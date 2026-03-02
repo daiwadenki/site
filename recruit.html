@@ -3,86 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>採用情報 | 大和電気株式会社</title>
-    <link rel="icon" href="favicon.ico">
+    <title>ちきゅうを照らす、仲間をあつめる！ | 大和電気株式会社 採用</title>
+    
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Poppins:wght@600&display=swap" rel="stylesheet">
     
     <style>
-        body, html {
-            margin: 0; padding: 0; width: 100%;
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            background: #f9f9f9;
+        /* --- CSS: ポップ&幾何学デザイン --- */
+
+        :root {
+            --main-blue: #007bff; /* ポップな青 */
+            --electric-yellow: #ffeb3b; /* 電気の黄色 */
+            --accent-pink: #ff4081; /* アクセントのピンク */
+            --text-color: #333;
+            --bg-color: #fff;
         }
 
-        /* ヘッダー（トップページと共通） */
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            font-family: 'Kosugi Maru', sans-serif; /* 丸ゴシックでポップに */
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+        }
+
+        /* 電気×幾何学模様の背景（CSSで描画） */
+        .geometric-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background-color: #f0f8ff;
+            background-image: 
+                linear-gradient(30deg, #e0f0ff 12%, transparent 12.5%, transparent 87%, #e0f0ff 87.5%, #e0f0ff),
+                linear-gradient(150deg, #e0f0ff 12%, transparent 12.5%, transparent 87%, #e0f0ff 87.5%, #e0f0ff),
+                linear-gradient(30deg, #e0f0ff 12%, transparent 12.5%, transparent 87%, #e0f0ff 87.5%, #e0f0ff),
+                linear-gradient(150deg, #e0f0ff 12%, transparent 12.5%, transparent 87%, #e0f0ff 87.5%, #e0f0ff),
+                linear-gradient(60deg, #d0e8ff 25%, transparent 25.5%, transparent 75%, #d0e8ff 75.5%, #d0e8ff),
+                linear-gradient(60deg, #d0e8ff 25%, transparent 25.5%, transparent 75%, #d0e8ff 75.5%, #d0e8ff);
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+            opacity: 0.5; /* 模様を薄く */
+        }
+
+        /* ヘッダー（トップと共通、少しポップに調整） */
         header {
             position: fixed; top: 0; width: 100%;
-            padding: 15px 40px; box-sizing: border-box; z-index: 100;
-            background: rgba(0, 0, 0, 0.8); /* 読みやすくするため少し濃いめに */
+            padding: 10px 40px; box-sizing: border-box; z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             display: flex; justify-content: space-between; align-items: center;
         }
 
-        .logo-area { display: flex; align-items: center; text-decoration: none; color: white; }
+        .logo-area { display: flex; align-items: center; text-decoration: none; color: var(--main-blue); }
         .logo-image { height: 40px; width: auto; margin-right: 15px; }
-        .company-name { font-size: 20px; font-weight: bold; letter-spacing: 0.1em; }
+        .company-name { font-size: 18px; font-weight: bold; font-family: 'Poppins', sans-serif; }
 
-        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 25px; }
-        nav ul li a { text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; }
-        .nav-jp { font-size: 13px; font-weight: bold; }
-        .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.8; }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; }
+        nav ul li a { text-decoration: none; color: #555; display: flex; flex-direction: column; align-items: center; }
+        .nav-jp { font-size: 12px; font-weight: bold; }
+        .nav-en { font-size: 9px; font-family: 'Poppins', sans-serif; color: var(--main-blue); }
+        nav ul li a:hover { color: var(--main-blue); }
 
-        /* 採用コンテンツ */
-        .recruit-page-container {
-            max-width: 900px;
-            margin: 120px auto 60px; /* ヘッダーに被らないよう上をあける */
-            padding: 40px;
-            background: white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            border-radius: 8px;
+        /* メインコンテンツ */
+        .container {
+            max-width: 1000px;
+            margin: 100px auto 60px;
+            padding: 20px;
         }
 
-        h1 {
-            font-size: 2rem;
-            color: #00479d;
-            border-bottom: 2px solid #00479d;
-            padding-bottom: 15px;
-            margin-bottom: 30px;
+        /* セクション共通見出し */
+        .section-title {
             text-align: center;
+            margin-bottom: 50px;
+            position: relative;
         }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #eee; padding: 20px; text-align: left; }
-        th { background: #f0f4f9; width: 30%; color: #00479d; }
+        .section-title h1, .section-title h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            color: var(--main-blue);
+            margin: 0;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title h1::before, .section-title h2::before {
+            content: "";
+            position: absolute;
+            bottom: 5px; left: -5px;
+            width: 100%; height: 15px;
+            background: var(--electric-yellow);
+            z-index: -1;
+            transform: rotate(-1deg);
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: var(--accent-pink);
+            font-weight: bold;
+            margin-top: 10px;
+            letter-spacing: 0.1em;
+        }
+
+        /* 各セクション */
+        section {
+            margin-bottom: 80px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,123,255,0.05);
+            border: 2px solid #e0f0ff;
+        }
+
+        /* メッセージ */
+        .message-text {
+            font-size: 1.2rem;
+            line-height: 2;
+            text-align: center;
+            border-left: none; padding-left: 0; /* 古いスタイルをリセット */
+        }
+        .highlight {
+            color: var(--main-blue);
+            font-weight: bold;
+            background: linear-gradient(transparent 60%, var(--electric-yellow) 60%);
+        }
+
+        /* 業務内容（写真レイアウト） */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .work-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            transition: transform 0.3s;
+        }
+        .work-card:hover { transform: translateY(-5px); }
+
+        .work-photo {
+            width: 100%;
+            height: 200px;
+            background-color: #ddd; /* 写真がない時の灰色 */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 0.8rem;
+        }
+        
+        /* 写真を張る時は、ここの `background-image` をコメントアウト解除して
+           GitHubにアップロードしたファイル名に変えてください 
+        */
+        /* .photo-1 { background-image: url('work_photo1.jpg'); } */
+        /* .photo-2 { background-image: url('work_photo2.jpg'); } */
+
+        .work-info { padding: 20px; }
+        .work-info h3 { color: var(--main-blue); margin-top: 0; }
+        .work-info p { font-size: 0.9rem; color: #666; margin-bottom: 0; }
+
+        /* 募集要項（テーブル） */
+        table { width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: -10px; }
+        th, td { border: none; padding: 20px; text-align: left; }
+        th { 
+            background: var(--main-blue); 
+            color: white; 
+            width: 30%; 
+            border-radius: 10px 0 0 10px;
+            font-size: 1rem;
+        }
+        td { 
+            background: #fff; 
+            border-radius: 0 10px 10px 0;
+            border: 1px solid #e0f0ff;
+            border-left: none;
+        }
 
         .back-btn {
             display: block;
             width: fit-content;
-            margin: 40px auto 0;
-            padding: 12px 30px;
-            background: #333;
+            margin: 50px auto 0;
+            padding: 15px 40px;
+            background: var(--accent-pink);
             color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 50px;
+            font-weight: bold;
             transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(255,64,129,0.3);
         }
-        .back-btn:hover { background: #000; }
+        .back-btn:hover { background: #ff1a6f; transform: scale(1.05); }
 
-        footer { background: #222; color: #fff; padding: 30px; text-align: center; font-size: 0.8rem; }
+        footer { background: #222; color: #fff; padding: 30px; text-align: center; font-size: 0.8rem; font-family: 'Poppins', sans-serif; }
 
         @media (max-width: 768px) {
-            header { flex-direction: column; padding: 10px; }
-            nav ul { gap: 10px; margin-top: 10px; }
-            .recruit-page-container { margin-top: 160px; padding: 20px; width: 90%; }
-            th, td { display: block; width: 100%; box-sizing: border-box; }
-            th { border-bottom: none; }
+            header { padding: 10px; }
+            .company-name { font-size: 16px; }
+            nav ul { gap: 10px; }
+            .nav-jp { font-size: 10px; }
+            .container { margin-top: 140px; padding: 10px; }
+            section { padding: 20px; border-radius: 15px; }
+            .section-title h1, .section-title h2 { font-size: 1.8rem; }
+            .message-text { font-size: 1rem; }
+            th, td { display: block; width: 100%; border-radius: 10px; }
+            th { border-radius: 10px 10px 0 0; padding: 10px 20px; }
+            td { border-radius: 0 0 10px 10px; border-left: 1px solid #e0f0ff; border-top: none; }
         }
     </style>
 </head>
 <body>
 
+    <div class="geometric-bg"></div>
+
     <header>
         <a href="index.html" class="logo-area">
             <img src="miko.png" alt="大和電気株式会社 ロゴ" class="logo-image">
-            <span class="company-name">大和電気株式会社</span>
+            <span class="company-name">DAIWA DENKI</span>
         </a>
         <nav>
             <ul>
@@ -94,36 +239,76 @@
         </nav>
     </header>
 
-    <div class="recruit-page-container">
-        <h1>募集要項</h1>
-        <table>
-            <tr>
-                <th>募集職種</th>
-                <td>電気工事士・現場管理見習い</td>
-            </tr>
-            <tr>
-                <th>仕事内容</th>
-                <td>オフィスビル、工場、公共施設等の電気設備工事、メンテナンス。</td>
-            </tr>
-            <tr>
-                <th>給与</th>
-                <td>250,000円 〜 450,000円（※経験・能力を考慮の上決定）</td>
-            </tr>
-            <tr>
-                <th>勤務時間</th>
-                <td>8:00 〜 17:00（現場により変動あり）</td>
-            </tr>
-            <tr>
-                <th>諸手当</th>
-                <td>通勤手当、資格手当、時間外勤務手当</td>
-            </tr>
-        </table>
+    <div class="container">
 
-        <a href="index.html" class="back-btn">トップページへ戻る</a>
+        <section id="message">
+            <div class="section-title">
+                <h1>MESSAGE</h1>
+                <p class="section-subtitle">未来の「ビリビリ」を、一緒につくろう！</p>
+            </div>
+            <p class="message-text">
+                電気は、街の血液です。<br>
+                私たちがとまれば、街の明かりが消え、スマホが充電できず、電車も動きません。<br>
+                <br>
+                大和電気株式会社は、そんな<span class="highlight">「当たり前の日常」を裏側で支える、電気のプロフェッショナル集団</span>です。<br>
+                <br>
+                難しそう？いえいえ、最初はみんな未経験！<br>
+                必要なのは、やる気と、ちょっとの好奇心だけ。<br>
+                私たちと一緒に、これからの日本を、もっと明るく、<span class="highlight">もっと面白い街にするために、そのチカラ、貸してください！</span>
+            </p>
+        </section>
+
+        <section id="work-detail">
+            <div class="section-title">
+                <h2>OUR WORK</h2>
+                <p class="section-subtitle">キミの技術が、街の明かりになる！</p>
+            </div>
+            
+            <div class="work-grid">
+                <div class="work-card">
+                    <div class="work-photo photo-1">
+                        【写真：ビル建設現場での配線作業】
+                    </div>
+                    <div class="work-info">
+                        <h3>現場施工（電気工事）</h3>
+                        <p>新しいビルや工場に、電気の「道」を作る仕事です。図面を見ながら、ケーブルを張り巡らせ、照明やコンセントを取り付けます。チームで協力して、真っ暗な空間に初めて明かりが灯った瞬間の感動は、言葉になりません！</p>
+                    </div>
+                </div>
+
+                <div class="work-card">
+                    <div class="work-photo photo-2">
+                        【写真：タブレットで図面を確認する姿】
+                    </div>
+                    <div class="work-info">
+                        <h3>施工管理（現場監督）</h3>
+                        <p>現場全体の司令塔です。「安全に、工期通りに、高品質に」工事が進むよう、職人さんたちへの指示出しや、必要な材料の手配、お客様との打ち合わせを行います。技術とコミュニケーションで現場を動かす、やりがいのあるポジションです。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="outline">
+            <div class="section-title">
+                <h2>GUIDELINES</h2>
+                <p class="section-subtitle">大和電気の一員になる、第一歩！</p>
+            </div>
+            
+            <table>
+                <tr><th>募集職種</th><td>電気工事士・現場管理見習い（未経験大歓迎！）</td></tr>
+                <tr><th>給与</th><td>月給 250,000円 〜 450,000円<br><span style="font-size:0.8rem;color:#666;">※キミの「やる気」と「伸び代」をしっかり評価します！</span></td></tr>
+                <tr><th>勤務地</th><td>本社および東京都内近郊の各現場<br><span style="font-size:0.8rem;color:#666;">（直行直帰OK！社用車貸与あり）</span></td></tr>
+                <tr><th>勤務時間</th><td>8:00 〜 17:00（休憩90分）<br><span style="font-size:0.8rem;color:#666;">※現場により変動あり。残業は少なめです。</span></td></tr>
+                <tr><th>休日・休暇</th><td>隔週休2日制（日・隔週土）、祝日、GW、夏季休暇、年末年始、有給休暇、慶弔休暇</td></tr>
+                <tr><th>福利厚生</th><td>社会保険完備、昇給年1回、賞与年2回、交通費全額支給、資格取得支援制度（受験料会社負担）、作業服貸与</td></tr>
+            </table>
+
+            <a href="index.html#contact" class="back-btn">この仕事に応募する！</a>
+        </section>
+
     </div>
 
     <footer>
-        &copy; 2026 大和電気株式会社 All Rights Reserved.
+        &copy; 2026 DAIWA DENKI Co., Ltd. All Rights Reserved.
     </footer>
 
 </body>
