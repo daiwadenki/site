@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大和電気株式会社 | YAMATO DENKI</title>
+    <title>大和電気株式会社 | DAIWA DENKI</title>
     
     <style>
         /* --- CSS: 全体の設定 --- */
@@ -12,23 +12,37 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100%;
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            overflow-x: hidden;
+            scroll-behavior: smooth; /* スクロールを滑らかに */
         }
 
-        /* 背景動画 */
-        #video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* 最初の画面（メインビジュアル） */
+        .hero {
+            position: relative;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
+            height: 100vh;
+            /* 背景画像の設定 */
+            background-image: url('main_haikei.jpg');
+            background-size: cover;    /* 隙間なく広げる */
+            background-position: center; /* 中央を基準にする */
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
         }
 
-        /* ヘッダー全体のレイアウト */
+        /* 画像の上に薄いフィルターをかけて文字を読みやすくする */
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.3); 
+        }
+
+        /* ヘッダー */
         header {
             position: fixed;
             top: 0;
@@ -36,34 +50,32 @@
             padding: 15px 40px;
             box-sizing: border-box;
             z-index: 100;
-            background: rgba(0, 0, 0, 0.3); /* 文字の視認性を上げるため少し暗く */
+            background: rgba(0, 0, 0, 0.5); 
             display: flex;
-            justify-content: space-between; /* 左端と右端に分ける */
-            align-items: center; /* 縦方向の中央揃え */
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* ロゴと社名のエリア */
         .logo-area {
             display: flex;
-            align-items: center; /* 画像とテキストを横並びで中央揃え */
+            align-items: center;
             text-decoration: none;
             color: white;
+            z-index: 101;
         }
 
         .logo-image {
-            height: 40px; /* ロゴの高さ（適宜調整してください） */
+            height: 40px;
             width: auto;
-            margin-right: 15px; /* ロゴと名前の間の余白 */
+            margin-right: 15px;
         }
 
         .company-name {
             font-size: 20px;
             font-weight: bold;
             letter-spacing: 0.1em;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
         }
 
-        /* メニュー（ナビゲーション） */
         nav ul {
             list-style: none;
             margin: 0;
@@ -79,94 +91,139 @@
             flex-direction: column;
             align-items: center;
             transition: 0.3s;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
         }
 
-        .nav-jp {
-            font-size: 14px;
-            font-weight: bold;
+        .nav-jp { font-size: 14px; font-weight: bold; }
+        .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.8; }
+
+        /* 真ん中の大きな文字 */
+        .hero-content {
+            position: relative;
+            z-index: 1;
         }
 
-        .nav-en {
-            font-size: 9px;
-            font-weight: normal;
-            letter-spacing: 0.05em;
-            margin-top: 2px;
-            opacity: 0.8;
+        .hero-content h1 {
+            font-size: 5rem;
+            margin: 0;
+            letter-spacing: 0.3em;
+            text-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
 
-        nav ul li a:hover {
-            color: #aaa;
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            letter-spacing: 0.5em;
         }
 
-        /* メインテキスト */
-        .main-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: white;
+        /* スクロール後のコンテンツエリア */
+        section {
+            padding: 100px 10%;
+            background: #f9f9f9;
+            color: #333;
             text-align: center;
         }
 
-        .main-content h1 {
-            font-size: 4rem;
-            margin: 0;
-            letter-spacing: 0.2em;
-            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+        .section-title {
+            margin-bottom: 50px;
         }
 
-        /* スマホ用調整 */
+        .section-title h2 {
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: #00479d; /* 企業カラー（仮：青） */
+        }
+
+        /* 事業案内のカードデザイン */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 40px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card h3 {
+            color: #00479d;
+            margin-bottom: 15px;
+        }
+
+        /* スマホ用 */
         @media (max-width: 900px) {
-            header {
-                padding: 10px 20px;
-                flex-direction: column; /* スマホでは縦に並べる（ロゴが上、メニューが下） */
-                gap: 10px;
-            }
-            .logo-image {
-                height: 30px;
-            }
-            .company-name {
-                font-size: 16px;
-            }
-            nav ul {
-                gap: 15px;
-            }
-            .nav-jp {
-                font-size: 11px;
-            }
-            .main-content h1 {
-                font-size: 2rem;
-            }
+            header { flex-direction: column; padding: 10px; }
+            .hero-content h1 { font-size: 2.5rem; }
+            nav ul { gap: 10px; margin-top: 10px; }
+            .nav-jp { font-size: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <video id="video-bg" autoplay muted loop playsinline>
-        <source src="bg-video.mp4" type="video/mp4">
-    </video>
-
     <header>
-        <a href="/" class="logo-area">
+        <a href="#" class="logo-area">
             <img src="miko.png" alt="大和電気 ロゴ" class="logo-image">
             <span class="company-name">大和電気</span>
         </a>
-
         <nav>
             <ul>
-                <li><a href="#"><span class="nav-jp">企業情報</span><span class="nav-en">Company</span></a></li>
-                <li><a href="#"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
-                <li><a href="#"><span class="nav-jp">実績紹介</span><span class="nav-en">Works</span></a></li>
-                <li><a href="#"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
-                <li><a href="#"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
+                <li><a href="#company"><span class="nav-jp">企業情報</span><span class="nav-en">Company</span></a></li>
+                <li><a href="#business"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
+                <li><a href="#works"><span class="nav-jp">実績紹介</span><span class="nav-en">Works</span></a></li>
+                <li><a href="#recruit"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
+                <li><a href="#contact"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
             </ul>
         </nav>
     </header>
 
-    <div class="main-content">
-        <h1>YAMATO DENKI</h1>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>DAIWA DENKI</h1>
+            <p>光り輝く未来を、電気の技術で。</p>
+        </div>
     </div>
+
+    <section id="business">
+        <div class="section-title">
+            <h2>事業案内</h2>
+            <p>BUSINESS</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>電気工事</h3>
+                <p>オフィスビルや工場の受変電設備から、一般住宅の配線工事まで幅広く対応します。</p>
+            </div>
+            <div class="service-card">
+                <h3>通信工事</h3>
+                <p>ネットワークインフラの構築、LAN配線、Wi-Fi環境の整備などを行います。</p>
+            </div>
+            <div class="service-card">
+                <h3>メンテナンス</h3>
+                <p>設備の保守点検から緊急時のトラブル対応まで、24時間365日の安心を支えます。</p>
+            </div>
+        </div>
+    </section>
 
 </body>
 </html>
