@@ -28,51 +28,71 @@
             z-index: -1;
         }
 
-        /* ヘッダー */
+        /* ヘッダー全体のレイアウト */
         header {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 20px 50px;
+            padding: 15px 40px;
             box-sizing: border-box;
             z-index: 100;
-            background: rgba(0, 0, 0, 0.2); /* メニューを見やすくするため少し暗く */
+            background: rgba(0, 0, 0, 0.3); /* 文字の視認性を上げるため少し暗く */
+            display: flex;
+            justify-content: space-between; /* 左端と右端に分ける */
+            align-items: center; /* 縦方向の中央揃え */
         }
 
+        /* ロゴと社名のエリア */
+        .logo-area {
+            display: flex;
+            align-items: center; /* 画像とテキストを横並びで中央揃え */
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo-image {
+            height: 40px; /* ロゴの高さ（適宜調整してください） */
+            width: auto;
+            margin-right: 15px; /* ロゴと名前の間の余白 */
+        }
+
+        .company-name {
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        }
+
+        /* メニュー（ナビゲーション） */
         nav ul {
             list-style: none;
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: flex-end;
-            gap: 40px;
+            gap: 30px;
         }
 
-        /* メニュー項目を縦並びにするための設定 */
         nav ul li a {
             text-decoration: none;
             color: white;
             display: flex;
-            flex-direction: column; /* 縦に並べる */
-            align-items: center;    /* 中央に寄せる */
+            flex-direction: column;
+            align-items: center;
             transition: 0.3s;
             text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
         }
 
-        /* 日本語部分 */
         .nav-jp {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
-            letter-spacing: 0.05em;
         }
 
-        /* 英語部分（小さい文字） */
         .nav-en {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: normal;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.05em;
             margin-top: 2px;
-            opacity: 0.8; /* 少し透かしてサブ要素感を出す */
+            opacity: 0.8;
         }
 
         nav ul li a:hover {
@@ -97,19 +117,23 @@
         }
 
         /* スマホ用調整 */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             header {
-                padding: 15px 10px;
+                padding: 10px 20px;
+                flex-direction: column; /* スマホでは縦に並べる（ロゴが上、メニューが下） */
+                gap: 10px;
+            }
+            .logo-image {
+                height: 30px;
+            }
+            .company-name {
+                font-size: 16px;
             }
             nav ul {
                 gap: 15px;
-                justify-content: center; /* スマホでは中央寄せ */
             }
             .nav-jp {
-                font-size: 12px;
-            }
-            .nav-en {
-                font-size: 8px;
+                font-size: 11px;
             }
             .main-content h1 {
                 font-size: 2rem;
@@ -124,38 +148,18 @@
     </video>
 
     <header>
+        <a href="/" class="logo-area">
+            <img src="miko.png" alt="大和電気 ロゴ" class="logo-image">
+            <span class="company-name">大和電気</span>
+        </a>
+
         <nav>
             <ul>
-                <li>
-                    <a href="#">
-                        <span class="nav-jp">企業情報</span>
-                        <span class="nav-en">Company</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="nav-jp">事業案内</span>
-                        <span class="nav-en">Business</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="nav-jp">実績紹介</span>
-                        <span class="nav-en">Works</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="nav-jp">採用情報</span>
-                        <span class="nav-en">Recruit</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="nav-jp">お問い合わせ</span>
-                        <span class="nav-en">Contact</span>
-                    </a>
-                </li>
+                <li><a href="#"><span class="nav-jp">企業情報</span><span class="nav-en">Company</span></a></li>
+                <li><a href="#"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
+                <li><a href="#"><span class="nav-jp">実績紹介</span><span class="nav-en">Works</span></a></li>
+                <li><a href="#"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
+                <li><a href="#"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
             </ul>
         </nav>
     </header>
