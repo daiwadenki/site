@@ -4,55 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>採用情報 | 大和電気株式会社</title>
+    <link rel="icon" href="favicon.ico">
+    
     <style>
-        body { font-family: sans-serif; margin: 0; padding: 0; line-height: 1.6; color: #333; }
-        header { background: #00479d; color: white; padding: 20px; text-align: center; }
-        .container { max-width: 800px; margin: 50px auto; padding: 0 20px; }
-        h1 { font-size: 2rem; }
-        h2 { border-left: 5px solid #00479d; padding-left: 15px; margin-top: 40px; }
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background: #f9f9f9;
+        }
+
+        /* ヘッダー（トップページと共通） */
+        header {
+            position: fixed; top: 0; width: 100%;
+            padding: 15px 40px; box-sizing: border-box; z-index: 100;
+            background: rgba(0, 0, 0, 0.8); /* 読みやすくするため少し濃いめに */
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .logo-area { display: flex; align-items: center; text-decoration: none; color: white; }
+        .logo-image { height: 40px; width: auto; margin-right: 15px; }
+        .company-name { font-size: 20px; font-weight: bold; letter-spacing: 0.1em; }
+
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 25px; }
+        nav ul li a { text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; }
+        .nav-jp { font-size: 13px; font-weight: bold; }
+        .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.8; }
+
+        /* 採用コンテンツ */
+        .recruit-page-container {
+            max-width: 900px;
+            margin: 120px auto 60px; /* ヘッダーに被らないよう上をあける */
+            padding: 40px;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #00479d;
+            border-bottom: 2px solid #00479d;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 15px; text-align: left; }
-        th { background: #f4f4f4; width: 30%; }
-        .back-btn { display: inline-block; margin-top: 30px; text-decoration: none; color: #00479d; font-weight: bold; }
+        th, td { border: 1px solid #eee; padding: 20px; text-align: left; }
+        th { background: #f0f4f9; width: 30%; color: #00479d; }
+
+        .back-btn {
+            display: block;
+            width: fit-content;
+            margin: 40px auto 0;
+            padding: 12px 30px;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: #000; }
+
+        footer { background: #222; color: #fff; padding: 30px; text-align: center; font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; padding: 10px; }
+            nav ul { gap: 10px; margin-top: 10px; }
+            .recruit-page-container { margin-top: 160px; padding: 20px; width: 90%; }
+            th, td { display: block; width: 100%; box-sizing: border-box; }
+            th { border-bottom: none; }
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>採用情報</h1>
-    <p>RECRUIT</p>
-</header>
+    <header>
+        <a href="index.html" class="logo-area">
+            <img src="miko.png" alt="大和電気株式会社 ロゴ" class="logo-image">
+            <span class="company-name">大和電気株式会社</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html#business"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
+                <li><a href="index.html#works"><span class="nav-jp">実績紹介</span><span class="nav-en">Works</span></a></li>
+                <li><a href="index.html#contact"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
+                <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
+            </ul>
+        </nav>
+    </header>
 
-<div class="container">
-    <h2>募集要項</h2>
-    <table>
-        <tr>
-            <th>職種</th>
-            <td>電気工事士（現場施工・管理）</td>
-        </tr>
-        <tr>
-            <th>給与</th>
-            <td>月給 250,000円 〜 450,000円（経験による）</td>
-        </tr>
-        <tr>
-            <th>勤務地</th>
-            <td>本社および各現場（直行直帰可）</td>
-        </tr>
-        <tr>
-            <th>休日</th>
-            <td>隔週休2日制、夏季休暇、年末年始休暇</td>
-        </tr>
-    </table>
+    <div class="recruit-page-container">
+        <h1>募集要項</h1>
+        <table>
+            <tr>
+                <th>募集職種</th>
+                <td>電気工事士・現場管理見習い</td>
+            </tr>
+            <tr>
+                <th>仕事内容</th>
+                <td>オフィスビル、工場、公共施設等の電気設備工事、メンテナンス。</td>
+            </tr>
+            <tr>
+                <th>給与</th>
+                <td>250,000円 〜 450,000円（※経験・能力を考慮の上決定）</td>
+            </tr>
+            <tr>
+                <th>勤務時間</th>
+                <td>8:00 〜 17:00（現場により変動あり）</td>
+            </tr>
+            <tr>
+                <th>諸手当</th>
+                <td>通勤手当、資格手当、時間外勤務手当</td>
+            </tr>
+        </table>
 
-    <h2>メッセージ</h2>
-    <p>私たちは技術だけでなく、チームワークを大切にしています。未経験の方でも先輩社員が丁寧に指導しますので、安心してご応募ください。</p>
+        <a href="index.html" class="back-btn">トップページへ戻る</a>
+    </div>
 
-    <a href="index.html" class="back-btn">← トップページに戻る</a>
-</div>
-
-<footer style="background: #222; color: #fff; padding: 20px; text-align: center; margin-top: 50px;">
-    &copy; 2026 大和電気株式会社
-</footer>
+    <footer>
+        &copy; 2026 大和電気株式会社 All Rights Reserved.
+    </footer>
 
 </body>
 </html>
