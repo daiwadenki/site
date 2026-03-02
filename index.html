@@ -3,40 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>大和電気株式会社 | YAMATO DENKI</title>
     
     <style>
-        /* --- CSS: ここに見た目の設定を書きます --- */
+        /* --- CSS: 全体の設定 --- */
 
-        /* 1. 全体の設定 */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            font-family: "Helvetica Neue", Arial, sans-serif;
-            overflow-x: hidden; /* 横揺れ防止 */
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            overflow-x: hidden;
         }
 
-        /* 2. 背景動画の設定 */
+        /* 背景動画 */
         #video-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 画面いっぱいに広げる */
-            z-index: -1; /* コンテンツの背後に配置 */
+            object-fit: cover;
+            z-index: -1;
         }
 
-        /* 3. ヘッダー（メニュー）の設定 */
+        /* ヘッダー */
         header {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 30px 50px;
+            padding: 20px 50px;
             box-sizing: border-box;
             z-index: 100;
+            background: rgba(0, 0, 0, 0.2); /* メニューを見やすくするため少し暗く */
         }
 
         nav ul {
@@ -44,25 +44,42 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: flex-end; /* 右寄せ */
-            gap: 30px; /* メニュー間の余白 */
+            justify-content: flex-end;
+            gap: 40px;
         }
 
+        /* メニュー項目を縦並びにするための設定 */
         nav ul li a {
             text-decoration: none;
             color: white;
-            font-weight: bold;
-            font-size: 14px;
-            letter-spacing: 0.1em;
+            display: flex;
+            flex-direction: column; /* 縦に並べる */
+            align-items: center;    /* 中央に寄せる */
             transition: 0.3s;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.3); /* 文字を読みやすく */
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        }
+
+        /* 日本語部分 */
+        .nav-jp {
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+        }
+
+        /* 英語部分（小さい文字） */
+        .nav-en {
+            font-size: 10px;
+            font-weight: normal;
+            letter-spacing: 0.1em;
+            margin-top: 2px;
+            opacity: 0.8; /* 少し透かしてサブ要素感を出す */
         }
 
         nav ul li a:hover {
-            color: #ccc; /* マウスを乗せた時の色 */
+            color: #aaa;
         }
 
-        /* 4. 真ん中のメインテキスト */
+        /* メインテキスト */
         .main-content {
             display: flex;
             justify-content: center;
@@ -75,19 +92,24 @@
         .main-content h1 {
             font-size: 4rem;
             margin: 0;
+            letter-spacing: 0.2em;
             text-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
 
-        /* スマホ用の調整 */
+        /* スマホ用調整 */
         @media (max-width: 768px) {
             header {
-                padding: 20px;
+                padding: 15px 10px;
             }
             nav ul {
                 gap: 15px;
+                justify-content: center; /* スマホでは中央寄せ */
             }
-            nav ul li a {
-                font-size: 10px;
+            .nav-jp {
+                font-size: 12px;
+            }
+            .nav-en {
+                font-size: 8px;
             }
             .main-content h1 {
                 font-size: 2rem;
@@ -104,17 +126,42 @@
     <header>
         <nav>
             <ul>
-                <li><a href="#">WORK</a></li>
-                <li><a href="#">PROFILE</a></li>
-                <li><a href="#">NEWS</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">CONTACT</a></li>
+                <li>
+                    <a href="#">
+                        <span class="nav-jp">企業情報</span>
+                        <span class="nav-en">Company</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="nav-jp">事業案内</span>
+                        <span class="nav-en">Business</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="nav-jp">実績紹介</span>
+                        <span class="nav-en">Works</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="nav-jp">採用情報</span>
+                        <span class="nav-en">Recruit</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="nav-jp">お問い合わせ</span>
+                        <span class="nav-en">Contact</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
 
     <div class="main-content">
-        <h1>PORTFOLIO</h1>
+        <h1>YAMATO DENKI</h1>
     </div>
 
 </body>
