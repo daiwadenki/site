@@ -16,6 +16,7 @@
             width: 100%;
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             scroll-behavior: smooth;
+            color: #333;
         }
 
         /* メインビジュアル */
@@ -23,7 +24,7 @@
             position: relative;
             width: 100%;
             height: 100vh;
-            background-image: url('main_haikei.jpg');
+            background-image: url('main_haikei.jpg'); /* あなたのアップロードした背景画像 */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -71,12 +72,13 @@
         nav ul li a { text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; transition: 0.3s; }
         .nav-jp { font-size: 13px; font-weight: bold; }
         .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.8; }
+        nav ul li a:hover { opacity: 0.7; }
 
         .hero-content { position: relative; z-index: 1; }
         .hero-content h1 { font-size: 5rem; margin: 0; letter-spacing: 0.3em; text-shadow: 0 0 30px rgba(0,0,0,0.5); }
         .hero-content p { font-size: 1.2rem; margin-top: 10px; letter-spacing: 0.5em; }
 
-        /* スクロールガイド */
+        /* スクロールガイド（Scroll Downに修正） */
         .scrolldown {
             position: absolute;
             bottom: 40px;
@@ -93,6 +95,7 @@
             text-transform: uppercase; 
             margin-left: 12px; 
             font-weight: bold;
+            color: white;
         }
         .arrow { 
             width: 2px;
@@ -116,28 +119,46 @@
         /* セクション共通設定 */
         section { padding: 100px 10%; text-align: center; }
         .section-title { margin-bottom: 60px; }
-        .section-title h2 { font-size: 2.2rem; position: relative; display: inline-block; padding-bottom: 15px; margin: 0; }
-        .section-title h2::after { content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 50px; height: 3px; background: #00479d; }
+        .section-title h2 { font-size: 2.2rem; position: relative; display: inline-block; padding-bottom: 15px; margin: 0; color: #00479d; }
         .section-title p { font-size: 0.9rem; color: #888; margin-top: 10px; letter-spacing: 0.2em; }
 
+        /* グリッドレイアウト */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .card { background: white; padding: 40px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-radius: 4px; transition: 0.3s; border-top: 4px solid #00479d; }
-        .card:hover { transform: translateY(-10px); }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .card h3 { font-size: 1.25rem; margin-bottom: 15px; }
+        .card p { font-size: 0.95rem; line-height: 1.7; color: #666; }
+
+        /* 実績紹介（Works）の画像枠 */
+        .work-img-dummy { width: 100%; height: 180px; background: #eee; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 0.8rem; }
 
         /* お問い合わせ */
-        .contact-box { max-width: 600px; margin: 0 auto; padding: 40px; border: 2px solid #eee; border-radius: 10px; background: #fff; }
-        .tel-number { font-size: 2.5rem; font-weight: bold; color: #00479d; text-decoration: none; display: block; margin: 20px 0; }
+        #contact { background: #f9f9f9; }
+        .contact-box { max-width: 600px; margin: 0 auto; padding: 40px; border: 1px solid #ddd; border-radius: 10px; background: #fff; }
+        .tel-number { font-size: 2.5rem; font-weight: bold; color: #00479d; text-decoration: none; display: block; margin: 20px 0; transition: 0.3s; }
+        .tel-number:hover { opacity: 0.7; }
 
         /* 採用情報セクション */
         #recruit { background: #00479d; color: white; }
-        #recruit .section-title h2::after { background: white; }
+        #recruit .section-title h2 { color: white; }
         #recruit .section-title p { color: rgba(255,255,255,0.7); }
         .recruit-content { max-width: 800px; margin: 0 auto; }
         .recruit-text { font-size: 1.1rem; line-height: 2; margin-bottom: 40px; }
-        .btn-recruit { display: inline-block; padding: 15px 50px; background: white; color: #00479d; text-decoration: none; font-weight: bold; border-radius: 50px; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        
+        .btn-recruit { 
+            display: inline-block; 
+            padding: 18px 60px; 
+            background: white; 
+            color: #00479d; 
+            text-decoration: none; 
+            font-weight: bold; 
+            border-radius: 50px; 
+            transition: 0.3s; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+        }
         .btn-recruit:hover { background: #f0f0f0; transform: scale(1.05); }
 
-        /* スマホ用 */
+        /* スマホ対応 */
         @media (max-width: 900px) {
             header { flex-direction: column; padding: 10px; background: rgba(0,0,0,0.8); }
             .hero-content h1 { font-size: 2.5rem; }
@@ -145,6 +166,7 @@
             .company-name { font-size: 18px; }
             .scrolldown span { font-size: 11px; }
             .arrow { height: 60px; }
+            .tel-number { font-size: 1.8rem; }
         }
     </style>
 </head>
@@ -172,30 +194,60 @@
         </div>
         <div class="scrolldown">
             <div class="arrow"></div>
-            <span>scroll</span>
+            <span>Scroll Down</span>
         </div>
     </div>
 
     <section id="business">
-        <div class="section-title"><h2>事業案内</h2><p>BUSINESS</p></div>
+        <div class="section-title">
+            <h2>事業案内</h2>
+            <p>BUSINESS</p>
+        </div>
         <div class="grid-container">
-            <div class="card"><h3>電気工事</h3><p>オフィスビルや工場の受変電設備から、一般住宅の配線工事まで幅広く対応します。</p></div>
-            <div class="card"><h3>通信工事</h3><p>ネットワークインフラの構築、LAN配線、Wi-Fi環境の整備などを行います。</p></div>
-            <div class="card"><h3>メンテナンス</h3><p>設備の保守点検から緊急時のトラブル対応まで、24時間365日の安心を支えます。</p></div>
+            <div class="card">
+                <h3>電気工事</h3>
+                <p>オフィスビルや工場の受変電設備から、一般住宅の配線工事まで幅広く対応します。</p>
+            </div>
+            <div class="card">
+                <h3>通信工事</h3>
+                <p>ネットワークインフラの構築、LAN配線、Wi-Fi環境の整備などを行います。</p>
+            </div>
+            <div class="card">
+                <h3>メンテナンス</h3>
+                <p>設備の保守点検から緊急時のトラブル対応まで、24時間365日の安心を支えます。</p>
+            </div>
         </div>
     </section>
 
     <section id="works">
-        <div class="section-title"><h2>実績紹介</h2><p>WORKS</p></div>
+        <div class="section-title">
+            <h2>実績紹介</h2>
+            <p>WORKS</p>
+        </div>
         <div class="grid-container">
-            <div class="card"><h3>〇〇商事様 本社ビル</h3><p>全館の照明LED化工事および受変電設備の改修を実施しました。</p></div>
-            <div class="card"><h3>△△工場 移転プロジェクト</h3><p>工場の稼働に必要な大型電力設備の設計・施工を一貫して担当。</p></div>
-            <div class="card"><h3>公共施設 街灯設置</h3><p>地域の安全を守るため、高効率なLED街灯への交換工事を行いました。</p></div>
+            <div class="card">
+                <div class="work-img-dummy">施工写真イメージ</div>
+                <h3>〇〇商事様 本社ビル</h3>
+                <p>照明LED化工事および受変電設備の改修を実施しました。</p>
+            </div>
+            <div class="card">
+                <div class="work-img-dummy">施工写真イメージ</div>
+                <h3>△△工場 移転プロジェクト</h3>
+                <p>大型電力設備の設計・施工を一貫して担当しました。</p>
+            </div>
+            <div class="card">
+                <div class="work-img-dummy">施工写真イメージ</div>
+                <h3>公共施設 街灯設置</h3>
+                <p>地域の安全を守る高効率なLED街灯への交換工事です。</p>
+            </div>
         </div>
     </section>
 
     <section id="contact">
-        <div class="section-title"><h2>お問い合わせ</h2><p>CONTACT</p></div>
+        <div class="section-title">
+            <h2>お問い合わせ</h2>
+            <p>CONTACT</p>
+        </div>
         <div class="contact-box">
             <p>お仕事のご依頼・ご相談は、お電話にてお問い合わせください。</p>
             <a href="tel:000-0000-0000" class="tel-number">000-0000-0000</a>
@@ -204,7 +256,10 @@
     </section>
 
     <section id="recruit">
-        <div class="section-title"><h2>採用情報</h2><p>RECRUIT</p></div>
+        <div class="section-title">
+            <h2>採用情報</h2>
+            <p>RECRUIT</p>
+        </div>
         <div class="recruit-content">
             <p class="recruit-text">
                 大和電気株式会社では、共に未来を照らす仲間を募集しています。<br>
