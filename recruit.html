@@ -4,50 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>採用情報 | 大和電気株式会社</title>
-    
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <style>
-        /* --- CSS: モダン&電気幾何学デザイン --- */
-
         :root {
-            --main-blue: #00479d; /* 元の企業の青に戻す（見やすさ重視） */
-            --accent-pink: #ff4081; /* 応募ボタン用（そのまま） */
+            --main-blue: #00479d;
+            --accent-pink: #ff4081;
             --text-color: #333;
-            --bg-color: #fff;
-            --sub-text-color: #888;
         }
 
         body, html {
             margin: 0; padding: 0; width: 100%;
-            /* 最初のモダンなフォントに戻す */
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             color: var(--text-color);
-            background-color: var(--bg-color);
+            background-color: #fff;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* --- 背景：様々な電気図形（幾何学模様） --- */
-        .geometric-overlay {
+        /* --- 背景アニメーションエリア --- */
+        .bg-animation {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: -1;
-            opacity: 0.03; /* とても薄く敷く（見づらさ防止） */
-            background-image: 
-                /* 六角形（ヘキサゴン） */
-                url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMwMDQ3OWQiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMDAgaDB2NDBoLTQwVjB6bTIwIDIwaDIwdjIwSDIwVjIwek0wIDIwaDIwdjIwSDBWMjB6bTIwIDBoMjBWMEgyMFYwWiIvPjwvZz48L2c+PC9zdmc+'),
-                /* 稲妻/稲妻（抽象） */
-                url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIj48ZyBmaWxsPSIjMDA0NzlkIiBmaWxsLW9wYWNpdHk9IjAuNSI+PHBhdGggZD0iTTE0IDMwaDE0djE0SDE0VjMwek0wIDBoMTR2MTRIMFYwek00MiA0MmgxNHYxNEg0MlY0MnpNNTggNThoMTR2MTRINThWNTh6TTI4IDE0aDE0djE0SDI4VjE0ek04IDQyaDE0djE0SDhWNDJ6TTU4IDI4aDE0djE0SDU4VjI4ek00MiA4aDE0djE0SDQyVjh6Ii8+PC9nPjwvc3ZnPg==');
-            background-size: 100px 100px, 60px 60px;
-            background-position: 0 0, 30px 30px;
+            background: #f8faff;
+            overflow: hidden;
         }
 
-        /* ヘッダー（トップと共通、最初のデザイン） */
+        /* 動く図形たちの共通設定 */
+        .shape {
+            position: absolute;
+            background: rgba(0, 71, 157, 0.03); /* 非常に薄い青 */
+            border: 1px solid rgba(0, 71, 157, 0.05);
+            animation: move 20s linear infinite;
+        }
+
+        .shape-sq { width: 100px; height: 100px; top: 10%; left: 10%; }
+        .shape-ci { width: 150px; height: 150px; border-radius: 50%; top: 60%; left: 80%; }
+        .shape-tri { 
+            width: 0; height: 0; 
+            border-left: 50px solid transparent; border-right: 50px solid transparent; 
+            border-bottom: 86px solid rgba(0, 71, 157, 0.03);
+            background: none; border-top: none;
+            top: 30%; left: 70%; 
+        }
+
+        @keyframes move {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* ヘッダー */
         header {
             position: fixed; top: 0; width: 100%;
             padding: 15px 40px; box-sizing: border-box; z-index: 100;
-            background: rgba(0, 0, 0, 0.7); /* 文字の視認性を上げるため少し暗く */
+            background: rgba(0, 0, 0, 0.7);
             display: flex; justify-content: space-between; align-items: center;
         }
 
@@ -60,154 +73,61 @@
         .nav-jp { font-size: 13px; font-weight: bold; }
         .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.8; }
 
-        /* メインコンテンツ */
-        .container {
-            max-width: 1000px;
-            margin: 120px auto 60px; /* ヘッダーに被らないよう上をあける */
-            padding: 20px;
-        }
+        /* コンテンツ */
+        .container { max-width: 1000px; margin: 120px auto 60px; padding: 20px; position: relative; }
 
-        /* セクション共通見出し（デザイン一新） */
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-title h1, .section-title h2 {
-            font-size: 2.2rem;
-            color: var(--main-blue); /* 色はそのまま */
-            margin: 0;
-            letter-spacing: 0.2em;
-            text-transform: uppercase; /* カタカナ見出し用 */
-        }
-
-        /* 黄色の下線は削除、小さく英語を追加 */
-        .section-title h1::after, .section-title h2::after { content: none; }
-
-        .section-subtitle {
-            font-size: 0.9rem;
-            color: var(--sub-text-color); /* 見やすい灰色に */
-            font-weight: normal;
-            margin-top: 10px;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-        }
-
-        /* 各セクション */
         section {
-            margin-bottom: 100px;
-            background: rgba(255, 255, 255, 0.9); /* 背景を見やすく（白） */
+            margin-bottom: 80px;
+            background: rgba(255, 255, 255, 0.95);
             padding: 50px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.03);
             border: 1px solid #eee;
         }
 
-        /* メッセージ */
-        .message-text {
-            font-size: 1.1rem;
-            line-height: 2.2;
-            text-align: center;
-        }
-        .highlight {
-            color: var(--main-blue);
-            font-weight: bold;
-        }
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h1, .section-title h2 { font-size: 2.2rem; color: var(--main-blue); margin: 0; letter-spacing: 0.2em; }
+        .section-subtitle { font-size: 0.9rem; color: #888; margin-top: 10px; letter-spacing: 0.3em; text-transform: uppercase; }
 
-        /* 業務内容（写真レイアウト、そのまま） */
-        .work-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-        }
+        .message-text { font-size: 1.1rem; line-height: 2.2; text-align: center; }
+        .highlight { color: var(--main-blue); font-weight: bold; }
 
-        .work-card {
-            background: #fff;
-            border-radius: 4px;
-            overflow: hidden;
-            border: 1px solid #eee;
-            transition: transform 0.3s;
-        }
-        .work-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-
-        .work-photo {
-            width: 100%;
-            height: 220px;
-            background-color: #ddd;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-size: 0.8rem;
-        }
-        
-        /* 写真を張る時は、ここの `background-image` をコメントアウト解除して
-           GitHubにアップロードしたファイル名に変えてください 
-        */
-        /* .photo-1 { background-image: url('work_photo1.jpg'); } */
-        /* .photo-2 { background-image: url('work_photo2.jpg'); } */
-
+        .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
+        .work-card { background: #fff; border: 1px solid #eee; overflow: hidden; }
+        .work-photo { width: 100%; height: 220px; background-color: #ddd; display: flex; align-items: center; justify-content: center; color: #888; font-size: 0.8rem; }
         .work-info { padding: 25px; }
-        .work-info h3 { color: var(--main-blue); margin-top: 0; font-size: 1.3rem; margin-bottom: 15px; }
-        .work-info p { font-size: 0.95rem; color: #555; margin-bottom: 0; line-height: 1.8; }
+        .work-info h3 { color: var(--main-blue); margin-top: 0; }
 
-        /* 募集要項（テーブル、配色を見やすく調整） */
-        table { width: 100%; border-collapse: separate; border-spacing: 0 15px; margin-top: -15px; }
-        th, td { border: none; padding: 25px; text-align: left; }
-        th { 
-            background: #f0f4f9; /* 薄い灰色にして見やすく */
-            color: var(--main-blue); 
-            width: 30%; 
-            border-radius: 4px 0 0 4px;
-            font-size: 1rem;
-        }
-        td { 
-            background: #fff; 
-            border-radius: 0 4px 4px 0;
-            border: 1px solid #eee;
-            border-left: none;
-            line-height: 1.8;
-        }
+        table { width: 100%; border-collapse: separate; border-spacing: 0 15px; }
+        th { background: #f0f4f9; color: var(--main-blue); width: 30%; padding: 20px; text-align: left; }
+        td { background: #fff; border: 1px solid #eee; padding: 20px; border-left: none; }
 
-        /* 応募ボタン（ピンクそのまま、少し大きく） */
         .back-btn {
-            display: block;
-            width: fit-content;
-            margin: 60px auto 0;
-            padding: 18px 60px;
-            background: var(--accent-pink);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(255,64,129,0.3);
-            letter-spacing: 0.1em;
+            display: block; width: fit-content; margin: 60px auto 0; padding: 18px 60px;
+            background: var(--accent-pink); color: white; text-decoration: none; border-radius: 50px;
+            font-weight: bold; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(255,64,129,0.3); transition: 0.3s;
         }
         .back-btn:hover { background: #ff1a6f; transform: scale(1.05); }
 
-        footer { background: #222; color: #fff; padding: 30px; text-align: center; font-size: 0.8rem; letter-spacing: 0.1em; }
+        footer { background: #222; color: #fff; padding: 30px; text-align: center; font-size: 0.8rem; }
 
-        @media (max-width: 900px) {
-            header { flex-direction: column; padding: 10px; background: rgba(0,0,0,0.9); }
-            nav ul { gap: 10px; margin-top: 10px; flex-wrap: wrap; justify-content: center; }
-            .company-name { font-size: 18px; }
-            .container { margin-top: 160px; padding: 10px; }
-            section { padding: 30px; border-radius: 4px; }
-            .section-title h1, .section-title h2 { font-size: 1.8rem; }
-            .work-grid { grid-template-columns: 1fr; }
-            th, td { display: block; width: 100%; border-radius: 4px; }
-            th { border-radius: 4px 4px 0 0; padding: 15px 25px; }
-            td { border-radius: 0 0 4px 4px; border-left: 1px solid #eee; border-top: none; }
+        @media (max-width: 768px) {
+            header { flex-direction: column; padding: 10px; }
+            nav ul { gap: 10px; margin-top: 10px; }
+            .container { margin-top: 160px; }
+            section { padding: 30px; }
+            th, td { display: block; width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <div class="geometric-overlay"></div>
+    <div class="bg-animation">
+        <div class="shape shape-sq" style="animation-delay: 0s; left: 5%;"></div>
+        <div class="shape shape-ci" style="animation-delay: 5s; left: 80%;"></div>
+        <div class="shape shape-tri" style="animation-delay: 10s; left: 40%;"></div>
+        <div class="shape shape-sq" style="animation-delay: 15s; left: 60%; width: 50px; height: 50px;"></div>
+    </div>
 
     <header>
         <a href="index.html" class="logo-area">
@@ -225,76 +145,55 @@
     </header>
 
     <div class="container">
-
-        <section id="message">
+        <section>
             <div class="section-title">
                 <h1>メッセージ</h1>
                 <p class="section-subtitle">MESSAGE</p>
             </div>
             <p class="message-text">
-                電気は、街の血液です。<br>
-                私たちがとまれば、街の明かりが消え、スマホが充電できず、電車も動きません。<br>
-                <br>
-                大和電気株式会社は、そんな<span class="highlight">「当たり前の日常」を裏側で支える、電気のプロフェッショナル集団</span>です。<br>
-                <br>
-                難しそう？いえいえ、最初はみんな未経験！<br>
-                必要なのは、やる気と、ちょっとの好奇心だけ。<br>
-                私たちと一緒に、これからの日本を、もっと明るく、<span class="highlight">もっと面白い街にするために、そのチカラ、貸してください！</span>
+                電気は、街の血液です。私たちがとまれば、街の明かりが消え、スマホが充電できず、電車も動きません。<br><br>
+                大和電気株式会社は、そんな<span class="highlight">「当たり前の日常」を裏側で支える、プロフェッショナル集団</span>です。
             </p>
         </section>
 
-        <section id="work-detail">
+        <section>
             <div class="section-title">
                 <h2>業務内容</h2>
                 <p class="section-subtitle">OUR WORK</p>
             </div>
-            
             <div class="work-grid">
                 <div class="work-card">
-                    <div class="work-photo photo-1">
-                        【写真：ビル建設現場での配線作業】
-                    </div>
+                    <div class="work-photo">【写真：現場施工】</div>
                     <div class="work-info">
                         <h3>現場施工（電気工事）</h3>
-                        <p>新しいビルや工場に、電気の「道」を作る仕事です。図面を見ながら、ケーブルを張り巡らせ、照明やコンセントを取り付けます。チームで協力して、真っ暗な空間に初めて明かりが灯った瞬間の感動は、言葉になりません！</p>
+                        <p>新しいビルや工場に、電気の「道」を作る仕事です。真っ暗な空間に初めて明かりが灯った瞬間の感動は、言葉になりません！</p>
                     </div>
                 </div>
-
                 <div class="work-card">
-                    <div class="work-photo photo-2">
-                        【写真：タブレットで図面を確認する姿】
-                    </div>
+                    <div class="work-photo">【写真：施工管理】</div>
                     <div class="work-info">
                         <h3>施工管理（現場監督）</h3>
-                        <p>現場全体の司令塔です。「安全に、工期通りに、高品質に」工事が進むよう、職人さんたちへの指示出しや、必要な材料の手配、お客様との打ち合わせを行います。技術とコミュニケーションで現場を動かす、やりがいのあるポジションです。</p>
+                        <p>現場全体の司令塔です。「安全に、工期通りに、高品質に」工事が進むよう、全体をコントロールするやりがいのあるポジションです。</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="outline">
+        <section>
             <div class="section-title">
                 <h2>募集要項</h2>
                 <p class="section-subtitle">GUIDELINES</p>
             </div>
-            
             <table>
-                <tr><th>募集職種</th><td>電気工事士・現場管理見習い（未経験大歓迎！）</td></tr>
-                <tr><th>給与</th><td>月給 250,000円 〜 450,000円<br><span style="font-size:0.8rem;color:#666;">※経験・能力を考慮の上決定します。</span></td></tr>
-                <tr><th>勤務地</th><td>本社および東京都内近郊の各現場<br><span style="font-size:0.8rem;color:#666;">（直行直帰OK！社用車貸与あり）</span></td></tr>
-                <tr><th>勤務時間</th><td>8:00 〜 17:00（休憩90分）<br><span style="font-size:0.8rem;color:#666;">※現場により変動あり。</span></td></tr>
-                <tr><th>休日・休暇</th><td>隔週休2日制（日・隔週土）、祝日、GW、夏季休暇、年末年始、有給休暇</td></tr>
-                <tr><th>福利厚生</th><td>社会保険完備、昇給年1回、賞与年2回、交通費全額支給、資格取得支援制度（受験料会社負担）、作業服貸与</td></tr>
+                <tr><th>募集職種</th><td>電気工事士・現場管理見習い</td></tr>
+                <tr><th>給与</th><td>月給 250,000円 〜 450,000円</td></tr>
+                <tr><th>勤務地</th><td>本社および各現場</td></tr>
             </table>
-
             <a href="index.html#contact" class="back-btn">この仕事に応募する！</a>
         </section>
-
     </div>
 
-    <footer>
-        &copy; 2026 DAIWA DENKI Co., Ltd. All Rights Reserved.
-    </footer>
+    <footer>&copy; 2026 DAIWA DENKI Co., Ltd.</footer>
 
 </body>
 </html>
