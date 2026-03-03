@@ -13,7 +13,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background-color: #00479d; /* 企業カラー */
+            background-color: #00479d; /* 企業カラーの青 */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -25,6 +25,7 @@
             visibility: hidden;
         }
         .loading-content { text-align: center; }
+        /* 跳ねる電気の粒（ドット） */
         .dot {
             display: inline-block;
             width: 25px; height: 25px;
@@ -82,7 +83,7 @@
         .logo-image { height: 50px; width: auto; margin-right: 15px; }
         .company-name { font-size: 24px; font-weight: bold; letter-spacing: 0.1em; }
 
-        /* PCメニュー */
+        /* PCナビゲーションメニュー */
         nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
         nav ul li a { 
             text-decoration: none; color: white; 
@@ -92,6 +93,11 @@
         .nav-jp { font-size: 15px; font-weight: bold; }
         .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.7; }
         nav ul li a:hover { color: #ffeb3b; transform: scale(1.1); }
+        nav ul li a::after {
+            content: ""; position: absolute; bottom: -8px; left: 0; width: 0; height: 2px;
+            background: #ffeb3b; transition: width 0.3s;
+        }
+        nav ul li a:hover::after { width: 100%; }
 
         /* ハンバーガーボタン (スマホ用) */
         .menu-btn {
@@ -124,11 +130,11 @@
             }
             nav.active { right: 0; }
 
-            nav ul { flex-direction: column; gap: 40px; }
+            nav ul { flex-direction: column; gap: 40px; text-align: center; }
             .nav-jp { font-size: 24px; }
             .nav-en { font-size: 14px; }
 
-            /* ×印のアニメーション */
+            /* 三本線が×に変わるアニメーション */
             .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
             .menu-btn.active span:nth-child(2) { opacity: 0; }
             .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
@@ -148,11 +154,11 @@
         .hero-content p { font-size: 1.2rem; margin-top: 15px; letter-spacing: 0.4em; }
 
         @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.2rem; letter-spacing: 0.1em; }
+            .hero-content h1 { font-size: 2.5rem; letter-spacing: 0.1em; }
             .hero-content p { font-size: 1rem; }
         }
 
-        /* スクロールダウン */
+        /* スクロールダウン矢印 */
         .scrolldown {
             position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
             display: flex; align-items: center; z-index: 2;
@@ -161,11 +167,22 @@
         .arrow::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #fff; animation: scroll-ani 2.5s infinite; }
         @keyframes scroll-ani { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
 
-        /* --- 6. コンテンツセクション --- */
+        /* --- 6. 各セクション --- */
         section { padding: 100px 8%; text-align: center; }
-        .section-title h2 { font-size: 2.2rem; color: #00479d; margin-bottom: 50px; }
+        .section-title h2 { font-size: 2.2rem; color: #00479d; margin: 0; letter-spacing: 0.2em; }
+        .section-subtitle { font-size: 0.9rem; color: #888; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 50px; }
+
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .card { background: white; padding: 40px 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-radius: 5px; border-top: 5px solid #00479d; }
+        .card { background: white; padding: 40px 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-radius: 5px; border-top: 5px solid #00479d; transition: 0.3s; }
+        .card:hover { transform: translateY(-10px); }
+
+        /* お問い合わせ誘導 */
+        #contact-cta { background: #f9f9f9; }
+        .contact-box { max-width: 600px; margin: 0 auto; padding: 40px; border: 1px solid #ddd; border-radius: 10px; background: #fff; }
+        .tel-number { font-size: 2.5rem; font-weight: bold; color: #00479d; text-decoration: none; display: block; margin: 20px 0; transition: 0.3s; }
+        .tel-number:hover { opacity: 0.7; }
+        .btn-detail { display: inline-block; padding: 12px 40px; border: 2px solid #00479d; color: #00479d; text-decoration: none; font-weight: bold; border-radius: 50px; transition: 0.3s; margin-top: 15px; }
+        .btn-detail:hover { background: #00479d; color: white; }
 
         footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
     </style>
@@ -183,7 +200,7 @@
 
     <header>
         <a href="index.html" class="logo-area">
-            <img src="miko.png" alt="ロゴ" class="logo-image">
+            <img src="miko.png" alt="大和電気 ロゴ" class="logo-image">
             <span class="company-name">大和電気株式会社</span>
         </a>
 
@@ -213,11 +230,36 @@
     </div>
 
     <section id="business">
-        <div class="section-title"><h2>事業案内</h2></div>
+        <div class="section-title">
+            <h2>事業案内</h2>
+            <p class="section-subtitle">Business</p>
+        </div>
         <div class="grid">
-            <div class="card"><h3>電気工事</h3><p>ビル、店舗、住宅のあらゆる電気設備に対応します。</p></div>
-            <div class="card"><h3>通信工事</h3><p>安定したネットワークインフラを構築します。</p></div>
-            <div class="card"><h3>保守点検</h3><p>24時間365日、安心のメンテナンス体制。</p></div>
+            <div class="card">
+                <h3>電気工事</h3>
+                <p>ビル、工場、住宅。あらゆる建物の「動脈」となる配線工事を、熟練の技術で安全に施工します。</p>
+            </div>
+            <div class="card">
+                <h3>通信設備</h3>
+                <p>ネットワークインフラの構築からWi-Fi環境の整備まで、現代社会に欠かせない通信を支えます。</p>
+            </div>
+            <div class="card">
+                <h3>保守点検</h3>
+                <p>「当たり前」を止めないために。24時間365日体制で設備の安全を見守り、迅速にメンテナンスを行います。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact-cta">
+        <div class="section-title">
+            <h2>お問い合わせ</h2>
+            <p class="section-subtitle">Contact</p>
+        </div>
+        <div class="contact-box">
+            <p>電気のことならなんでもお任せください！</p>
+            <a href="tel:03-1234-5678" class="tel-number">03-1234-5678</a>
+            <p>受付時間：平日 9:00〜18:00</p>
+            <a href="contact.html" class="btn-detail">お問い合わせフォームはこちら</a>
         </div>
     </section>
 
@@ -226,12 +268,12 @@
     </footer>
 
     <script>
-        // ローディング解除の動き
+        // ローディング画面を1.5秒後に消す
         window.addEventListener('load', function() {
             setTimeout(function() {
                 const loader = document.getElementById('loading');
                 loader.classList.add('loaded');
-            }, 1500); // 1.5秒しっかり見せる
+            }, 1500);
         });
 
         // ハンバーガーメニューの開閉制御
@@ -243,7 +285,7 @@
             navMenu.classList.toggle('active');
         });
 
-        // メニュー内リンクをクリックした時にメニューを閉じる
+        // スマホメニュー内のリンクを押したときにメニューを閉じる
         function closeMenu() {
             menuBtn.classList.remove('active');
             navMenu.classList.remove('active');
