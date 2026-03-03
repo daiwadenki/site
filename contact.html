@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ | 大和電気株式会社</title>
+    
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <style>
+        :root {
+            --main-blue: #00479d;
+            --hover-yellow: #ffeb3b;
+            --text-color: #333;
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            color: var(--text-color);
+            background-color: #fcfcfc;
+        }
+
+        /* --- ヘッダー（全ページ共通） --- */
+        header {
+            position: fixed; top: 0; width: 100%;
+            padding: 20px 60px; box-sizing: border-box; z-index: 100;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .logo-area { display: flex; align-items: center; text-decoration: none; color: white; }
+        .logo-image { height: 55px; width: auto; margin-right: 20px; }
+        .company-name { font-size: 26px; font-weight: bold; letter-spacing: 0.1em; }
+
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 40px; }
+        nav ul li a { 
+            text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; 
+            transition: 0.3s; position: relative; 
+        }
+        .nav-jp { font-size: 16px; font-weight: bold; }
+        .nav-en { font-size: 10px; margin-top: 4px; opacity: 0.8; }
+        nav ul li a:hover { transform: scale(1.15); color: var(--hover-yellow); }
+        nav ul li a::after { 
+            content: ""; position: absolute; bottom: -8px; left: 0; width: 0; height: 2px; 
+            background: var(--hover-yellow); transition: width 0.3s; 
+        }
+        nav ul li a:hover::after { width: 100%; }
+
+        /* --- メインコンテンツ --- */
+        .container { 
+            max-width: 800px; 
+            margin: 160px auto 80px; 
+            padding: 60px 40px; 
+            background: white; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+            border-radius: 8px; 
+            text-align: center;
+        }
+
+        .section-title { margin-bottom: 40px; }
+        .section-title h1 { font-size: 2.2rem; color: var(--main-blue); margin: 0; letter-spacing: 0.2em; }
+        .section-subtitle { font-size: 0.9rem; color: #888; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.3em; }
+
+        /* メッセージエリア */
+        .contact-message {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--main-blue);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        .contact-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 50px;
+        }
+
+        /* 電話番号エリア */
+        .tel-box {
+            background: #f0f4f9;
+            padding: 40px;
+            border-radius: 12px;
+            display: inline-block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .tel-label { font-size: 1rem; color: #555; margin-bottom: 10px; }
+        .tel-number { 
+            font-size: 3rem; 
+            font-weight: bold; 
+            color: var(--main-blue); 
+            text-decoration: none; 
+            display: block;
+            margin: 15px 0;
+            transition: 0.3s;
+        }
+        .tel-number:hover { opacity: 0.7; transform: scale(1.02); }
+        .tel-info { font-size: 0.9rem; color: #888; }
+
+        /* ボタン */
+        .back-home {
+            display: inline-block;
+            margin-top: 50px;
+            padding: 15px 40px;
+            border: 2px solid var(--main-blue);
+            color: var(--main-blue);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+        .back-home:hover {
+            background: var(--main-blue);
+            color: white;
+        }
+
+        footer { background: #222; color: #fff; padding: 30px; text-align: center; font-size: 0.8rem; }
+
+        @media (max-width: 900px) {
+            header { padding: 20px; flex-direction: column; }
+            nav ul { gap: 15px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
+            .container { margin-top: 240px; padding: 40px 20px; width: 90%; }
+            .tel-number { font-size: 2rem; }
+            .company-name { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-area">
+            <img src="miko.png" alt="大和電気株式会社 ロゴ" class="logo-image">
+            <span class="company-name">大和電気株式会社</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html#business"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
+                <li><a href="index.html#works"><span class="nav-jp">実績紹介</span><span class="nav-en">Works</span></a></li>
+                <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
+                <li><a href="contact.html"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
+                <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="section-title">
+            <h1>お問い合わせ</h1>
+            <p class="section-subtitle">CONTACT</p>
+        </div>
+
+        <p class="contact-message">
+            電気のことならなんでもお任せください！
+        </p>
+        <p class="contact-description">
+            オフィス・工場の設備工事から、急な電気トラブルのメンテナンスまで、<br>
+            プロフェッショナルの技術スタッフが迅速に対応いたします。<br>
+            まずはお気軽にお電話にてご相談ください。
+        </p>
+
+        <div class="tel-box">
+            <p class="tel-label">お電話でのご相談・ご依頼はこちら</p>
+            <a href="tel:03-1234-5678" class="tel-number">03-1234-5678</a>
+            <p class="tel-info">受付時間：平日 9:00 〜 18:00</p>
+        </div>
+
+        <a href="index.html" class="back-home">トップページへ戻る</a>
+    </div>
+
+    <footer>&copy; 2026 DAIWA DENKI Co., Ltd. All Rights Reserved.</footer>
+
+</body>
+</html>
