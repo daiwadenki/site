@@ -6,71 +6,33 @@
     <title>会社概要 | 大和電気株式会社</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
-        :root {
-            --main-blue: #00479d;
-            --hover-yellow: #ffeb3b;
-            --text-color: #333;
-        }
-
-        body, html {
-            margin: 0; padding: 0; width: 100%;
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            color: var(--text-color);
-            background-color: #fcfcfc;
-        }
-
-        /* ヘッダー（共通デザイン） */
+        :root { --main-blue: #00479d; --hover-yellow: #ffeb3b; }
+        body, html { margin: 0; padding: 0; width: 100%; font-family: sans-serif; background-color: #fcfcfc; }
         header {
-            position: fixed; top: 0; width: 100%;
-            padding: 20px 60px; box-sizing: border-box; z-index: 100;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex; justify-content: space-between; align-items: center;
-            backdrop-filter: blur(5px);
+            position: fixed; top: 0; width: 100%; padding: 20px 60px; box-sizing: border-box; z-index: 100;
+            background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(5px);
         }
         .logo-area { display: flex; align-items: center; text-decoration: none; color: white; }
         .logo-image { height: 55px; width: auto; margin-right: 20px; }
-        .company-name { font-size: 26px; font-weight: bold; letter-spacing: 0.1em; }
+        .company-name { font-size: 26px; font-weight: bold; color: white; }
         nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 40px; }
         nav ul li a { text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; transition: 0.3s; position: relative; }
         .nav-jp { font-size: 16px; font-weight: bold; }
-        .nav-en { font-size: 10px; margin-top: 4px; opacity: 0.8; }
         nav ul li a:hover { transform: scale(1.15); color: var(--hover-yellow); }
-        nav ul li a::after { content: ""; position: absolute; bottom: -8px; left: 0; width: 0; height: 2px; background: var(--hover-yellow); transition: width 0.3s; }
-        nav ul li a:hover::after { width: 100%; }
 
-        /* メインコンテンツ */
         .container { max-width: 900px; margin: 160px auto 80px; padding: 40px; background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border-radius: 8px; }
-        .section-title { text-align: center; margin-bottom: 50px; }
-        .section-title h1 { font-size: 2.2rem; color: var(--main-blue); margin: 0; letter-spacing: 0.2em; }
-        .section-subtitle { font-size: 0.9rem; color: #888; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.3em; }
-
-        /* 会社概要テーブル */
-        .company-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .company-table { width: 100%; border-collapse: collapse; }
         .company-table th, .company-table td { padding: 25px; border-bottom: 1px solid #eee; text-align: left; }
-        .company-table th { width: 30%; color: var(--main-blue); font-weight: bold; background: #f9f9f9; }
-        .company-table td { line-height: 1.8; }
+        .company-table th { width: 30%; color: var(--main-blue); background: #f9f9f9; }
 
-        /* 企業理念 */
-        .philosophy { margin-top: 60px; padding: 40px; background: #00479d; color: white; border-radius: 8px; text-align: center; }
-        .philosophy h2 { margin-top: 0; font-size: 1.5rem; letter-spacing: 0.1em; }
-        .philosophy p { font-size: 1.1rem; line-height: 2; margin-bottom: 0; }
-
-        footer { background: #222; color: #fff; padding: 30px; text-align: center; font-size: 0.8rem; }
-
-        @media (max-width: 900px) {
-            header { padding: 20px; flex-direction: column; }
-            nav ul { gap: 15px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
-            .container { margin-top: 240px; padding: 20px; width: 90%; }
-            .company-table th, .company-table td { display: block; width: 100%; box-sizing: border-box; }
-            .company-table th { border-bottom: none; padding-bottom: 5px; }
-        }
+        footer { background: #222; color: #fff; padding: 30px; text-align: center; }
+        @media (max-width: 900px) { header { flex-direction: column; padding: 15px; } .container { margin-top: 240px; } }
     </style>
 </head>
 <body>
-
     <header>
         <a href="index.html" class="logo-area">
-            <img src="miko.png" alt="大和電気株式会社 ロゴ" class="logo-image">
+            <img src="miko.png" alt="ロゴ" class="logo-image">
             <span class="company-name">大和電気株式会社</span>
         </a>
         <nav>
@@ -78,62 +40,19 @@
                 <li><a href="index.html#business"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
                 <li><a href="index.html#works"><span class="nav-jp">実績紹介</span><span class="nav-en">Works</span></a></li>
                 <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
-                <li><a href="index.html#contact"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
+                <li><a href="contact.html"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
                 <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
             </ul>
         </nav>
     </header>
-
     <div class="container">
-        <div class="section-title">
-            <h1>会社概要</h1>
-            <p class="section-subtitle">COMPANY INFO</p>
-        </div>
-
+        <h1 style="text-align: center; color: #00479d;">会社概要</h1>
         <table class="company-table">
-            <tr>
-                <th>会社名</th>
-                <td>大和電気株式会社（DAIWA DENKI Co., Ltd.）</td>
-            </tr>
-            <tr>
-                <th>代表者</th>
-                <td>代表取締役　山田 太郎</td>
-            </tr>
-            <tr>
-                <th>所在地</th>
-                <td>〒000-0000<br>東京都〇〇区△△ 1-2-3 大和ビル 4F</td>
-            </tr>
-            <tr>
-                <th>設立</th>
-                <td>1990年（平成2年）4月1日</td>
-            </tr>
-            <tr>
-                <th>資本金</th>
-                <td>2,000万円</td>
-            </tr>
-            <tr>
-                <th>事業内容</th>
-                <td>
-                    ・電気設備工事の設計および施工<br>
-                    ・通信設備、LAN構築工事<br>
-                    ・照明設備のLED化コンサルティング<br>
-                    ・保守点検・メンテナンス業務
-                </td>
-            </tr>
-            <tr>
-                <th>主要取引銀行</th>
-                <td>〇〇銀行、△△信用金庫</td>
-            </tr>
+            <tr><th>会社名</th><td>大和電気株式会社</td></tr>
+            <tr><th>代表者</th><td>山田 太郎</td></tr>
+            <tr><th>事業内容</th><td>電気設備工事・通信工事</td></tr>
         </table>
-
-        <div class="philosophy">
-            <h2>企業理念</h2>
-            <p>「確かな技術で、街に明かりを、人に笑顔を。」<br>
-            私たちは電気のプロフェッショナルとして、安全かつ高品質な施工を通じ、持続可能な社会の発展に貢献します。</p>
-        </div>
     </div>
-
-    <footer>&copy; 2026 DAIWA DENKI Co., Ltd. All Rights Reserved.</footer>
-
+    <footer>&copy; 2026 DAIWA DENKI</footer>
 </body>
 </html>
