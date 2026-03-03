@@ -8,213 +8,111 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <style>
-        /* --- 1. ローディング画面 (画面いっぱいのポップな演出) --- */
+        /* --- 1. ローディング画面 --- */
         #loading {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: #00479d; /* 企業カラーの青 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #00479d; display: flex; justify-content: center; align-items: center; z-index: 9999;
             transition: opacity 0.8s ease, visibility 0.8s;
         }
-        #loading.loaded {
-            opacity: 0;
-            visibility: hidden;
-        }
+        #loading.loaded { opacity: 0; visibility: hidden; }
         .loading-content { text-align: center; }
-        /* 跳ねる電気の粒（ドット） */
-        .dot {
-            display: inline-block;
-            width: 25px; height: 25px;
-            margin: 0 10px;
-            background-color: #ffeb3b; /* 電気の黄色 */
-            border-radius: 50%;
-            animation: bounce 0.6s infinite alternate;
-        }
+        .dot { display: inline-block; width: 25px; height: 25px; margin: 0 10px; background-color: #ffeb3b; border-radius: 50%; animation: bounce 0.6s infinite alternate; }
         .dot:nth-child(2) { animation-delay: 0.2s; }
         .dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-30px); scale: 1.1; }
-        }
-        .loading-text {
-            margin-top: 30px;
-            color: white;
-            font-weight: bold;
-            letter-spacing: 0.4em;
-            font-size: 14px;
-            animation: pulse 1.5s infinite;
-        }
+        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-30px); scale: 1.1; } }
+        .loading-text { margin-top: 30px; color: white; font-weight: bold; letter-spacing: 0.4em; font-size: 14px; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
         /* --- 2. 全体設定 --- */
         body, html {
             margin: 0; padding: 0; width: 100%;
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            scroll-behavior: smooth;
-            color: #333;
-            overflow-x: hidden;
+            scroll-behavior: smooth; color: #333; overflow-x: hidden;
         }
 
-        /* --- 3. ヘッダー (PC/スマホ可変) --- */
+        /* --- 3. ヘッダー --- */
         header {
-            position: fixed;
-            top: 0; width: 100%;
-            padding: 15px 40px;
-            box-sizing: border-box;
-            z-index: 100;
-            background: rgba(0, 0, 0, 0.7); 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(8px);
+            position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
+            background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
         }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: white;
-            z-index: 110;
-        }
+        .logo-area { display: flex; align-items: center; text-decoration: none; color: white; z-index: 110; }
         .logo-image { height: 50px; width: auto; margin-right: 15px; }
         .company-name { font-size: 24px; font-weight: bold; letter-spacing: 0.1em; }
 
-        /* PCナビゲーションメニュー */
+        /* PCメニュー */
         nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
-        nav ul li a { 
-            text-decoration: none; color: white; 
-            display: flex; flex-direction: column; align-items: center; 
-            transition: 0.3s; position: relative;
-        }
+        nav ul li a { text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; transition: 0.3s; position: relative; }
         .nav-jp { font-size: 15px; font-weight: bold; }
         .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.7; }
         nav ul li a:hover { color: #ffeb3b; transform: scale(1.1); }
-        nav ul li a::after {
-            content: ""; position: absolute; bottom: -8px; left: 0; width: 0; height: 2px;
-            background: #ffeb3b; transition: width 0.3s;
-        }
-        nav ul li a:hover::after { width: 100%; }
 
-        /* ハンバーガーボタン (スマホ用) */
-        .menu-btn {
-            display: none; /* PCでは隠す */
-            cursor: pointer;
-            z-index: 110;
-            background: none; border: none;
-            flex-direction: column; gap: 6px; padding: 10px;
-        }
-        .menu-btn span {
-            display: block; width: 30px; height: 2px;
-            background: white; transition: 0.3s;
-        }
+        /* スマホ用ボタン */
+        .menu-btn { display: none; cursor: pointer; z-index: 110; background: none; border: none; flex-direction: column; gap: 6px; padding: 10px; }
+        .menu-btn span { display: block; width: 30px; height: 2px; background: white; transition: 0.3s; }
 
-        /* --- 4. スマホ版の表示設定 (レスポンシブ) --- */
         @media (max-width: 1024px) {
             header { padding: 15px 20px; }
             .company-name { font-size: 18px; }
-            .logo-image { height: 40px; }
-
-            .menu-btn { display: flex; } /* 三本線を表示 */
-
-            nav {
-                position: fixed; top: 0; right: -100%;
-                width: 100%; height: 100vh;
-                background: rgba(0, 71, 157, 0.98); /* 全画面を企業の青に */
-                transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-                display: flex; align-items: center; justify-content: center;
-                z-index: 105;
-            }
+            .menu-btn { display: flex; }
+            nav { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background: rgba(0, 71, 157, 0.98); transition: 0.5s; display: flex; align-items: center; justify-content: center; z-index: 105; }
             nav.active { right: 0; }
-
             nav ul { flex-direction: column; gap: 40px; text-align: center; }
-            .nav-jp { font-size: 24px; }
-            .nav-en { font-size: 14px; }
-
-            /* 三本線が×に変わるアニメーション */
+            .nav-jp { font-size: 22px; }
             .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
             .menu-btn.active span:nth-child(2) { opacity: 0; }
             .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        /* --- 5. メインビジュアル --- */
+        /* --- 4. メインビジュアル --- */
         .hero {
-            position: relative;
-            width: 100%; height: 100vh;
+            position: relative; width: 100%; height: 100vh;
             background: url('main_haikei.jpg') center/cover no-repeat;
-            display: flex; justify-content: center; align-items: center;
-            color: white; text-align: center;
+            display: flex; justify-content: center; align-items: center; color: white; text-align: center;
         }
         .hero::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); }
         .hero-content { position: relative; z-index: 1; }
-        .hero-content h1 { font-size: 4.5rem; margin: 0; letter-spacing: 0.3em; text-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .hero-content h1 { font-size: 4.5rem; margin: 0; letter-spacing: 0.3em; }
         .hero-content p { font-size: 1.2rem; margin-top: 15px; letter-spacing: 0.4em; }
+        @media (max-width: 768px) { .hero-content h1 { font-size: 2.2rem; } }
 
-        @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.5rem; letter-spacing: 0.1em; }
-            .hero-content p { font-size: 1rem; }
-        }
-
-        /* スクロールダウン矢印 */
-        .scrolldown {
-            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            display: flex; align-items: center; z-index: 2;
-        }
-        .arrow { width: 1px; height: 80px; background: rgba(255,255,255,0.5); position: relative; overflow: hidden; }
-        .arrow::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #fff; animation: scroll-ani 2.5s infinite; }
-        @keyframes scroll-ani { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
-
-        /* --- 6. 各セクション --- */
+        /* --- 5. セクション共通 --- */
         section { padding: 100px 8%; text-align: center; }
         .section-title h2 { font-size: 2.2rem; color: #00479d; margin: 0; letter-spacing: 0.2em; }
         .section-subtitle { font-size: 0.9rem; color: #888; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 50px; }
-
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .card { background: white; padding: 40px 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-radius: 5px; border-top: 5px solid #00479d; transition: 0.3s; }
-        .card:hover { transform: translateY(-10px); }
+        .btn-link { display: inline-block; margin-top: 30px; padding: 12px 40px; border: 2px solid #00479d; color: #00479d; text-decoration: none; font-weight: bold; border-radius: 50px; transition: 0.3s; }
+        .btn-link:hover { background: #00479d; color: white; }
 
-        /* お問い合わせ誘導 */
-        #contact-cta { background: #f9f9f9; }
-        .contact-box { max-width: 600px; margin: 0 auto; padding: 40px; border: 1px solid #ddd; border-radius: 10px; background: #fff; }
-        .tel-number { font-size: 2.5rem; font-weight: bold; color: #00479d; text-decoration: none; display: block; margin: 20px 0; transition: 0.3s; }
-        .tel-number:hover { opacity: 0.7; }
-        .btn-detail { display: inline-block; padding: 12px 40px; border: 2px solid #00479d; color: #00479d; text-decoration: none; font-weight: bold; border-radius: 50px; transition: 0.3s; margin-top: 15px; }
-        .btn-detail:hover { background: #00479d; color: white; }
+        /* --- 6. 各セクション固有 --- */
+        #about { background: #fff; }
+        #business { background: #f9f9f9; }
+        #works { background: #fff; }
+        #contact-cta { background: #f0f4f9; }
+        #recruit-cta { background: #00479d; color: white; }
+        #recruit-cta h2 { color: white; }
+
+        .tel-number { font-size: 2.5rem; font-weight: bold; color: #00479d; text-decoration: none; display: block; margin: 20px 0; }
+        @media (max-width: 768px) { .tel-number { font-size: 1.8rem; } }
 
         footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
     </style>
 </head>
 <body>
 
-    <div id="loading">
-        <div class="loading-content">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <p class="loading-text">CONNECTING...</p>
-        </div>
-    </div>
+    <div id="loading"><div class="loading-content"><div class="dot"></div><div class="dot"></div><div class="dot"></div><p class="loading-text">CONNECTING...</p></div></div>
 
     <header>
         <a href="index.html" class="logo-area">
-            <img src="miko.png" alt="大和電気 ロゴ" class="logo-image">
+            <img src="miko.png" alt="ロゴ" class="logo-image">
             <span class="company-name">大和電気株式会社</span>
         </a>
-
-        <button class="menu-btn" id="menuBtn">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
+        <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
         <nav id="navMenu">
             <ul>
+                <li><a href="#about" onclick="closeMenu()"><span class="nav-jp">会社概要</span><span class="nav-en">About</span></a></li>
                 <li><a href="#business" onclick="closeMenu()"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
                 <li><a href="#works" onclick="closeMenu()"><span class="nav-jp">実績紹介</span><span class="nav-en">Works</span></a></li>
-                <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
                 <li><a href="contact.html"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
                 <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
             </ul>
@@ -222,70 +120,63 @@
     </header>
 
     <div class="hero">
-        <div class="hero-content">
-            <h1>DAIWA DENKI</h1>
-            <p>光り輝く未来を、電気の技術で。</p>
-        </div>
-        <div class="scrolldown"><div class="arrow"></div></div>
+        <div class="hero-content"><h1>DAIWA DENKI</h1><p>光り輝く未来を、電気の技術で。</p></div>
     </div>
 
-    <section id="business">
-        <div class="section-title">
-            <h2>事業案内</h2>
-            <p class="section-subtitle">Business</p>
+    <section id="about">
+        <div class="section-title"><h2>会社概要</h2><p class="section-subtitle">About Us</p></div>
+        <div style="max-width: 800px; margin: 0 auto; line-height: 2; text-align: left;">
+            <p>大和電気株式会社は、創業以来、電気設備工事を通じて地域のインフラを支え続けてきました。「安全・確実・迅速」をモットーに、信頼される技術集団を目指しています。</p>
+            <p>確かな実績と最新の技術を融合させ、お客様の多様なニーズに柔軟にお応えいたします。</p>
         </div>
+        <a href="company.html" class="btn-link">詳しく見る</a>
+    </section>
+
+    <section id="business">
+        <div class="section-title"><h2>事業案内</h2><p class="section-subtitle">Our Business</p></div>
         <div class="grid">
-            <div class="card">
-                <h3>電気工事</h3>
-                <p>ビル、工場、住宅。あらゆる建物の「動脈」となる配線工事を、熟練の技術で安全に施工します。</p>
-            </div>
-            <div class="card">
-                <h3>通信設備</h3>
-                <p>ネットワークインフラの構築からWi-Fi環境の整備まで、現代社会に欠かせない通信を支えます。</p>
-            </div>
-            <div class="card">
-                <h3>保守点検</h3>
-                <p>「当たり前」を止めないために。24時間365日体制で設備の安全を見守り、迅速にメンテナンスを行います。</p>
-            </div>
+            <div class="card"><h3>一般電気工事</h3><p>戸建住宅からビル・マンションの配線工事まで、幅広く対応いたします。</p></div>
+            <div class="card"><h3>産業用設備</h3><p>工場の生産ラインや受変電設備の設計・施工・保守を行います。</p></div>
+            <div class="card"><h3>省エネソリューション</h3><p>LED照明への交換や太陽光発電システムの設置などをご提案します。</p></div>
+        </div>
+    </section>
+
+    <section id="works">
+        <div class="section-title"><h2>実績紹介</h2><p class="section-subtitle">Our Works</p></div>
+        <div class="grid">
+            <div class="card"><h3>〇〇商業施設</h3><p>照明設備全般および空調制御システムの施工を担当しました。</p></div>
+            <div class="card"><h3>△△マンション</h3><p>新築時の電気幹線工事および各戸配線工事を施工しました。</p></div>
+            <div class="card"><h3>公共道路照明</h3><p>自治体より委託を受け、主要道路のLED街灯設置を行いました。</p></div>
         </div>
     </section>
 
     <section id="contact-cta">
-        <div class="section-title">
-            <h2>お問い合わせ</h2>
-            <p class="section-subtitle">Contact</p>
-        </div>
-        <div class="contact-box">
-            <p>電気のことならなんでもお任せください！</p>
+        <div class="section-title"><h2>お問い合わせ</h2><p class="section-subtitle">Contact</p></div>
+        <div style="background:white; padding:40px; border-radius:10px; max-width:600px; margin:0 auto;">
+            <p>電気のトラブルや工事のご相談は、お気軽にお電話ください！</p>
             <a href="tel:03-1234-5678" class="tel-number">03-1234-5678</a>
-            <p>受付時間：平日 9:00〜18:00</p>
-            <a href="contact.html" class="btn-detail">お問い合わせフォームはこちら</a>
+            <a href="contact.html" class="btn-link">お問い合わせフォーム</a>
         </div>
     </section>
 
-    <footer>
-        &copy; 2026 大和電気株式会社 All Rights Reserved.
-    </footer>
+    <section id="recruit-cta">
+        <div class="section-title"><h2>採用情報</h2><p class="section-subtitle" style="color:rgba(255,255,255,0.7)">Recruit</p></div>
+        <p>技術を磨き、共に未来を照らす仲間を募集しています。未経験者も大歓迎！</p>
+        <a href="recruit.html" class="btn-link" style="border-color:white; color:white;">採用情報を詳しく見る</a>
+    </section>
+
+    <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
 
     <script>
-        // ローディング画面を1.5秒後に消す
         window.addEventListener('load', function() {
-            setTimeout(function() {
-                const loader = document.getElementById('loading');
-                loader.classList.add('loaded');
-            }, 1500);
+            setTimeout(function() { document.getElementById('loading').classList.add('loaded'); }, 1500);
         });
-
-        // ハンバーガーメニューの開閉制御
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
-
         menuBtn.addEventListener('click', () => {
             menuBtn.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-
-        // スマホメニュー内のリンクを押したときにメニューを閉じる
         function closeMenu() {
             menuBtn.classList.remove('active');
             navMenu.classList.remove('active');
