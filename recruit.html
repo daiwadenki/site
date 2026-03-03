@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>採用情報 | 大和電気株式会社</title>
+    
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <style>
         :root {
             --main-blue: #00479d;
             --accent-pink: #ff4081;
+            --hover-yellow: #ffeb3b;
             --text-color: #333;
         }
 
@@ -31,50 +33,91 @@
             overflow: hidden;
         }
 
-        /* 動く図形たちの共通設定 */
         .shape {
             position: absolute;
-            background: rgba(0, 71, 157, 0.03); /* 非常に薄い青 */
+            background: rgba(0, 71, 157, 0.03);
             border: 1px solid rgba(0, 71, 157, 0.05);
             animation: move 20s linear infinite;
         }
-
-        .shape-sq { width: 100px; height: 100px; top: 10%; left: 10%; }
-        .shape-ci { width: 150px; height: 150px; border-radius: 50%; top: 60%; left: 80%; }
+        .shape-sq { width: 100px; height: 100px; }
+        .shape-ci { width: 150px; height: 150px; border-radius: 50%; }
         .shape-tri { 
             width: 0; height: 0; 
             border-left: 50px solid transparent; border-right: 50px solid transparent; 
             border-bottom: 86px solid rgba(0, 71, 157, 0.03);
-            background: none; border-top: none;
-            top: 30%; left: 70%; 
         }
 
         @keyframes move {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
             10% { opacity: 1; }
             90% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+            100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
         }
 
-        /* ヘッダー */
+        /* --- ヘッダー（index.htmlと完全に統一） --- */
         header {
-            position: fixed; top: 0; width: 100%;
-            padding: 15px 40px; box-sizing: border-box; z-index: 100;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex; justify-content: space-between; align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 60px;
+            box-sizing: border-box;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.7); /* 読みやすさのため少しだけ暗めに */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(5px);
         }
 
-        .logo-area { display: flex; align-items: center; text-decoration: none; color: white; }
-        .logo-image { height: 45px; width: auto; margin-right: 15px; }
-        .company-name { font-size: 22px; font-weight: bold; letter-spacing: 0.1em; }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            z-index: 101;
+        }
 
-        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 25px; }
-        nav ul li a { text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; }
-        .nav-jp { font-size: 13px; font-weight: bold; }
-        .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.8; }
+        .logo-image { height: 55px; width: auto; margin-right: 20px; }
+        .company-name { font-size: 26px; font-weight: bold; letter-spacing: 0.1em; }
 
-        /* コンテンツ */
-        .container { max-width: 1000px; margin: 120px auto 60px; padding: 20px; position: relative; }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 40px; }
+        nav ul li a { 
+            text-decoration: none; 
+            color: white; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-jp { font-size: 16px; font-weight: bold; }
+        .nav-en { font-size: 10px; margin-top: 4px; opacity: 0.8; letter-spacing: 0.1em; }
+
+        /* ホバーアニメーション */
+        nav ul li a:hover {
+            transform: scale(1.15);
+            color: var(--hover-yellow);
+        }
+        nav ul li a::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--hover-yellow);
+            transition: width 0.3s;
+        }
+        nav ul li a:hover::after { width: 100%; }
+
+        /* --- コンテンツエリア --- */
+        .container {
+            max-width: 1000px;
+            margin: 150px auto 60px; /* ヘッダーが大きくなった分、余白を広く */
+            padding: 20px;
+            position: relative;
+        }
 
         section {
             margin-bottom: 80px;
@@ -93,14 +136,14 @@
         .highlight { color: var(--main-blue); font-weight: bold; }
 
         .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
-        .work-card { background: #fff; border: 1px solid #eee; overflow: hidden; }
+        .work-card { background: #fff; border: 1px solid #eee; overflow: hidden; border-radius: 4px; }
         .work-photo { width: 100%; height: 220px; background-color: #ddd; display: flex; align-items: center; justify-content: center; color: #888; font-size: 0.8rem; }
         .work-info { padding: 25px; }
-        .work-info h3 { color: var(--main-blue); margin-top: 0; }
+        .work-info h3 { color: var(--main-blue); margin-top: 0; margin-bottom: 15px; }
 
         table { width: 100%; border-collapse: separate; border-spacing: 0 15px; }
-        th { background: #f0f4f9; color: var(--main-blue); width: 30%; padding: 20px; text-align: left; }
-        td { background: #fff; border: 1px solid #eee; padding: 20px; border-left: none; }
+        th { background: #f0f4f9; color: var(--main-blue); width: 30%; padding: 20px; text-align: left; border-radius: 4px 0 0 4px; }
+        td { background: #fff; border: 1px solid #eee; padding: 20px; border-left: none; border-radius: 0 4px 4px 0; }
 
         .back-btn {
             display: block; width: fit-content; margin: 60px auto 0; padding: 18px 60px;
@@ -111,22 +154,24 @@
 
         footer { background: #222; color: #fff; padding: 30px; text-align: center; font-size: 0.8rem; }
 
-        @media (max-width: 768px) {
-            header { flex-direction: column; padding: 10px; }
-            nav ul { gap: 10px; margin-top: 10px; }
-            .container { margin-top: 160px; }
-            section { padding: 30px; }
+        @media (max-width: 900px) {
+            header { padding: 20px; flex-direction: column; }
+            nav ul { gap: 20px; margin-top: 20px; }
+            .company-name { font-size: 20px; }
+            .container { margin-top: 220px; }
             th, td { display: block; width: 100%; }
+            th { border-radius: 4px 4px 0 0; }
+            td { border-radius: 0 0 4px 4px; border-left: 1px solid #eee; border-top: none; }
         }
     </style>
 </head>
 <body>
 
     <div class="bg-animation">
-        <div class="shape shape-sq" style="animation-delay: 0s; left: 5%;"></div>
-        <div class="shape shape-ci" style="animation-delay: 5s; left: 80%;"></div>
-        <div class="shape shape-tri" style="animation-delay: 10s; left: 40%;"></div>
-        <div class="shape shape-sq" style="animation-delay: 15s; left: 60%; width: 50px; height: 50px;"></div>
+        <div class="shape shape-sq" style="animation-delay: 0s; left: 10%;"></div>
+        <div class="shape shape-ci" style="animation-delay: 5s; left: 75%;"></div>
+        <div class="shape shape-tri" style="animation-delay: 10s; left: 45%;"></div>
+        <div class="shape shape-sq" style="animation-delay: 15s; left: 85%; width: 60px; height: 60px;"></div>
     </div>
 
     <header>
@@ -152,7 +197,8 @@
             </div>
             <p class="message-text">
                 電気は、街の血液です。私たちがとまれば、街の明かりが消え、スマホが充電できず、電車も動きません。<br><br>
-                大和電気株式会社は、そんな<span class="highlight">「当たり前の日常」を裏側で支える、プロフェッショナル集団</span>です。
+                大和電気株式会社は、そんな<span class="highlight">「当たり前の日常」を裏側で支える、プロフェッショナル集団</span>です。<br><br>
+                私たちと一緒に、これからの日本を、もっと明るく、もっと面白い街にするために、そのチカラ、貸してください！
             </p>
         </section>
 
@@ -166,7 +212,7 @@
                     <div class="work-photo">【写真：現場施工】</div>
                     <div class="work-info">
                         <h3>現場施工（電気工事）</h3>
-                        <p>新しいビルや工場に、電気の「道」を作る仕事です。真っ暗な空間に初めて明かりが灯った瞬間の感動は、言葉になりません！</p>
+                        <p>新しいビルや工場に、電気の「道」を作る仕事です。図面を見ながらケーブルを張り巡らせ、照明などを取り付けます。初めて明かりが灯った瞬間の感動は格別です！</p>
                     </div>
                 </div>
                 <div class="work-card">
@@ -185,15 +231,16 @@
                 <p class="section-subtitle">GUIDELINES</p>
             </div>
             <table>
-                <tr><th>募集職種</th><td>電気工事士・現場管理見習い</td></tr>
+                <tr><th>募集職種</th><td>電気工事士・現場管理見習い（未経験大歓迎！）</td></tr>
                 <tr><th>給与</th><td>月給 250,000円 〜 450,000円</td></tr>
-                <tr><th>勤務地</th><td>本社および各現場</td></tr>
+                <tr><th>勤務地</th><td>本社および各現場（直行直帰OK）</td></tr>
+                <tr><th>休日・休暇</th><td>隔週休2日制（日・隔週土）、祝日、GW、夏季、年末年始</td></tr>
             </table>
             <a href="index.html#contact" class="back-btn">この仕事に応募する！</a>
         </section>
     </div>
 
-    <footer>&copy; 2026 DAIWA DENKI Co., Ltd.</footer>
+    <footer>&copy; 2026 DAIWA DENKI Co., Ltd. All Rights Reserved.</footer>
 
 </body>
 </html>
