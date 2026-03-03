@@ -54,7 +54,7 @@
             100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
         }
 
-        /* --- ヘッダー（index.htmlと完全に統一） --- */
+        /* --- ヘッダー（index.html / company.html と完全に統一） --- */
         header {
             position: fixed;
             top: 0;
@@ -62,7 +62,7 @@
             padding: 20px 60px;
             box-sizing: border-box;
             z-index: 100;
-            background: rgba(0, 0, 0, 0.7); /* 読みやすさのため少しだけ暗めに */
+            background: rgba(0, 0, 0, 0.7); 
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -114,7 +114,7 @@
         /* --- コンテンツエリア --- */
         .container {
             max-width: 1000px;
-            margin: 150px auto 60px; /* ヘッダーが大きくなった分、余白を広く */
+            margin: 150px auto 60px; 
             padding: 20px;
             position: relative;
         }
@@ -155,13 +155,11 @@
         footer { background: #222; color: #fff; padding: 30px; text-align: center; font-size: 0.8rem; }
 
         @media (max-width: 900px) {
-            header { padding: 20px; flex-direction: column; }
-            nav ul { gap: 20px; margin-top: 20px; }
+            header { padding: 15px; flex-direction: column; }
+            nav ul { gap: 15px; margin-top: 15px; flex-wrap: wrap; justify-content: center; }
             .company-name { font-size: 20px; }
             .container { margin-top: 220px; }
             th, td { display: block; width: 100%; }
-            th { border-radius: 4px 4px 0 0; }
-            td { border-radius: 0 0 4px 4px; border-left: 1px solid #eee; border-top: none; }
         }
     </style>
 </head>
@@ -183,6 +181,7 @@
             <ul>
                 <li><a href="index.html#business"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
                 <li><a href="index.html#works"><span class="nav-jp">実績紹介</span><span class="nav-en">Works</span></a></li>
+                <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
                 <li><a href="index.html#contact"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
                 <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
             </ul>
