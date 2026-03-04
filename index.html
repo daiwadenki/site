@@ -7,29 +7,15 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <style>
-        /* --- 1. ローディング画面 --- */
-        #loading {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #00479d; display: flex; justify-content: center; align-items: center; z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s;
-        }
-        #loading.loaded { opacity: 0; visibility: hidden; }
-        .loading-content { text-align: center; }
-        .dot { display: inline-block; width: 25px; height: 25px; margin: 0 10px; background-color: #ffeb3b; border-radius: 50%; animation: bounce 0.6s infinite alternate; }
-        .dot:nth-child(2) { animation-delay: 0.2s; }
-        .dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-30px); scale: 1.1; } }
-        .loading-text { margin-top: 30px; color: white; font-weight: bold; letter-spacing: 0.4em; font-size: 14px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-
-        /* --- 2. 全体設定 --- */
+        /* --- 1. 全体設定 --- */
         body, html {
             margin: 0; padding: 0; width: 100%;
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             scroll-behavior: smooth; color: #333; overflow-x: hidden;
+            background-color: #fff;
         }
 
-        /* --- 3. ヘッダー（ホバーアニメーション追加） --- */
+        /* --- 2. ヘッダー（完成版メニュー・リンク修正済み） --- */
         header {
             position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
             background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
@@ -38,47 +24,32 @@
         .logo-image { height: 50px; width: auto; margin-right: 15px; }
         .company-name { font-size: 24px; font-weight: bold; letter-spacing: 0.1em; }
 
-        /* ナビゲーション基本 */
         nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
         nav ul li a { 
             text-decoration: none; color: white; 
             display: flex; flex-direction: column; align-items: center; 
-            transition: 0.3s; position: relative;
-            padding-bottom: 5px; /* ラインのための余白 */
+            transition: 0.3s; position: relative; padding-bottom: 5px;
         }
         .nav-jp { font-size: 15px; font-weight: bold; }
         .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.7; letter-spacing: 0.1em; }
 
-        /* 【復活】ホバー時の黄色ライン演出 */
+        /* ホバー時の黄色ライン */
         nav ul li a::after {
-            content: "";
-            position: absolute;
-            bottom: -2px; /* 英語の下の位置 */
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #ffeb3b; /* 黄色 */
-            transition: width 0.3s ease;
+            content: ""; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px;
+            background: #ffeb3b; transition: width 0.3s ease;
         }
-        nav ul li a:hover {
-            color: #ffeb3b;
-            transform: scale(1.1);
-        }
-        nav ul li a:hover::after {
-            width: 100%;
-        }
+        nav ul li a:hover { color: #ffeb3b; transform: scale(1.1); }
+        nav ul li a:hover::after { width: 100%; }
 
         /* スマホ用ボタン */
         .menu-btn { display: none; cursor: pointer; z-index: 110; background: none; border: none; flex-direction: column; gap: 6px; padding: 10px; }
         .menu-btn span { display: block; width: 30px; height: 2px; background: white; transition: 0.3s; }
 
-        /* スマホ版（1024px以下）の設定 */
         @media (max-width: 1024px) {
             header { padding: 15px 20px; }
             .company-name { font-size: 18px; }
             .logo-image { height: 40px; }
             .menu-btn { display: flex; }
-
             nav { 
                 position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; 
                 background: rgba(0, 71, 157, 0.98); transition: 0.5s; 
@@ -87,17 +58,13 @@
             nav.active { right: 0; }
             nav ul { flex-direction: column; gap: 40px; text-align: center; }
             .nav-jp { font-size: 22px; }
-            .nav-en { font-size: 12px; }
-
-            /* スマホ版でもホバーラインを中央から広がるように微調整 */
             nav ul li a::after { left: 50%; transform: translateX(-50%); }
-
             .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
             .menu-btn.active span:nth-child(2) { opacity: 0; }
             .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        /* --- 4. メインビジュアル --- */
+        /* --- 3. メインビジュアル --- */
         .hero {
             position: relative; width: 100%; height: 100vh;
             background: url('main_haikei.jpg') center/cover no-repeat;
@@ -108,7 +75,7 @@
         .hero-content h1 { font-size: 4.5rem; margin: 0; letter-spacing: 0.3em; }
         .hero-content p { font-size: 1.2rem; margin-top: 15px; letter-spacing: 0.4em; }
 
-        /* --- SCROLL DOWN （完成版・変更不可） --- */
+        /* SCROLL DOWN */
         .scrolldown {
             position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
             display: flex; flex-direction: column; align-items: center; z-index: 2;
@@ -126,21 +93,64 @@
             100% { transform: scaleY(0); transform-origin: bottom; }
         }
 
-        /* --- 5. セクション設定 --- */
-        section { padding: 100px 8%; text-align: center; }
+        /* --- 4. 横スクロールセクション --- */
+        .horizontal-section {
+            padding: 100px 0;
+            background-color: #f8faff;
+            text-align: center;
+        }
         .section-title h2 { font-size: 2.2rem; color: #00479d; margin: 0; letter-spacing: 0.2em; }
-        .section-subtitle { font-size: 0.9rem; color: #888; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 50px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .card { background: white; padding: 40px 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-radius: 5px; border-top: 5px solid #00479d; transition: 0.3s; }
-        .btn-link { display: inline-block; margin-top: 30px; padding: 12px 40px; border: 2px solid #00479d; color: #00479d; text-decoration: none; font-weight: bold; border-radius: 50px; transition: 0.3s; }
+        .section-subtitle { font-size: 0.9rem; color: #888; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 40px; }
+
+        /* スクロールコンテナ */
+        .scroll-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 20px;
+            padding: 20px 8%;
+            scrollbar-width: none; /* Firefox用 */
+        }
+        .scroll-container::-webkit-scrollbar { display: none; /* Chrome, Safari用 */ }
+
+        .scroll-card {
+            flex: 0 0 320px;
+            background: white;
+            padding: 50px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            scroll-snap-align: center;
+            text-decoration: none;
+            color: inherit;
+            border-top: 6px solid #00479d;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .scroll-card:hover { transform: translateY(-10px); background: #00479d; color: white; }
+        .scroll-card h3 { font-size: 1.5rem; margin-bottom: 15px; }
+        .scroll-card p { font-size: 0.95rem; line-height: 1.6; opacity: 0.8; }
+        .card-more { font-weight: bold; margin-top: 20px; color: #ffeb3b; }
+
+        @media (max-width: 768px) {
+            .scroll-card { flex: 0 0 85%; } /* スマホではカードを大きく */
+        }
+
+        /* --- 5. お問い合わせ・採用情報（固定） --- */
+        section { padding: 100px 8%; text-align: center; }
+        .contact-box { background: white; padding: 40px; border-radius: 10px; max-width: 600px; margin: 0 auto; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .tel-number { font-size: 2.5rem; font-weight: bold; color: #00479d; text-decoration: none; display: block; margin: 20px 0; }
+        .btn-link { display: inline-block; padding: 12px 40px; border: 2px solid #00479d; color: #00479d; text-decoration: none; font-weight: bold; border-radius: 50px; transition: 0.3s; }
         .btn-link:hover { background: #00479d; color: white; }
+
+        #recruit-cta { background: #00479d; color: white; }
+        #recruit-cta h2 { color: white; }
 
         footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
     </style>
 </head>
 <body>
-
-    <div id="loading"><div class="loading-content"><div class="dot"></div><div class="dot"></div><div class="dot"></div><p class="loading-text">CONNECTING...</p></div></div>
 
     <header>
         <a href="index.html" class="logo-area">
@@ -150,9 +160,8 @@
         <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
         <nav id="navMenu">
             <ul>
-                <li><a href="#about" onclick="closeMenu()"><span class="nav-jp">会社概要</span><span class="nav-en">About</span></a></li>
-                <li><a href="#business" onclick="closeMenu()"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
-                <li><a href="#works" onclick="closeMenu()"><span class="nav-jp">実績紹介</span><span class="nav-en">Works</span></a></li>
+                <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
+                <li><a href="#services"><span class="nav-jp">事業・実績</span><span class="nav-en">Services</span></a></li>
                 <li><a href="contact.html"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
                 <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
             </ul>
@@ -164,50 +173,56 @@
         <div class="scrolldown"><span>Scroll Down</span><div class="line"></div></div>
     </div>
 
-    <section id="about">
-        <div class="section-title"><h2>会社概要</h2><p class="section-subtitle">About Us</p></div>
-        <p style="max-width: 800px; margin: 0 auto; line-height: 2;">大和電気株式会社は、電気設備工事を通じて地域のインフラを支え続けてきました。</p>
-        <a href="company.html" class="btn-link">詳しく見る</a>
-    </section>
+    <div class="horizontal-section" id="services">
+        <div class="section-title"><h2>サービス紹介</h2><p class="section-subtitle">Information</p></div>
+        
+        <div class="scroll-container">
+            <a href="company.html" class="scroll-card">
+                <div>
+                    <h3>会社概要</h3>
+                    <p>大和電気株式会社の歩み、経営理念、拠点情報などをご紹介します。私たちは信頼を第一に歩み続けます。</p>
+                </div>
+                <div class="card-more">VIEW MORE →</div>
+            </a>
 
-    <section id="business" style="background: #f9f9f9;">
-        <div class="section-title"><h2>事業案内</h2><p class="section-subtitle">Our Business</p></div>
-        <div class="grid">
-            <div class="card"><h3>一般電気工事</h3><p>ビル、店舗、住宅のあらゆる電気設備に対応します。</p></div>
-            <div class="card"><h3>産業用設備</h3><p>工場の生産ラインなどの設計・施工を行います。</p></div>
-            <div class="card"><h3>省エネ</h3><p>LED化などの省エネ提案をいたします。</p></div>
+            <a href="company.html#business" class="scroll-card">
+                <div>
+                    <h3>事業案内</h3>
+                    <p>一般電気工事から産業用設備、省エネ提案まで。多岐にわたる専門技術でニーズにお応えします。</p>
+                </div>
+                <div class="card-more">VIEW MORE →</div>
+            </a>
+
+            <a href="company.html#works" class="scroll-card">
+                <div>
+                    <h3>実績紹介</h3>
+                    <p>これまでに手掛けた商業施設、マンション、公共事業などの施工実績を公開しています。</p>
+                </div>
+                <div class="card-more">VIEW MORE →</div>
+            </a>
         </div>
-    </section>
+        <p style="margin-top: 20px; font-size: 0.8rem; color: #aaa;">← 横にスクロールできます →</p>
+    </div>
 
-    <section id="works">
-        <div class="section-title"><h2>実績紹介</h2><p class="section-subtitle">Our Works</p></div>
-        <div class="grid">
-            <div class="card"><h3>商業施設A</h3><p>照明設備全般の施工を担当しました。</p></div>
-            <div class="card"><h3>マンションB</h3><p>幹線工事および各戸配線工事を施工。</p></div>
-            <div class="card"><h3>公共道路</h3><p>LED街灯設置工事を実施しました。</p></div>
-        </div>
-    </section>
-
-    <section id="contact-cta" style="background: #f0f4f9;">
+    <section id="contact-cta" style="background: #fff;">
         <div class="section-title"><h2>お問い合わせ</h2><p class="section-subtitle">Contact</p></div>
-        <div style="background:white; padding:40px; border-radius:10px; max-width:600px; margin:0 auto;">
-            <a href="tel:03-1234-5678" style="font-size: 2.5rem; font-weight: bold; color: #00479d; text-decoration: none; display: block; margin: 20px 0;">03-1234-5678</a>
-            <a href="contact.html" class="btn-link">メールでのお問い合わせ</a>
+        <div class="contact-box">
+            <p>お見積りや工事のご相談はお気軽にどうぞ</p>
+            <a href="tel:03-1234-5678" class="tel-number">03-1234-5678</a>
+            <a href="contact.html" class="btn-link">お問い合わせフォーム</a>
         </div>
     </section>
 
-    <section id="recruit-cta" style="background: #00479d; color: white;">
-        <div class="section-title"><h2 style="color: white;">採用情報</h2><p class="section-subtitle" style="color:rgba(255,255,255,0.7)">Recruit</p></div>
-        <p>共に未来を照らす仲間を募集しています。</p>
+    <section id="recruit-cta">
+        <div class="section-title"><h2>採用情報</h2><p class="section-subtitle" style="color:rgba(255,255,255,0.7)">Recruit</p></div>
+        <p>未来の街を支える仲間を募集しています。</p>
         <a href="recruit.html" class="btn-link" style="border-color:white; color:white;">詳細を見る</a>
     </section>
 
     <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
 
     <script>
-        window.addEventListener('load', function() {
-            setTimeout(function() { document.getElementById('loading').classList.add('loaded'); }, 1500);
-        });
+        // ハンバーガーメニュー制御
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         menuBtn.addEventListener('click', () => {
