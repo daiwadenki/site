@@ -39,7 +39,6 @@
         .logo-image { height: 50px; width: auto; margin-right: 15px; }
         .company-name { font-size: 24px; font-weight: bold; letter-spacing: 0.1em; }
 
-        /* PCメニュー */
         nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
         nav ul li a { text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; transition: 0.3s; position: relative; }
         .nav-jp { font-size: 15px; font-weight: bold; }
@@ -63,7 +62,7 @@
             .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        /* --- 4. メインビジュアル & Scroll Down --- */
+        /* --- 4. メインビジュアル & Scroll Down (修正版) --- */
         .hero {
             position: relative; width: 100%; height: 100vh;
             background: url('main_haikei.jpg') center/cover no-repeat;
@@ -74,21 +73,26 @@
         .hero-content h1 { font-size: 4.5rem; margin: 0; letter-spacing: 0.3em; }
         .hero-content p { font-size: 1.2rem; margin-top: 15px; letter-spacing: 0.4em; }
 
-        /* Scroll Down アニメーション */
+        /* Scroll Down アニメーション（線の右に文字） */
         .scrolldown {
             position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center; z-index: 2;
+            display: flex; align-items: flex-end; z-index: 2;
         }
-        .scrolldown span {
-            writing-mode: vertical-rl; font-size: 12px; letter-spacing: 0.2em;
-            color: white; margin-bottom: 10px; text-transform: uppercase;
+        .arrow-line { 
+            width: 1px; height: 100px; background: rgba(255,255,255,0.3); 
+            position: relative; overflow: hidden; 
         }
-        .arrow-line { width: 1px; height: 80px; background: rgba(255,255,255,0.3); position: relative; overflow: hidden; }
         .arrow-line::after {
             content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: #fff; animation: scroll-ani 2.5s infinite;
         }
         @keyframes scroll-ani { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+
+        .scrolldown span {
+            writing-mode: vertical-rl; font-size: 11px; letter-spacing: 0.4em;
+            color: white; margin-left: 15px; text-transform: uppercase; font-weight: bold;
+            opacity: 0.8;
+        }
 
         @media (max-width: 768px) { .hero-content h1 { font-size: 2.2rem; } }
 
@@ -117,14 +121,7 @@
 </head>
 <body>
 
-    <div id="loading">
-        <div class="loading-content">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <p class="loading-text">CONNECTING...</p>
-        </div>
-    </div>
+    <div id="loading"><div class="loading-content"><div class="dot"></div><div class="dot"></div><div class="dot"></div><p class="loading-text">CONNECTING...</p></div></div>
 
     <header>
         <a href="index.html" class="logo-area">
@@ -149,8 +146,8 @@
             <p>光り輝く未来を、電気の技術で。</p>
         </div>
         <div class="scrolldown">
-            <span>Scroll</span>
             <div class="arrow-line"></div>
+            <span>SCROLL DOWN</span>
         </div>
     </div>
 
@@ -166,8 +163,8 @@
         <div class="section-title"><h2>事業案内</h2><p class="section-subtitle">Our Business</p></div>
         <div class="grid">
             <div class="card"><h3>一般電気工事</h3><p>ビル、店舗、住宅のあらゆる電気配線・設備に対応。安全を第一に施工します。</p></div>
-            <div class="card"><h3>通信工事</h3><p>現代社会の生命線であるネットワークインフラを構築。Wi-Fi環境の整備もお任せください。</p></div>
-            <div class="card"><h3>保守・点検</h3><p>トラブルを未然に防ぐ定期点検と、迅速なメンテナンス体制を整えています。</p></div>
+            <div class="card"><h3>通信工事</h3><p>ネットワークインフラの構築からWi-Fi環境の整備までお任せください。</p></div>
+            <div class="card"><h3>保守・点検</h3><p>24時間365日体制で設備の安全を見守り、迅速にメンテナンスを行います。</p></div>
         </div>
     </section>
 
@@ -176,14 +173,14 @@
         <div class="grid">
             <div class="card"><h3>公共施設照明工事</h3><p>地域のランドマークとなる施設の全館照明工事を担当しました。</p></div>
             <div class="card"><h3>工場受変電設備</h3><p>大規模工場の心臓部となる受変電設備の改修工事を完遂しました。</p></div>
-            <div class="card"><h3>店舗新築プロジェクト</h3><p>有名商業テナントの電気系統の設計から施工までを一貫して担当。</p></div>
+            <div class="card"><h3>店舗新築プロジェクト</h3><p>商業テナントの電気系統の設計から施工までを一貫して担当。</p></div>
         </div>
     </section>
 
     <section id="contact-cta">
         <div class="section-title"><h2>お問い合わせ</h2><p class="section-subtitle">Contact</p></div>
         <div style="background:white; padding:40px; border-radius:10px; max-width:600px; margin:0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-            <p>電気の工事やご相談は、お気軽にお電話ください！</p>
+            <p>電気に関するご相談は、お気軽にお電話ください！</p>
             <a href="tel:03-1234-5678" class="tel-number">03-1234-5678</a>
             <a href="contact.html" class="btn-link">お問い合わせフォーム</a>
         </div>
@@ -191,19 +188,16 @@
 
     <section id="recruit-cta">
         <div class="section-title"><h2>採用情報</h2><p class="section-subtitle" style="color:rgba(255,255,255,0.7)">Recruit</p></div>
-        <p>私たちと一緒に、街に明かりを灯しませんか？未経験からでもプロを目指せる環境があります。</p>
+        <p>私たちと一緒に、街に明かりを灯しませんか？未経験からでもプロを目指せます。</p>
         <a href="recruit.html" class="btn-link" style="border-color:white; color:white;">採用情報を詳しく見る</a>
     </section>
 
     <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
 
     <script>
-        // ローディング解除
         window.addEventListener('load', function() {
             setTimeout(function() { document.getElementById('loading').classList.add('loaded'); }, 1500);
         });
-        
-        // ハンバーガーメニュー制御
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         menuBtn.addEventListener('click', () => {
