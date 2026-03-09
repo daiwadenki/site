@@ -15,7 +15,7 @@
             background-color: #fff;
         }
 
-        /* --- 2. ヘッダー（完成版メニュー・リンク修正済み） --- */
+        /* --- 2. ヘッダー（完成版メニュー） --- */
         header {
             position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
             background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
@@ -93,7 +93,7 @@
             100% { transform: scaleY(0); transform-origin: bottom; }
         }
 
-        /* --- 4. 横スクロールセクション --- */
+        /* --- 4. サービス紹介セクション（中央配置調整済み） --- */
         .horizontal-section {
             padding: 100px 0;
             background-color: #f8faff;
@@ -102,19 +102,20 @@
         .section-title h2 { font-size: 2.2rem; color: #00479d; margin: 0; letter-spacing: 0.2em; }
         .section-subtitle { font-size: 0.9rem; color: #888; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 40px; }
 
-        /* スクロールコンテナ */
+        /* コンテナを中央寄せにする設定 */
         .scroll-container {
             display: flex;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            gap: 20px;
-            padding: 20px 8%;
-            scrollbar-width: none; /* Firefox用 */
+            gap: 25px;
+            padding: 20px 20px;
+            scrollbar-width: none;
+            justify-content: center; /* PCで中央寄せ */
         }
-        .scroll-container::-webkit-scrollbar { display: none; /* Chrome, Safari用 */ }
+        .scroll-container::-webkit-scrollbar { display: none; }
 
         .scroll-card {
-            flex: 0 0 320px;
+            flex: 0 0 320px; /* カードの幅 */
             background: white;
             padding: 50px 30px;
             border-radius: 15px;
@@ -127,17 +128,23 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            text-align: left; /* テキストは左揃えで読みやすく */
         }
         .scroll-card:hover { transform: translateY(-10px); background: #00479d; color: white; }
-        .scroll-card h3 { font-size: 1.5rem; margin-bottom: 15px; }
-        .scroll-card p { font-size: 0.95rem; line-height: 1.6; opacity: 0.8; }
+        .scroll-card h3 { font-size: 1.4rem; margin-bottom: 15px; }
+        .scroll-card p { font-size: 0.9rem; line-height: 1.7; opacity: 0.8; }
         .card-more { font-weight: bold; margin-top: 20px; color: #ffeb3b; }
 
+        @media (max-width: 1080px) {
+            /* 画面が狭くなったら左詰めにしてスクロールを可能にする */
+            .scroll-container { justify-content: flex-start; padding: 20px 8%; }
+            .scroll-card { flex: 0 0 300px; }
+        }
         @media (max-width: 768px) {
-            .scroll-card { flex: 0 0 85%; } /* スマホではカードを大きく */
+            .scroll-card { flex: 0 0 85%; }
         }
 
-        /* --- 5. お問い合わせ・採用情報（固定） --- */
+        /* --- 5. お問い合わせ・採用情報 --- */
         section { padding: 100px 8%; text-align: center; }
         .contact-box { background: white; padding: 40px; border-radius: 10px; max-width: 600px; margin: 0 auto; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         .tel-number { font-size: 2.5rem; font-weight: bold; color: #00479d; text-decoration: none; display: block; margin: 20px 0; }
@@ -180,7 +187,7 @@
             <a href="company.html" class="scroll-card">
                 <div>
                     <h3>会社概要</h3>
-                    <p>大和電気株式会社の歩み、経営理念、拠点情報などをご紹介します。私たちは信頼を第一に歩み続けます。</p>
+                    <p>私たちの経営理念や会社情報、アクセスについて。信頼を築き、街を支える大和電気の原点をご紹介します。</p>
                 </div>
                 <div class="card-more">VIEW MORE →</div>
             </a>
@@ -188,7 +195,7 @@
             <a href="company.html#business" class="scroll-card">
                 <div>
                     <h3>事業案内</h3>
-                    <p>一般電気工事から産業用設備、省エネ提案まで。多岐にわたる専門技術でニーズにお応えします。</p>
+                    <p>一般電気工事から高圧設備、産業用ロボットの配線まで。幅広いニーズに対応する技術力を解説します。</p>
                 </div>
                 <div class="card-more">VIEW MORE →</div>
             </a>
@@ -196,18 +203,18 @@
             <a href="company.html#works" class="scroll-card">
                 <div>
                     <h3>実績紹介</h3>
-                    <p>これまでに手掛けた商業施設、マンション、公共事業などの施工実績を公開しています。</p>
+                    <p>これまで私たちが手掛けてきた主な施工実績です。地域のインフラを支えてきた誇りと経験があります。</p>
                 </div>
                 <div class="card-more">VIEW MORE →</div>
             </a>
         </div>
-        <p style="margin-top: 20px; font-size: 0.8rem; color: #aaa;">← 横にスクロールできます →</p>
+        <p class="sp-only" style="margin-top: 20px; font-size: 0.8rem; color: #aaa; display: none;">← 横にスワイプできます →</p>
     </div>
 
-    <section id="contact-cta" style="background: #fff;">
+    <section id="contact-cta">
         <div class="section-title"><h2>お問い合わせ</h2><p class="section-subtitle">Contact</p></div>
         <div class="contact-box">
-            <p>お見積りや工事のご相談はお気軽にどうぞ</p>
+            <p>ご相談やお見積りはお電話、またはフォームよりお気軽にどうぞ</p>
             <a href="tel:03-1234-5678" class="tel-number">03-1234-5678</a>
             <a href="contact.html" class="btn-link">お問い合わせフォーム</a>
         </div>
@@ -215,14 +222,13 @@
 
     <section id="recruit-cta">
         <div class="section-title"><h2>採用情報</h2><p class="section-subtitle" style="color:rgba(255,255,255,0.7)">Recruit</p></div>
-        <p>未来の街を支える仲間を募集しています。</p>
+        <p>共に成長し、未来を照らす仲間を探しています。</p>
         <a href="recruit.html" class="btn-link" style="border-color:white; color:white;">詳細を見る</a>
     </section>
 
     <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
 
     <script>
-        // ハンバーガーメニュー制御
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         menuBtn.addEventListener('click', () => {
@@ -232,6 +238,11 @@
         function closeMenu() {
             menuBtn.classList.remove('active');
             navMenu.classList.remove('active');
+        }
+
+        // スマホの時だけ「スワイプできます」を表示する制御（おまけ）
+        if (window.innerWidth <= 1080) {
+            document.querySelector('.sp-only').style.display = 'block';
         }
     </script>
 </body>
