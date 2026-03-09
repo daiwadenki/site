@@ -7,29 +7,14 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <style>
-        /* --- 1. ローディング画面（共通） --- */
-        #loading {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #00479d; display: flex; justify-content: center; align-items: center; z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s;
-        }
-        #loading.loaded { opacity: 0; visibility: hidden; }
-        .loading-content { text-align: center; }
-        .dot { display: inline-block; width: 25px; height: 25px; margin: 0 10px; background-color: #ffeb3b; border-radius: 50%; animation: bounce 0.6s infinite alternate; }
-        .dot:nth-child(2) { animation-delay: 0.2s; }
-        .dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-30px); scale: 1.1; } }
-        .loading-text { margin-top: 30px; color: white; font-weight: bold; letter-spacing: 0.4em; font-size: 14px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-
-        /* --- 2. 全体設定 --- */
+        /* --- 1. 全体設定 --- */
         body, html {
             margin: 0; padding: 0; width: 100%;
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             background-color: #fff; color: #333; overflow-x: hidden;
         }
 
-        /* --- 3. ヘッダー（完成版メニューを完全移植） --- */
+        /* --- 2. ヘッダー（完成版メニューを完全移植） --- */
         header {
             position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
             background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
@@ -72,41 +57,33 @@
             nav.active { right: 0; }
             nav ul { flex-direction: column; gap: 40px; text-align: center; }
             .nav-jp { font-size: 22px; }
-            .nav-en { font-size: 12px; }
             nav ul li a::after { left: 50%; transform: translateX(-50%); }
             .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
             .menu-btn.active span:nth-child(2) { opacity: 0; }
             .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        /* --- 4. 採用メインビジュアル --- */
+        /* --- 3. 採用メインビジュアル --- */
         .recruit-hero {
             background-color: #00479d; color: white; padding: 180px 20px 100px; text-align: center;
         }
         .recruit-hero h1 { font-size: 3rem; letter-spacing: 0.2em; margin: 0; }
         .recruit-hero p { font-size: 1.1rem; opacity: 0.9; margin-top: 20px; letter-spacing: 0.2em; }
 
-        /* --- 5. コンテンツエリア --- */
+        /* --- 4. コンテンツエリア --- */
         .container { max-width: 1000px; margin: 60px auto 100px; padding: 0 20px; }
 
-        /* 募集要項テーブル */
-        .recruit-table {
-            width: 100%; border-collapse: collapse; margin-top: 40px; background: #fff;
-        }
-        .recruit-table th, .recruit-table td {
-            padding: 25px; border-bottom: 1px solid #eee; text-align: left;
-        }
-        .recruit-table th {
-            width: 25%; color: #00479d; font-weight: bold; background: #f8faff;
-        }
-        .recruit-table td { line-height: 1.8; }
-
-        /* メッセージセクション */
         .message-box {
             background: #f0f4f9; padding: 60px 40px; border-radius: 10px; text-align: center; margin-bottom: 60px;
         }
         .message-box h2 { color: #00479d; margin-bottom: 20px; }
         .message-box p { line-height: 2; }
+
+        /* 募集要項テーブル */
+        .recruit-table { width: 100%; border-collapse: collapse; margin-top: 40px; background: #fff; }
+        .recruit-table th, .recruit-table td { padding: 25px; border-bottom: 1px solid #eee; text-align: left; }
+        .recruit-table th { width: 25%; color: #00479d; font-weight: bold; background: #f8faff; }
+        .recruit-table td { line-height: 1.8; }
 
         /* 応募ボタン */
         .apply-area { text-align: center; margin-top: 80px; }
@@ -128,8 +105,6 @@
 </head>
 <body>
 
-    <div id="loading"><div class="loading-content"><div class="dot"></div><div class="dot"></div><div class="dot"></div><p class="loading-text">CONNECTING...</p></div></div>
-
     <header>
         <a href="index.html" class="logo-area">
             <img src="miko.png" alt="ロゴ" class="logo-image">
@@ -138,9 +113,8 @@
         <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
         <nav id="navMenu">
             <ul>
-                <li><a href="index.html#about"><span class="nav-jp">会社概要</span><span class="nav-en">About</span></a></li>
-                <li><a href="index.html#business"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
-                <li><a href="index.html#works"><span class="nav-jp">実績紹介</span><span class="nav-en">Works</span></a></li>
+                <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
+                <li><a href="index.html#services"><span class="nav-jp">事業・実績</span><span class="nav-en">Services</span></a></li>
                 <li><a href="contact.html"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
                 <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
             </ul>
@@ -156,66 +130,34 @@
         <div class="message-box">
             <h2>代表メッセージ</h2>
             <p>
-                電気工事は、ただ線を繋ぐだけの仕事ではありません。<br>
-                人々の暮らしに「明かり」という安心を届ける、やりがいに満ちた仕事です。<br>
+                電気工事は、人々の暮らしに「明かり」を届ける、やりがいに満ちた仕事です。<br>
                 未経験でも構いません。ベテランの職人が一から丁寧に技術を伝授します。<br>
                 一生モノのスキルを身につけて、私たちと一緒に街を支えませんか？
             </p>
         </div>
 
-        <div class="section-title" style="text-align: center;">
-            <h2 style="color: #00479d; font-size: 2rem;">募集要項</h2>
-        </div>
-
         <table class="recruit-table">
-            <tr>
-                <th>職種</th>
-                <td>電気工事士（現場施工・管理）</td>
-            </tr>
-            <tr>
-                <th>給与</th>
-                <td>月給 250,000円 〜 450,000円<br><span style="font-size: 0.8rem; color: #888;">※経験・能力・資格を考慮の上、決定いたします。</span></td>
-            </tr>
-            <tr>
-                <th>勤務地</th>
-                <td>東京都内および近郊の各現場（本社：東京都〇〇区）</td>
-            </tr>
-            <tr>
-                <th>勤務時間</th>
-                <td>8:00 〜 17:00（休憩90分）</td>
-            </tr>
-            <tr>
-                <th>休日・休暇</th>
-                <td>日曜日、祝日、夏季休暇、年末年始、有給休暇</td>
-            </tr>
-            <tr>
-                <th>福利厚生</th>
-                <td>社会保険完備、資格取得支援制度、制服貸与、退職金制度</td>
-            </tr>
+            <tr><th>職種</th><td>電気工事士（現場施工・管理）</td></tr>
+            <tr><th>給与</th><td>月給 250,000円 〜 450,000円</td></tr>
+            <tr><th>勤務地</th><td>東京都内および近郊の各現場</td></tr>
+            <tr><th>休日</th><td>日曜日、祝日、夏季休暇、年末年始</td></tr>
         </table>
 
         <div class="apply-area">
             <p style="margin-bottom: 20px; color: #666;">少しでも興味を持たれた方は、まずはお話ししませんか？</p>
-            <a href="contact.html" class="apply-btn">この職種に応募する</a>
+            <a href="apply.html" class="apply-btn">この職種に応募する</a>
         </div>
     </div>
 
     <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
 
     <script>
-        window.addEventListener('load', function() {
-            setTimeout(function() { document.getElementById('loading').classList.add('loaded'); }, 1500);
-        });
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         menuBtn.addEventListener('click', () => {
             menuBtn.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-        function closeMenu() {
-            menuBtn.classList.remove('active');
-            navMenu.classList.remove('active');
-        }
     </script>
 </body>
 </html>
