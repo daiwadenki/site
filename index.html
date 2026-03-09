@@ -33,7 +33,6 @@
         .nav-jp { font-size: 15px; font-weight: bold; }
         .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.7; letter-spacing: 0.1em; }
 
-        /* ホバー時の黄色ライン */
         nav ul li a::after {
             content: ""; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px;
             background: #ffeb3b; transition: width 0.3s ease;
@@ -75,7 +74,6 @@
         .hero-content h1 { font-size: 4.5rem; margin: 0; letter-spacing: 0.3em; }
         .hero-content p { font-size: 1.2rem; margin-top: 15px; letter-spacing: 0.4em; }
 
-        /* SCROLL DOWN */
         .scrolldown {
             position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
             display: flex; flex-direction: column; align-items: center; z-index: 2;
@@ -102,7 +100,6 @@
         .section-title h2 { font-size: 2.2rem; color: #00479d; margin: 0; letter-spacing: 0.2em; }
         .section-subtitle { font-size: 0.9rem; color: #888; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 40px; }
 
-        /* コンテナ（PCで中央寄せ） */
         .scroll-container {
             display: flex;
             overflow-x: auto;
@@ -130,14 +127,11 @@
             justify-content: space-between;
             text-align: left;
         }
-        /* ホバー時はカード全体が青くなり、文字は白、VIEW MOREは黄色に */
         .scroll-card:hover { transform: translateY(-10px); background: #00479d; color: white; }
-        .scroll-card:hover .card-more { color: #ffeb3b; } /* ホバー時だけ黄色に */
+        .scroll-card:hover .card-more { color: #ffeb3b; }
 
         .scroll-card h3 { font-size: 1.4rem; margin-bottom: 15px; }
         .scroll-card p { font-size: 0.9rem; line-height: 1.7; opacity: 0.8; }
-        
-        /* 【修正】通常時のVIEW MOREの色を青に */
         .card-more { font-weight: bold; margin-top: 20px; color: #00479d; transition: 0.3s; }
 
         @media (max-width: 1080px) {
@@ -159,6 +153,7 @@
         #recruit-cta h2 { color: white; }
 
         footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
+        .sp-only-text { margin-top: 20px; font-size: 0.8rem; color: #aaa; display: none; }
     </style>
 </head>
 <body>
@@ -196,7 +191,7 @@
                 <div class="card-more">VIEW MORE →</div>
             </a>
 
-            <a href="company.html#business" class="scroll-card">
+            <a href="business.html" class="scroll-card">
                 <div>
                     <h3>事業案内</h3>
                     <p>一般電気工事から高圧設備、産業用ロボットの配線まで。幅広いニーズに対応する技術力を解説します。</p>
@@ -204,7 +199,7 @@
                 <div class="card-more">VIEW MORE →</div>
             </a>
 
-            <a href="company.html#works" class="scroll-card">
+            <a href="works.html" class="scroll-card">
                 <div>
                     <h3>実績紹介</h3>
                     <p>これまで私たちが手掛けてきた主な施工実績です。地域のインフラを支えてきた誇りと経験があります。</p>
@@ -212,7 +207,7 @@
                 <div class="card-more">VIEW MORE →</div>
             </a>
         </div>
-        <p class="sp-only" style="margin-top: 20px; font-size: 0.8rem; color: #aaa; display: none;">← 横にスワイプできます →</p>
+        <p id="spGuide" class="sp-only-text">← 横にスワイプできます →</p>
     </div>
 
     <section id="contact-cta">
@@ -239,13 +234,11 @@
             menuBtn.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-        function closeMenu() {
-            menuBtn.classList.remove('active');
-            navMenu.classList.remove('active');
-        }
 
+        // スマホガイド表示制御
+        const spGuide = document.getElementById('spGuide');
         if (window.innerWidth <= 1080) {
-            document.querySelector('.sp-only').style.display = 'block';
+            spGuide.style.display = 'block';
         }
     </script>
 </body>
