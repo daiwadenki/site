@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>エントリーフォーム | 大和電気株式会社</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <style>
+        /* --- 1. 全体設定 --- */
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: #f4f7fa; color: #333; overflow-x: hidden;
+        }
+
+        /* --- 2. ヘッダー（完成版メニュー完全移植） --- */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
+            background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
+        }
+        .logo-area { display: flex; align-items: center; text-decoration: none; color: white; z-index: 110; }
+        .logo-image { height: 50px; width: auto; margin-right: 15px; }
+        .company-name { font-size: 24px; font-weight: bold; letter-spacing: 0.1em; }
+
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
+        nav ul li a { 
+            text-decoration: none; color: white; 
+            display: flex; flex-direction: column; align-items: center; 
+            transition: 0.3s; position: relative; padding-bottom: 5px;
+        }
+        .nav-jp { font-size: 15px; font-weight: bold; }
+        .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.7; letter-spacing: 0.1em; }
+
+        /* ホバー時の黄色ライン演出 */
+        nav ul li a::after {
+            content: ""; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px;
+            background: #ffeb3b; transition: width 0.3s ease;
+        }
+        nav ul li a:hover { color: #ffeb3b; transform: scale(1.1); }
+        nav ul li a:hover::after { width: 100%; }
+
+        /* スマホ用ボタン */
+        .menu-btn { display: none; cursor: pointer; z-index: 110; background: none; border: none; flex-direction: column; gap: 6px; padding: 10px; }
+        .menu-btn span { display: block; width: 30px; height: 2px; background: white; transition: 0.3s; }
+
+        @media (max-width: 1024px) {
+            header { padding: 15px 20px; }
+            .company-name { font-size: 18px; }
+            .logo-image { height: 40px; }
+            .menu-btn { display: flex; }
+            nav { 
+                position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; 
+                background: rgba(0, 71, 157, 0.98); transition: 0.5s; 
+                display: flex; align-items: center; justify-content: center; z-index: 105; 
+            }
+            nav.active { right: 0; }
+            nav ul { flex-direction: column; gap: 40px; text-align: center; }
+            .nav-jp { font-size: 22px; }
+            nav ul li a::after { left: 50%; transform: translateX(-50%); }
+            .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .menu-btn.active span:nth-child(2) { opacity: 0; }
+            .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        }
+
+        /* --- 3. ページヘッダー --- */
+        .page-header {
+            background-color: #00479d; color: white; padding: 150px 20px 60px; text-align: center;
+        }
+        .page-header h1 { font-size: 2rem; letter-spacing: 0.2em; margin: 0; }
+        .page-header p { font-size: 0.9rem; opacity: 0.8; margin-top: 10px; letter-spacing: 0.2em; }
+
+        /* --- 4. 応募フォームエリア --- */
+        .container { max-width: 850px; margin: 40px auto 100px; padding: 0 20px; }
+        
+        .form-card {
+            background: white; padding: 50px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .form-section-title {
+            font-size: 1.2rem; font-weight: bold; color: #00479d; border-left: 4px solid #ffeb3b;
+            padding-left: 15px; margin-bottom: 30px; margin-top: 40px;
+        }
+        .form-section-title:first-child { margin-top: 0; }
+
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 0.95rem; }
+        .required-tag { background: #ff4d4d; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 3px; margin-left: 8px; vertical-align: middle; }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; box-sizing: border-box; transition: 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #00479d; outline: none; box-shadow: 0 0 5px rgba(0,71,157,0.1);
+        }
+
+        /* 2カラムレイアウト（PC用） */
+        .flex-row { display: flex; gap: 20px; }
+        .flex-row .form-group { flex: 1; }
+
+        .submit-area { text-align: center; margin-top: 50px; border-top: 1px solid #eee; padding-top: 40px; }
+        .apply-submit-btn {
+            background: #00479d; color: white; padding: 18px 80px; border: none; border-radius: 50px;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .apply-submit-btn:hover { background: #003575; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,71,157,0.2); }
+
+        footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
+
+        @media (max-width: 768px) {
+            .form-card { padding: 30px 20px; }
+            .flex-row { flex-direction: column; gap: 0; }
+            .apply-submit-btn { width: 100%; padding: 18px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-area">
+            <img src="miko.png" alt="ロゴ" class="logo-image">
+            <span class="company-name">大和電気株式会社</span>
+        </a>
+        <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+        <nav id="navMenu">
+            <ul>
+                <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
+                <li><a href="index.html#services"><span class="nav-jp">事業・実績</span><span class="nav-en">Services</span></a></li>
+                <li><a href="contact.html"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
+                <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1>エントリーフォーム</h1>
+        <p>ENTRY FORM</p>
+    </div>
+
+    <div class="container">
+        <div class="form-card">
+            <form action="#">
+                <div class="form-section-title">基本情報</div>
+                
+                <div class="flex-row">
+                    <div class="form-group">
+                        <label>お名前<span class="required-tag">必須</span></label>
+                        <input type="text" placeholder="大和 太郎" required>
+                    </div>
+                    <div class="form-group">
+                        <label>フリガナ<span class="required-tag">必須</span></label>
+                        <input type="text" placeholder="ダイワ タロウ" required>
+                    </div>
+                </div>
+
+                <div class="flex-row">
+                    <div class="form-group">
+                        <label>生年月日<span class="required-tag">必須</span></label>
+                        <input type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>性別</label>
+                        <select>
+                            <option value="未選択">選択してください</option>
+                            <option value="男性">男性</option>
+                            <option value="女性">女性</option>
+                            <option value="その他">その他・回答しない</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section-title">連絡先・住所</div>
+
+                <div class="flex-row">
+                    <div class="form-group">
+                        <label>メールアドレス<span class="required-tag">必須</span></label>
+                        <input type="email" placeholder="example@mail.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>電話番号<span class="required-tag">必須</span></label>
+                        <input type="tel" placeholder="09012345678" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>郵便番号</label>
+                    <input type="text" placeholder="123-4567" style="width: 150px;">
+                </div>
+
+                <div class="form-group">
+                    <label>住所<span class="required-tag">必須</span></label>
+                    <input type="text" placeholder="東京都〇〇区△△ 1-2-3 〇〇マンション101" required>
+                </div>
+
+                <div class="form-section-title">経歴・メッセージ</div>
+
+                <div class="form-group">
+                    <label>現在の職業・最終学歴</label>
+                    <input type="text" placeholder="例：〇〇株式会社 勤務 / △△専門学校 卒業">
+                </div>
+
+                <div class="form-group">
+                    <label>保有資格（あれば）</label>
+                    <textarea rows="3" placeholder="例：第二種電気工事士、普通自動車第一種免許 など"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>自己PR・志望動機など</label>
+                    <textarea rows="5" placeholder="自由にご記入ください"></textarea>
+                </div>
+
+                <div class="submit-area">
+                    <p style="font-size: 0.85rem; color: #666; margin-bottom: 20px;">
+                        ご入力いただいた情報は、採用選考以外の目的には使用いたしません。
+                    </p>
+                    <button type="submit" class="apply-submit-btn">入力内容を確認する</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenu = document.getElementById('navMenu');
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
