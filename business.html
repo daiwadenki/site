@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事業案内 | 大和電気株式会社</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <style>
+        /* --- 1. 全体設定 --- */
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: #fff; color: #333; overflow-x: hidden;
+        }
+
+        /* --- 2. ヘッダー（完成版メニュー完全移植） --- */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
+            background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
+        }
+        .logo-area { display: flex; align-items: center; text-decoration: none; color: white; z-index: 110; }
+        .logo-image { height: 50px; width: auto; margin-right: 15px; }
+        .company-name { font-size: 24px; font-weight: bold; letter-spacing: 0.1em; }
+
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
+        nav ul li a { 
+            text-decoration: none; color: white; 
+            display: flex; flex-direction: column; align-items: center; 
+            transition: 0.3s; position: relative; padding-bottom: 5px;
+        }
+        .nav-jp { font-size: 15px; font-weight: bold; }
+        .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.7; letter-spacing: 0.1em; }
+
+        /* ホバー時の黄色ライン */
+        nav ul li a::after {
+            content: ""; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px;
+            background: #ffeb3b; transition: width 0.3s ease;
+        }
+        nav ul li a:hover { color: #ffeb3b; transform: scale(1.1); }
+        nav ul li a:hover::after { width: 100%; }
+
+        /* スマホ用ボタン */
+        .menu-btn { display: none; cursor: pointer; z-index: 110; background: none; border: none; flex-direction: column; gap: 6px; padding: 10px; }
+        .menu-btn span { display: block; width: 30px; height: 2px; background: white; transition: 0.3s; }
+
+        @media (max-width: 1024px) {
+            header { padding: 15px 20px; }
+            .company-name { font-size: 18px; }
+            .logo-image { height: 40px; }
+            .menu-btn { display: flex; }
+            nav { 
+                position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; 
+                background: rgba(0, 71, 157, 0.98); transition: 0.5s; 
+                display: flex; align-items: center; justify-content: center; z-index: 105; 
+            }
+            nav.active { right: 0; }
+            nav ul { flex-direction: column; gap: 40px; text-align: center; }
+            .nav-jp { font-size: 22px; }
+            nav ul li a::after { left: 50%; transform: translateX(-50%); }
+            .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .menu-btn.active span:nth-child(2) { opacity: 0; }
+            .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        }
+
+        /* --- 3. ページヘッダー --- */
+        .page-header {
+            background-color: #00479d; color: white; padding: 160px 20px 80px; text-align: center;
+        }
+        .page-header h1 { font-size: 2.2rem; letter-spacing: 0.2em; margin: 0; }
+        .page-header p { font-size: 0.9rem; opacity: 0.8; margin-top: 10px; letter-spacing: 0.3em; }
+
+        /* --- 4. 事業案内コンテンツ --- */
+        .container { max-width: 1000px; margin: 80px auto; padding: 0 20px; }
+
+        .business-item {
+            display: flex; align-items: center; gap: 50px; margin-bottom: 100px;
+        }
+        .business-item:nth-child(even) { flex-direction: row-reverse; }
+
+        .business-img {
+            flex: 1; height: 350px; background: #f0f4f9; border-radius: 15px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; color: #00479d; font-weight: bold; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .business-text { flex: 1; }
+        .business-number { font-size: 3rem; font-weight: bold; color: rgba(0, 71, 157, 0.1); line-height: 1; margin-bottom: 10px; }
+        .business-text h2 { font-size: 1.8rem; color: #00479d; margin-bottom: 20px; border-bottom: 3px solid #ffeb3b; display: inline-block; padding-bottom: 5px; }
+        .business-text p { line-height: 1.8; color: #555; font-size: 1rem; }
+        
+        .business-list { margin-top: 20px; padding-left: 20px; list-style-type: square; color: #00479d; }
+        .business-list li { margin-bottom: 8px; color: #555; }
+
+        /* お問い合わせ誘導 */
+        .cta-section {
+            background: #f8faff; padding: 80px 20px; text-align: center; border-radius: 20px;
+        }
+        .cta-section h3 { font-size: 1.5rem; margin-bottom: 20px; }
+        .cta-btn {
+            display: inline-block; padding: 18px 50px; background: #00479d; color: white;
+            text-decoration: none; border-radius: 50px; font-weight: bold; transition: 0.3s;
+        }
+        .cta-btn:hover { background: #003575; transform: translateY(-3px); }
+
+        footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
+
+        @media (max-width: 768px) {
+            .business-item, .business-item:nth-child(even) { flex-direction: column; gap: 30px; margin-bottom: 60px; }
+            .business-img { width: 100%; height: 250px; }
+            .business-text h2 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-area">
+            <img src="miko.png" alt="ロゴ" class="logo-image">
+            <span class="company-name">大和電気株式会社</span>
+        </a>
+        <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+        <nav id="navMenu">
+            <ul>
+                <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
+                <li><a href="index.html#services"><span class="nav-jp">事業・実績</span><span class="nav-en">Services</span></a></li>
+                <li><a href="contact.html"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
+                <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1>事業案内</h1>
+        <p>OUR BUSINESS</p>
+    </div>
+
+    <div class="container">
+        
+        <div class="business-item">
+            <div class="business-img">一般電気設備工事</div>
+            <div class="business-text">
+                <div class="business-number">01</div>
+                <h2>一般電気設備工事</h2>
+                <p>
+                    オフィスビル、商業施設、マンションなどの新築・改修に伴う電気設備工事一式を請け負います。受変電設備から電灯・コンセント設備まで、建物に必要な全ての「電気の道」を構築します。
+                </p>
+                <ul class="business-list">
+                    <li>受変電設備・幹線設備工事</li>
+                    <li>電灯・動力設備工事</li>
+                    <li>非常用発電機・蓄電池設備</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="business-item">
+            <div class="business-img">産業用・工場設備工事</div>
+            <div class="business-text">
+                <div class="business-number">02</div>
+                <h2>産業用・工場設備工事</h2>
+                <p>
+                    工場の生産ラインの稼働に不可欠な動力配線や、制御盤の据付工事を行います。複雑な配線設計も、熟練の技術者が正確かつ安全に施工し、安定した生産環境を支えます。
+                </p>
+                <ul class="business-list">
+                    <li>生産ライン動力配線</li>
+                    <li>自動制御・計装工事</li>
+                    <li>制御盤・操作盤の据付</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="business-item">
+            <div class="business-img">弱電・通信設備工事</div>
+            <div class="business-text">
+                <div class="business-number">03</div>
+                <h2>弱電・通信設備工事</h2>
+                <p>
+                    インターネット環境（LAN）の構築や、放送設備、火災報知器などの弱電工事にも対応しています。現代社会に欠かせない情報通信インフラの基盤をトータルサポートします。
+                </p>
+                <ul class="business-list">
+                    <li>LAN・光ネットワーク構築</li>
+                    <li>放送・インターホン設備</li>
+                    <li>火災報知器・セキュリティ設備</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h3>電気設備に関することなら、何でもご相談ください。</h3>
+            <p style="margin-bottom: 30px; color: #666;">お見積りや現場調査のご依頼も随時承っております。</p>
+            <a href="contact.html" class="cta-btn">お問い合わせはこちら</a>
+        </div>
+
+    </div>
+
+    <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenu = document.getElementById('navMenu');
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
