@@ -93,7 +93,7 @@
             100% { transform: scaleY(0); transform-origin: bottom; }
         }
 
-        /* --- 4. サービス紹介セクション（中央配置調整済み） --- */
+        /* --- 4. サービス紹介セクション --- */
         .horizontal-section {
             padding: 100px 0;
             background-color: #f8faff;
@@ -102,7 +102,7 @@
         .section-title h2 { font-size: 2.2rem; color: #00479d; margin: 0; letter-spacing: 0.2em; }
         .section-subtitle { font-size: 0.9rem; color: #888; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 40px; }
 
-        /* コンテナを中央寄せにする設定 */
+        /* コンテナ（PCで中央寄せ） */
         .scroll-container {
             display: flex;
             overflow-x: auto;
@@ -110,12 +110,12 @@
             gap: 25px;
             padding: 20px 20px;
             scrollbar-width: none;
-            justify-content: center; /* PCで中央寄せ */
+            justify-content: center;
         }
         .scroll-container::-webkit-scrollbar { display: none; }
 
         .scroll-card {
-            flex: 0 0 320px; /* カードの幅 */
+            flex: 0 0 320px;
             background: white;
             padding: 50px 30px;
             border-radius: 15px;
@@ -128,15 +128,19 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            text-align: left; /* テキストは左揃えで読みやすく */
+            text-align: left;
         }
+        /* ホバー時はカード全体が青くなり、文字は白、VIEW MOREは黄色に */
         .scroll-card:hover { transform: translateY(-10px); background: #00479d; color: white; }
+        .scroll-card:hover .card-more { color: #ffeb3b; } /* ホバー時だけ黄色に */
+
         .scroll-card h3 { font-size: 1.4rem; margin-bottom: 15px; }
         .scroll-card p { font-size: 0.9rem; line-height: 1.7; opacity: 0.8; }
-        .card-more { font-weight: bold; margin-top: 20px; color: #ffeb3b; }
+        
+        /* 【修正】通常時のVIEW MOREの色を青に */
+        .card-more { font-weight: bold; margin-top: 20px; color: #00479d; transition: 0.3s; }
 
         @media (max-width: 1080px) {
-            /* 画面が狭くなったら左詰めにしてスクロールを可能にする */
             .scroll-container { justify-content: flex-start; padding: 20px 8%; }
             .scroll-card { flex: 0 0 300px; }
         }
@@ -240,7 +244,6 @@
             navMenu.classList.remove('active');
         }
 
-        // スマホの時だけ「スワイプできます」を表示する制御（おまけ）
         if (window.innerWidth <= 1080) {
             document.querySelector('.sp-only').style.display = 'block';
         }
