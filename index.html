@@ -15,7 +15,7 @@
             background-color: #fff;
         }
 
-        /* --- 2. ヘッダー（完成版メニュー） --- */
+        /* --- 2. ヘッダー（共通メニュー） --- */
         header {
             position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
             background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
@@ -57,10 +57,6 @@
             nav.active { right: 0; }
             nav ul { flex-direction: column; gap: 40px; text-align: center; }
             .nav-jp { font-size: 22px; }
-            nav ul li a::after { left: 50%; transform: translateX(-50%); }
-            .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-            .menu-btn.active span:nth-child(2) { opacity: 0; }
-            .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
         /* --- 3. メインビジュアル --- */
@@ -74,24 +70,7 @@
         .hero-content h1 { font-size: 4.5rem; margin: 0; letter-spacing: 0.3em; }
         .hero-content p { font-size: 1.2rem; margin-top: 15px; letter-spacing: 0.4em; }
 
-        .scrolldown {
-            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center; z-index: 2;
-        }
-        .scrolldown span { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: #fff; margin-bottom: 10px; font-weight: bold; }
-        .scrolldown .line { width: 1px; height: 80px; background: rgba(255,255,255,0.2); position: relative; overflow: hidden; }
-        .scrolldown .line::after {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #fff;
-            animation: scrolldown-ani 2.0s cubic-bezier(0.76, 0, 0.3, 1) infinite;
-        }
-        @keyframes scrolldown-ani {
-            0% { transform: scaleY(0); transform-origin: top; }
-            45% { transform: scaleY(1); transform-origin: top; }
-            55% { transform: scaleY(1); transform-origin: bottom; }
-            100% { transform: scaleY(0); transform-origin: bottom; }
-        }
-
-        /* --- 4. サービス紹介セクション --- */
+        /* --- 4. サービス紹介セクション（カード修正版） --- */
         .horizontal-section {
             padding: 100px 0;
             background-color: #f8faff;
@@ -130,6 +109,10 @@
         .scroll-card:hover { transform: translateY(-10px); background: #00479d; color: white; }
         .scroll-card:hover .card-more { color: #ffeb3b; }
 
+        /* 「困った！」カード専用スタイル（少し目立たせる） */
+        .card-trouble { border-top-color: #e74c3c; }
+        .card-trouble:hover { background: #e74c3c; }
+
         .scroll-card h3 { font-size: 1.4rem; margin-bottom: 15px; }
         .scroll-card p { font-size: 0.9rem; line-height: 1.7; opacity: 0.8; }
         .card-more { font-weight: bold; margin-top: 20px; color: #00479d; transition: 0.3s; }
@@ -142,18 +125,7 @@
             .scroll-card { flex: 0 0 85%; }
         }
 
-        /* --- 5. お問い合わせ・採用情報 --- */
-        section { padding: 100px 8%; text-align: center; }
-        .contact-box { background: white; padding: 40px; border-radius: 10px; max-width: 600px; margin: 0 auto; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .tel-number { font-size: 2.5rem; font-weight: bold; color: #00479d; text-decoration: none; display: block; margin: 20px 0; }
-        .btn-link { display: inline-block; padding: 12px 40px; border: 2px solid #00479d; color: #00479d; text-decoration: none; font-weight: bold; border-radius: 50px; transition: 0.3s; }
-        .btn-link:hover { background: #00479d; color: white; }
-
-        #recruit-cta { background: #00479d; color: white; }
-        #recruit-cta h2 { color: white; }
-
         footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
-        .sp-only-text { margin-top: 20px; font-size: 0.8rem; color: #aaa; display: none; }
     </style>
 </head>
 <body>
@@ -167,7 +139,8 @@
         <nav id="navMenu">
             <ul>
                 <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
-                <li><a href="#services"><span class="nav-jp">事業・実績</span><span class="nav-en">Services</span></a></li>
+                <li><a href="business.html"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
+                <li><a href="trouble.html"><span class="nav-jp">困ったときは</span><span class="nav-en">Trouble</span></a></li>
                 <li><a href="contact.html"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
                 <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
             </ul>
@@ -176,7 +149,6 @@
 
     <div class="hero">
         <div class="hero-content"><h1>DAIWA DENKI</h1><p>光り輝く未来を、電気の技術で。</p></div>
-        <div class="scrolldown"><span>Scroll Down</span><div class="line"></div></div>
     </div>
 
     <div class="horizontal-section" id="services">
@@ -186,7 +158,7 @@
             <a href="company.html" class="scroll-card">
                 <div>
                     <h3>会社概要</h3>
-                    <p>私たちの経営理念や会社情報、アクセスについて。信頼を築き、街を支える大和電気の原点をご紹介します。</p>
+                    <p>私たちの経営理念や会社情報、アクセスについて。1971年の創業以来、地域を支えてきた歩みをご紹介します。</p>
                 </div>
                 <div class="card-more">VIEW MORE →</div>
             </a>
@@ -194,36 +166,20 @@
             <a href="business.html" class="scroll-card">
                 <div>
                     <h3>事業案内</h3>
-                    <p>一般電気工事から高圧設備、産業用ロボットの配線まで。幅広いニーズに対応する技術力を解説します。</p>
+                    <p>一般住宅から工場、農事設備、LAN構築まで。確かな技術でお客様のニーズに応える幅広い事業領域を解説します。</p>
                 </div>
                 <div class="card-more">VIEW MORE →</div>
             </a>
 
-            <a href="works.html" class="scroll-card">
+            <a href="trouble.html" class="scroll-card card-trouble">
                 <div>
-                    <h3>実績紹介</h3>
-                    <p>これまで私たちが手掛けてきた主な施工実績です。地域のインフラを支えてきた誇りと経験があります。</p>
+                    <h3>困った！<br>電気が消えた！</h3>
+                    <p>突然の停電やブレーカーのトラブル。こんな時はどうすればいい？安全に復旧させるための確認手順はこちら。</p>
                 </div>
-                <div class="card-more">VIEW MORE →</div>
+                <div class="card-more">解決方法を見る →</div>
             </a>
         </div>
-        <p id="spGuide" class="sp-only-text">← 横にスワイプできます →</p>
     </div>
-
-    <section id="contact-cta">
-        <div class="section-title"><h2>お問い合わせ</h2><p class="section-subtitle">Contact</p></div>
-        <div class="contact-box">
-            <p>ご相談やお見積りはお電話、またはフォームよりお気軽にどうぞ</p>
-            <a href="tel:03-1234-5678" class="tel-number">03-1234-5678</a>
-            <a href="contact.html" class="btn-link">お問い合わせフォーム</a>
-        </div>
-    </section>
-
-    <section id="recruit-cta">
-        <div class="section-title"><h2>採用情報</h2><p class="section-subtitle" style="color:rgba(255,255,255,0.7)">Recruit</p></div>
-        <p>共に成長し、未来を照らす仲間を探しています。</p>
-        <a href="recruit.html" class="btn-link" style="border-color:white; color:white;">詳細を見る</a>
-    </section>
 
     <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
 
@@ -234,12 +190,6 @@
             menuBtn.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-
-        // スマホガイド表示制御
-        const spGuide = document.getElementById('spGuide');
-        if (window.innerWidth <= 1080) {
-            spGuide.style.display = 'block';
-        }
     </script>
 </body>
 </html>
