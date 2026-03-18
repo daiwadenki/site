@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>困ったときはどうしよう！ | 大和電気株式会社</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <style>
+        /* --- 1. 全体設定 --- */
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: #f0f4f9; color: #333; overflow-x: hidden;
+        }
+
+        /* --- 2. ヘッダー（共通デザイン） --- */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
+            background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
+        }
+        .logo-area { display: flex; align-items: center; text-decoration: none; color: white; z-index: 110; }
+        .logo-image { height: 50px; width: auto; margin-right: 15px; }
+        .company-name { font-size: 24px; font-weight: bold; letter-spacing: 0.1em; }
+
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
+        nav ul li a { 
+            text-decoration: none; color: white; 
+            display: flex; flex-direction: column; align-items: center; 
+            transition: 0.3s; position: relative; padding-bottom: 5px;
+        }
+        .nav-jp { font-size: 15px; font-weight: bold; }
+        .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.7; letter-spacing: 0.1em; }
+
+        /* --- 3. ページヘッダー --- */
+        .page-header {
+            background-color: #e74c3c; color: white; padding: 160px 20px 80px; text-align: center;
+        }
+        .page-header h1 { font-size: 2.2rem; letter-spacing: 0.1em; margin: 0; }
+        .page-header p { font-size: 1.1rem; opacity: 0.9; margin-top: 10px; }
+
+        .container { max-width: 1000px; margin: 40px auto 100px; padding: 0 20px; }
+
+        /* --- 4. 分電盤解説セクション --- */
+        .panel-info {
+            background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 50px;
+        }
+        .section-title { color: #00479d; border-bottom: 3px solid #ffeb3b; display: inline-block; margin-bottom: 30px; font-size: 1.5rem; }
+        
+        .panel-diagram {
+            display: grid; grid-template-columns: 1fr 2fr; gap: 30px; align-items: center;
+        }
+        .panel-illustration {
+            background: #f8faff; border: 2px dashed #00479d; border-radius: 10px; height: 250px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #00479d;
+        }
+        .breaker-details h4 { color: #00479d; margin: 15px 0 5px 0; border-left: 4px solid #ffeb3b; padding-left: 10px; }
+        .breaker-details p { font-size: 0.9rem; margin: 0; color: #666; }
+
+        /* --- 5. 診断チャート --- */
+        .chart-section { background: white; padding: 50px 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        
+        .intro-box { display: flex; align-items: center; gap: 20px; background: #fff5f5; padding: 20px; border-radius: 10px; margin-bottom: 40px; }
+        .illust-placeholder { width: 80px; height: 80px; background: #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; text-align: center; }
+
+        .flow-container { display: flex; flex-direction: column; align-items: center; gap: 20px; position: relative; }
+        .flow-card {
+            background: #fff; border: 2px solid #00479d; padding: 20px; border-radius: 10px; width: 100%; max-width: 500px;
+            text-align: center; position: relative; z-index: 2;
+        }
+        .flow-card.start { background: #00479d; color: white; font-weight: bold; }
+        .flow-card.question { border-color: #ffeb3b; background: #fffdf0; }
+        .flow-card.action { border-style: dashed; }
+        .flow-card.result { background: #e74c3c; color: white; border: none; font-weight: bold; }
+        .flow-card.result.safe { background: #2ecc71; }
+
+        .arrow { font-size: 24px; color: #00479d; font-weight: bold; }
+        .branch { display: flex; width: 100%; justify-content: center; gap: 20px; }
+        .branch-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .label { font-size: 0.8rem; font-weight: bold; background: #00479d; color: white; padding: 2px 10px; border-radius: 10px; margin-bottom: -10px; z-index: 3; }
+
+        .tel-link { color: inherit; text-decoration: underline; font-size: 1.2rem; }
+
+        @media (max-width: 768px) {
+            .panel-diagram { grid-template-columns: 1fr; }
+            .branch { flex-direction: column; }
+            .flow-card { font-size: 0.9rem; }
+        }
+
+        footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-area">
+            <img src="miko.png" alt="ロゴ" class="logo-image">
+            <span class="company-name">大和電気株式会社</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="company.html"><span class="nav-jp">会社概要</span></a></li>
+                <li><a href="business.html"><span class="nav-jp">事業案内</span></a></li>
+                <li><a href="works.html"><span class="nav-jp">実績紹介</span></a></li>
+                <li><a href="trouble.html" style="color:#ffeb3b;"><span class="nav-jp">困ったときは</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1>困った、どうしよう！</h1>
+        <p>停電、地震！あわてず安全確認。電気が消えたときの手順</p>
+    </div>
+
+    <div class="container">
+        
+        <section class="panel-info">
+            <h2 class="section-title">分電盤（ぶんでんばん）とは？</h2>
+            <div class="panel-diagram">
+                <div class="panel-illustration">
+                    <span>【イラスト挿入箇所】</span><br>
+                    <strong>分電盤の全体図</strong><br>
+                    <small>（左に大きなスイッチ、右に小さいスイッチが並んでいる絵）</small>
+                </div>
+                <div class="breaker-details">
+                    <p>家庭内の電気を各部屋へ分け、使いすぎや漏電の際に電気を遮断する大切な装置です。</p>
+                    
+                    <h4>● アンペアブレーカー</h4>
+                    <p>契約以上の電気を一度に使ったときに「ガチャン」と切れる一番大きなスイッチです。</p>
+                    
+                    <h4>● 漏電ブレーカー</h4>
+                    <p>家の中のどこかで電気が漏れている（漏電）を検知すると切れる安全装置です。</p>
+                    
+                    <h4>● 回路ブレーカー</h4>
+                    <p>キッチン、エアコンなど部屋ごとのスイッチ。その場所で使いすぎると個別に切れます。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="chart-section">
+            <div class="intro-box">
+                <div class="illust-placeholder">イラスト：<br>悩む人</div>
+                <div>
+                    <h3 style="margin:0 0 5px 0;">突然電気が消えてしまったら...</h3>
+                    <p style="margin:0; font-size:0.9rem;">次の手順で操作をしてみてください。落ち着いて確認しましょう。</p>
+                </div>
+            </div>
+
+            <div class="flow-container">
+                <div class="flow-card start">START：電気が消えた！</div>
+                <div class="arrow">↓</div>
+                <div class="flow-card question">隣近所はどうですか？</div>
+                
+                <div class="branch">
+                    <div class="branch-item">
+                        <span class="label">消えている</span>
+                        <div class="flow-card action">1〜2分間待ってみる</div>
+                        <div class="arrow">↓</div>
+                        <div class="flow-card question">つきましたか？</div>
+                        <div class="branch">
+                            <div class="branch-item">
+                                <span class="label">つかない</span>
+                                <div class="flow-card result">
+                                    【外部トラブル】<br>東北電力コールセンター<br>
+                                    <a href="tel:0120175366" class="tel-link">0120-175-366</a><br>
+                                    <small>またはご契約の小売電気事業者へ</small>
+                                </div>
+                            </div>
+                            <div class="branch-item">
+                                <span class="label">ついた</span>
+                                <div class="flow-card result safe">解消：復旧しました</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="branch-item">
+                        <span class="label">消えていない</span>
+                        <div class="flow-card question">分電盤を見てください。<br>アンペア、または漏電ブレーカーが<br>切れていますか？</div>
+                        
+                        <div class="branch">
+                            <div class="branch-item">
+                                <span class="label">切れていない</span>
+                                <div class="flow-card question">回路ブレーカーの1つが<br>切れていますか？</div>
+                                <div class="branch">
+                                    <div class="branch-item">
+                                        <span class="label">切れている</span>
+                                        <div class="flow-card action">器具をコンセントから外し、<br>スイッチを入れる</div>
+                                        <div class="arrow">↓</div>
+                                        <div class="flow-card result">
+                                            また切れたら：<br>修理依頼（ショートの恐れ）<br>大和電気：022-382-5012
+                                        </div>
+                                    </div>
+                                    <div class="branch-item">
+                                        <span class="label">切れていない</span>
+                                        <div class="flow-card result">
+                                            容量不足の可能性あり<br>アンペア変更工事のご相談<br>大和電気：022-382-5012
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="branch-item">
+                                <span class="label">切れている</span>
+                                <div class="flow-card action">
+                                    回路を全て切り、元を入れ、<br>一つずつ回路を入れていく
+                                </div>
+                                <div class="arrow">↓</div>
+                                <div class="flow-card result">
+                                    特定箇所でまた落ちたら：<br>修理依頼（漏電の恐れ）<br>大和電気：022-382-5012
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
+
+    <script>
+        // メニュー等の共通スクリプトは適宜 index と同様に配置してください
+    </script>
+</body>
+</html>
