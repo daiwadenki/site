@@ -14,7 +14,7 @@
             background-color: #fff; color: #333; overflow-x: hidden;
         }
 
-        /* --- 2. ヘッダー（完成版メニュー完全移植） --- */
+        /* --- 2. ヘッダー（共通デザイン） --- */
         header {
             position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
             background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
@@ -32,7 +32,6 @@
         .nav-jp { font-size: 15px; font-weight: bold; }
         .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.7; letter-spacing: 0.1em; }
 
-        /* ホバー時の黄色ライン */
         nav ul li a::after {
             content: ""; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px;
             background: #ffeb3b; transition: width 0.3s ease;
@@ -40,7 +39,6 @@
         nav ul li a:hover { color: #ffeb3b; transform: scale(1.1); }
         nav ul li a:hover::after { width: 100%; }
 
-        /* スマホ用ボタン */
         .menu-btn { display: none; cursor: pointer; z-index: 110; background: none; border: none; flex-direction: column; gap: 6px; padding: 10px; }
         .menu-btn span { display: block; width: 30px; height: 2px; background: white; transition: 0.3s; }
 
@@ -57,10 +55,6 @@
             nav.active { right: 0; }
             nav ul { flex-direction: column; gap: 40px; text-align: center; }
             .nav-jp { font-size: 22px; }
-            nav ul li a::after { left: 50%; transform: translateX(-50%); }
-            .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-            .menu-btn.active span:nth-child(2) { opacity: 0; }
-            .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
         /* --- 3. ページヘッダー --- */
@@ -82,7 +76,7 @@
             flex: 1; height: 350px; background: #f0f4f9; border-radius: 15px;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.2rem; color: #00479d; font-weight: bold; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; padding: 20px;
         }
 
         .business-text { flex: 1; }
@@ -90,8 +84,9 @@
         .business-text h2 { font-size: 1.8rem; color: #00479d; margin-bottom: 20px; border-bottom: 3px solid #ffeb3b; display: inline-block; padding-bottom: 5px; }
         .business-text p { line-height: 1.8; color: #555; font-size: 1rem; }
         
-        .business-list { margin-top: 20px; padding-left: 20px; list-style-type: square; color: #00479d; }
-        .business-list li { margin-bottom: 8px; color: #555; }
+        .business-list { margin-top: 20px; padding-left: 0; list-style-type: none; }
+        .business-list li { margin-bottom: 10px; color: #333; font-weight: bold; display: flex; align-items: center; }
+        .business-list li::before { content: "■"; color: #00479d; margin-right: 10px; font-size: 0.8rem; }
 
         /* お問い合わせ誘導 */
         .cta-section {
@@ -108,7 +103,7 @@
 
         @media (max-width: 768px) {
             .business-item, .business-item:nth-child(even) { flex-direction: column; gap: 30px; margin-bottom: 60px; }
-            .business-img { width: 100%; height: 250px; }
+            .business-img { width: 100%; height: 200px; }
             .business-text h2 { font-size: 1.5rem; }
         }
     </style>
@@ -144,27 +139,28 @@
                 <div class="business-number">01</div>
                 <h2>一般電気設備工事</h2>
                 <p>
-                    オフィスビル、商業施設、マンションなどの新築・改修に伴う電気設備工事一式を請け負います。受変電設備から電灯・コンセント設備まで、建物に必要な全ての「電気の道」を構築します。
+                    一般住宅、オフィス、店舗、商業施設、マンションなどの新築・改修に伴う電気設備工事一式を請け負います。受変電設備から電灯・コンセント設備まで、建物に必要な全ての「電気の道」を構築します。
                 </p>
                 <ul class="business-list">
                     <li>受変電設備・幹線設備工事</li>
                     <li>電灯・動力設備工事</li>
                     <li>非常用発電機・蓄電池設備</li>
+                    <li>容量変更工事（アンペア変更）</li>
                 </ul>
             </div>
         </div>
 
         <div class="business-item">
-            <div class="business-img">産業用・工場設備工事</div>
+            <div class="business-img">産業用・農事用・工場動力設備工事</div>
             <div class="business-text">
                 <div class="business-number">02</div>
-                <h2>産業用・工場設備工事</h2>
+                <h2>産業用・農事用・<br>工場動力設備工事</h2>
                 <p>
-                    工場の生産ラインの稼働に不可欠な動力配線や、制御盤の据付工事を行います。複雑な配線設計も、熟練の技術者が正確かつ安全に施工し、安定した生産環境を支えます。
+                    動力配線や、制御盤の据付工事を行います。複雑な配線設計も、熟練の技術者が正確かつ安全に施工し、安定した生産環境を支えます。
                 </p>
                 <ul class="business-list">
-                    <li>生産ライン動力配線</li>
-                    <li>自動制御・計装工事</li>
+                    <li>動力配線</li>
+                    <li>計装工事</li>
                     <li>制御盤・操作盤の据付</li>
                 </ul>
             </div>
@@ -176,10 +172,10 @@
                 <div class="business-number">03</div>
                 <h2>弱電・通信設備工事</h2>
                 <p>
-                    インターネット環境（LAN）の構築や、放送設備、火災報知器などの弱電工事にも対応しています。現代社会に欠かせない情報通信インフラの基盤をトータルサポートします。
+                    インターネット環境（LAN）の配線や、放送設備、火災報知器などの弱電工事にも対応しています。現代社会に欠かせない情報通信インフラの基盤をトータルサポートします。
                 </p>
                 <ul class="business-list">
-                    <li>LAN・光ネットワーク構築</li>
+                    <li>LAN</li>
                     <li>放送・インターホン設備</li>
                     <li>火災報知器・セキュリティ設備</li>
                 </ul>
@@ -188,7 +184,7 @@
 
         <div class="cta-section">
             <h3>電気設備に関することなら、何でもご相談ください。</h3>
-            <p style="margin-bottom: 30px; color: #666;">お見積りや現場調査のご依頼も随時承っております。</p>
+            <p style="margin-bottom: 30px; color: #666;">地域に根ざした確かな技術で、安心の電気環境をお届けします。</p>
             <a href="contact.html" class="cta-btn">お問い合わせはこちら</a>
         </div>
 
