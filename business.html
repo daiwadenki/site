@@ -14,7 +14,7 @@
             background-color: #fff; color: #333; overflow-x: hidden;
         }
 
-        /* --- 2. ヘッダー（共通デザイン） --- */
+        /* --- 2. 最新ヘッダー（共通デザイン） --- */
         header {
             position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
             background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
@@ -45,7 +45,6 @@
         @media (max-width: 1024px) {
             header { padding: 15px 20px; }
             .company-name { font-size: 18px; }
-            .logo-image { height: 40px; }
             .menu-btn { display: flex; }
             nav { 
                 position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; 
@@ -66,45 +65,30 @@
 
         /* --- 4. 事業案内コンテンツ --- */
         .container { max-width: 1000px; margin: 80px auto; padding: 0 20px; }
-
-        .business-item {
-            display: flex; align-items: center; gap: 50px; margin-bottom: 100px;
-        }
+        .business-item { display: flex; align-items: center; gap: 50px; margin-bottom: 100px; }
         .business-item:nth-child(even) { flex-direction: row-reverse; }
-
         .business-img {
             flex: 1; height: 350px; background: #f0f4f9; border-radius: 15px;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.2rem; color: #00479d; font-weight: bold; overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; padding: 20px;
         }
-
         .business-text { flex: 1; }
         .business-number { font-size: 3rem; font-weight: bold; color: rgba(0, 71, 157, 0.1); line-height: 1; margin-bottom: 10px; }
         .business-text h2 { font-size: 1.8rem; color: #00479d; margin-bottom: 20px; border-bottom: 3px solid #ffeb3b; display: inline-block; padding-bottom: 5px; }
         .business-text p { line-height: 1.8; color: #555; font-size: 1rem; }
-        
         .business-list { margin-top: 20px; padding-left: 0; list-style-type: none; }
         .business-list li { margin-bottom: 10px; color: #333; font-weight: bold; display: flex; align-items: center; }
         .business-list li::before { content: "■"; color: #00479d; margin-right: 10px; font-size: 0.8rem; }
 
-        /* お問い合わせ誘導 */
-        .cta-section {
-            background: #f8faff; padding: 80px 20px; text-align: center; border-radius: 20px;
-        }
-        .cta-section h3 { font-size: 1.5rem; margin-bottom: 20px; }
-        .cta-btn {
-            display: inline-block; padding: 18px 50px; background: #00479d; color: white;
-            text-decoration: none; border-radius: 50px; font-weight: bold; transition: 0.3s;
-        }
-        .cta-btn:hover { background: #003575; transform: translateY(-3px); }
+        .cta-section { background: #f8faff; padding: 80px 20px; text-align: center; border-radius: 20px; }
+        .cta-btn { display: inline-block; padding: 18px 50px; background: #00479d; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; transition: 0.3s; }
 
         footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
 
         @media (max-width: 768px) {
             .business-item, .business-item:nth-child(even) { flex-direction: column; gap: 30px; margin-bottom: 60px; }
             .business-img { width: 100%; height: 200px; }
-            .business-text h2 { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -119,7 +103,8 @@
         <nav id="navMenu">
             <ul>
                 <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
-                <li><a href="index.html#services"><span class="nav-jp">事業・実績</span><span class="nav-en">Services</span></a></li>
+                <li><a href="business.html" style="color:#ffeb3b;"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
+                <li><a href="trouble.html"><span class="nav-jp">困ったときは</span><span class="nav-en">Trouble</span></a></li>
                 <li><a href="contact.html"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
                 <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
             </ul>
@@ -132,15 +117,12 @@
     </div>
 
     <div class="container">
-        
         <div class="business-item">
             <div class="business-img">一般電気設備工事</div>
             <div class="business-text">
                 <div class="business-number">01</div>
                 <h2>一般電気設備工事</h2>
-                <p>
-                    一般住宅、オフィス、店舗、商業施設、マンションなどの新築・改修に伴う電気設備工事一式を請け負います。受変電設備から電灯・コンセント設備まで、建物に必要な全ての「電気の道」を構築します。
-                </p>
+                <p>一般住宅、オフィス、店舗、商業施設、マンションなどの新築・改修に伴う電気設備工事一式を請け負います。</p>
                 <ul class="business-list">
                     <li>受変電設備・幹線設備工事</li>
                     <li>電灯・動力設備工事</li>
@@ -155,9 +137,7 @@
             <div class="business-text">
                 <div class="business-number">02</div>
                 <h2>産業用・農事用・<br>工場動力設備工事</h2>
-                <p>
-                    動力配線や、制御盤の据付工事を行います。複雑な配線設計も、熟練の技術者が正確かつ安全に施工し、安定した生産環境を支えます。
-                </p>
+                <p>動力配線や、制御盤の据付工事を行います。複雑な配線設計も、熟練の技術者が正確かつ安全に施工します。</p>
                 <ul class="business-list">
                     <li>動力配線</li>
                     <li>計装工事</li>
@@ -171,11 +151,9 @@
             <div class="business-text">
                 <div class="business-number">03</div>
                 <h2>弱電・通信設備工事</h2>
-                <p>
-                    インターネット環境（LAN）の配線や、放送設備、火災報知器などの弱電工事にも対応しています。現代社会に欠かせない情報通信インフラの基盤をトータルサポートします。
-                </p>
+                <p>インターネット環境（LAN）の配線や、放送設備、火災報知器などの弱電工事に対応。情報通信インフラを支えます。</p>
                 <ul class="business-list">
-                    <li>LAN</li>
+                    <li>LAN構築工事</li>
                     <li>放送・インターホン設備</li>
                     <li>火災報知器・セキュリティ設備</li>
                 </ul>
@@ -184,10 +162,8 @@
 
         <div class="cta-section">
             <h3>電気設備に関することなら、何でもご相談ください。</h3>
-            <p style="margin-bottom: 30px; color: #666;">地域に根ざした確かな技術で、安心の電気環境をお届けします。</p>
             <a href="contact.html" class="cta-btn">お問い合わせはこちら</a>
         </div>
-
     </div>
 
     <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
