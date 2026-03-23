@@ -7,14 +7,13 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <style>
-        /* --- 1. 全体設定 --- */
         body, html {
             margin: 0; padding: 0; width: 100%;
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            background-color: #f0f4f9; color: #333; overflow-x: hidden;
+            background-color: #f4f7fa; color: #333; overflow-x: hidden;
         }
 
-        /* --- 2. ヘッダー（共通デザイン） --- */
+        /* --- ヘッダー --- */
         header {
             position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
             background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
@@ -24,70 +23,81 @@
         .company-name { font-size: 24px; font-weight: bold; letter-spacing: 0.1em; }
 
         nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
-        nav ul li a { 
-            text-decoration: none; color: white; 
-            display: flex; flex-direction: column; align-items: center; 
-            transition: 0.3s; position: relative; padding-bottom: 5px;
-        }
-        .nav-jp { font-size: 15px; font-weight: bold; }
-        .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.7; letter-spacing: 0.1em; }
+        nav ul li a { text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; }
 
-        /* --- 3. ページヘッダー --- */
         .page-header {
-            background-color: #e74c3c; color: white; padding: 160px 20px 80px; text-align: center;
+            background-color: #e74c3c; color: white; padding: 160px 20px 60px; text-align: center;
         }
         .page-header h1 { font-size: 2.2rem; letter-spacing: 0.1em; margin: 0; }
-        .page-header p { font-size: 1.1rem; opacity: 0.9; margin-top: 10px; }
 
-        .container { max-width: 1000px; margin: 40px auto 100px; padding: 0 20px; }
+        .container { max-width: 1100px; margin: 40px auto 100px; padding: 0 20px; }
 
-        /* --- 4. 分電盤解説セクション --- */
-        .panel-info {
-            background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 50px;
+        /* --- 診断チャートセクション --- */
+        .chart-section {
+            background: white; padding: 60px 40px; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
-        .section-title { color: #00479d; border-bottom: 3px solid #ffeb3b; display: inline-block; margin-bottom: 30px; font-size: 1.5rem; }
-        
-        .panel-diagram {
-            display: grid; grid-template-columns: 1fr 2fr; gap: 30px; align-items: center;
-        }
-        .panel-illustration {
-            background: #f8faff; border: 2px dashed #00479d; border-radius: 10px; height: 250px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #00479d;
-        }
-        .breaker-details h4 { color: #00479d; margin: 15px 0 5px 0; border-left: 4px solid #ffeb3b; padding-left: 10px; }
-        .breaker-details p { font-size: 0.9rem; margin: 0; color: #666; }
 
-        /* --- 5. 診断チャート --- */
-        .chart-section { background: white; padding: 50px 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        
-        .intro-box { display: flex; align-items: center; gap: 20px; background: #fff5f5; padding: 20px; border-radius: 10px; margin-bottom: 40px; }
-        .illust-placeholder { width: 80px; height: 80px; background: #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; text-align: center; }
+        .intro-box {
+            display: flex; align-items: center; gap: 30px; background: #fff5f5;
+            padding: 30px; border-radius: 12px; margin-bottom: 60px; /* 下との余白を大きく */
+        }
 
-        .flow-container { display: flex; flex-direction: column; align-items: center; gap: 20px; position: relative; }
+        /* フロー全体の縦の繋がり（ゆとり設計） */
+        .flow-container {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 40px; /* ブロックごとの縦の距離を40pxに拡張 */
+            position: relative;
+        }
+
         .flow-card {
-            background: #fff; border: 2px solid #00479d; padding: 20px; border-radius: 10px; width: 100%; max-width: 500px;
-            text-align: center; position: relative; z-index: 2;
+            background: #fff; border: 2px solid #00479d; padding: 25px 40px; /* 内側の余白も拡張 */
+            border-radius: 12px; width: 100%; max-width: 650px; /* 横幅を広げて1行で読めるように */
+            box-sizing: border-box; text-align: center; position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
-        .flow-card.start { background: #00479d; color: white; font-weight: bold; }
+
+        .flow-card.start { background: #00479d; color: white; font-weight: bold; font-size: 1.2rem; }
         .flow-card.question { border-color: #ffeb3b; background: #fffdf0; }
-        .flow-card.action { border-style: dashed; }
-        .flow-card.result { background: #e74c3c; color: white; border: none; font-weight: bold; }
+        .flow-card.result { background: #e74c3c; color: white; border: none; font-weight: bold; padding: 35px 40px; }
         .flow-card.result.safe { background: #2ecc71; }
 
-        .arrow { font-size: 24px; color: #00479d; font-weight: bold; }
-        .branch { display: flex; width: 100%; justify-content: center; gap: 20px; }
-        .branch-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        .label { font-size: 0.8rem; font-weight: bold; background: #00479d; color: white; padding: 2px 10px; border-radius: 10px; margin-bottom: -10px; z-index: 3; }
-
-        .tel-link { color: inherit; text-decoration: underline; font-size: 1.2rem; }
-
-        @media (max-width: 768px) {
-            .panel-diagram { grid-template-columns: 1fr; }
-            .branch { flex-direction: column; }
-            .flow-card { font-size: 0.9rem; }
+        /* 縦に繋ぐ矢印ラインの長さを拡張 */
+        .line-arrow {
+            width: 2px; height: 50px; /* 縦線を長くして視覚的な距離をあける */
+            background-color: #00479d; position: relative;
+        }
+        .line-arrow::after {
+            content: ""; position: absolute; bottom: -5px; left: -4px;
+            border-top: 10px solid #00479d; border-left: 5px solid transparent; border-right: 5px solid transparent;
         }
 
-        footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
+        /* 左右への分岐 */
+        .branch-group {
+            display: flex; width: 100%; max-width: 1000px;
+            justify-content: space-between; gap: 50px; /* 左右の距離を50pxに拡張 */
+            margin-top: 20px;
+        }
+
+        .branch-column {
+            flex: 1; display: flex; flex-direction: column; align-items: center;
+            gap: 30px; /* 縦の距離 */
+        }
+
+        /* YES/NOのラベルを見やすく */
+        .choice-label {
+            font-size: 0.9rem; font-weight: bold; background: #00479d; color: white;
+            padding: 6px 20px; border-radius: 20px; letter-spacing: 0.1em;
+            margin-bottom: -10px; z-index: 10;
+        }
+        .choice-label.red { background: #e74c3c; }
+
+        .tel-link { color: inherit; text-decoration: underline; font-size: 1.4rem; font-weight: bold; display: block; margin: 10px 0; }
+
+        @media (max-width: 1024px) {
+            .branch-group { flex-direction: column; align-items: center; gap: 80px; } /* スマホでは縦並びにして、さらに距離を取る */
+            .flow-card { max-width: 90%; padding: 20px; }
+        }
     </style>
 </head>
 <body>
@@ -101,7 +111,6 @@
             <ul>
                 <li><a href="company.html"><span class="nav-jp">会社概要</span></a></li>
                 <li><a href="business.html"><span class="nav-jp">事業案内</span></a></li>
-                <li><a href="works.html"><span class="nav-jp">実績紹介</span></a></li>
                 <li><a href="trouble.html" style="color:#ffeb3b;"><span class="nav-jp">困ったときは</span></a></li>
             </ul>
         </nav>
@@ -109,104 +118,82 @@
 
     <div class="page-header">
         <h1>困った、どうしよう！</h1>
-        <p>停電、地震！あわてず安全確認。電気が消えたときの手順</p>
     </div>
 
     <div class="container">
-        
-        <section class="panel-info">
-            <h2 class="section-title">分電盤（ぶんでんばん）とは？</h2>
-            <div class="panel-diagram">
-                <div class="panel-illustration">
-                    <span>【イラスト挿入箇所】</span><br>
-                    <strong>分電盤の全体図</strong><br>
-                    <small>（左に大きなスイッチ、右に小さいスイッチが並んでいる絵）</small>
-                </div>
-                <div class="breaker-details">
-                    <p>家庭内の電気を各部屋へ分け、使いすぎや漏電の際に電気を遮断する大切な装置です。</p>
-                    
-                    <h4>● アンペアブレーカー</h4>
-                    <p>契約以上の電気を一度に使ったときに「ガチャン」と切れる一番大きなスイッチです。</p>
-                    
-                    <h4>● 漏電ブレーカー</h4>
-                    <p>家の中のどこかで電気が漏れている（漏電）を検知すると切れる安全装置です。</p>
-                    
-                    <h4>● 回路ブレーカー</h4>
-                    <p>キッチン、エアコンなど部屋ごとのスイッチ。その場所で使いすぎると個別に切れます。</p>
-                </div>
-            </div>
-        </section>
-
         <section class="chart-section">
             <div class="intro-box">
-                <div class="illust-placeholder">イラスト：<br>悩む人</div>
                 <div>
-                    <h3 style="margin:0 0 5px 0;">突然電気が消えてしまったら...</h3>
-                    <p style="margin:0; font-size:0.9rem;">次の手順で操作をしてみてください。落ち着いて確認しましょう。</p>
+                    <h3 style="margin:0 0 10px 0; color: #e74c3c; font-size: 1.5rem;">突然電気が消えてしまったら...</h3>
+                    <p style="margin:0; font-size: 1rem; line-height: 1.6;">あわてずに、まずは次の手順で一つずつ確認を進めてみましょう。</p>
                 </div>
             </div>
 
             <div class="flow-container">
                 <div class="flow-card start">START：電気が消えた！</div>
-                <div class="arrow">↓</div>
-                <div class="flow-card question">隣近所はどうですか？</div>
+                <div class="line-arrow"></div>
+                <div class="flow-card question">【確認①】 お隣や、近所の街灯はついていますか？</div>
                 
-                <div class="branch">
-                    <div class="branch-item">
-                        <span class="label">消えている</span>
-                        <div class="flow-card action">1〜2分間待ってみる</div>
-                        <div class="arrow">↓</div>
-                        <div class="flow-card question">つきましたか？</div>
-                        <div class="branch">
-                            <div class="branch-item">
-                                <span class="label">つかない</span>
+                <div class="branch-group">
+                    <div class="branch-column">
+                        <span class="choice-label red">消えている（ご近所も同じ）</span>
+                        <div class="flow-card">1〜2分間、そのまま様子を見てみる</div>
+                        <div class="line-arrow"></div>
+                        <div class="flow-card question">電気はつきましたか？</div>
+                        
+                        <div class="branch-group" style="gap: 20px;">
+                            <div class="branch-column">
+                                <span class="choice-label red">つかない</span>
                                 <div class="flow-card result">
-                                    【外部トラブル】<br>東北電力コールセンター<br>
-                                    <a href="tel:0120175366" class="tel-link">0120-175-366</a><br>
-                                    <small>またはご契約の小売電気事業者へ</small>
+                                    【東北電力コールセンターへ】<br>
+                                    <a href="tel:0120175366" class="tel-link">0120-175-366</a>
+                                    <small>（24時間受付 / またはご契約の小売電気事業者へ）</small>
                                 </div>
                             </div>
-                            <div class="branch-item">
-                                <span class="label">ついた</span>
-                                <div class="flow-card result safe">解消：復旧しました</div>
+                            <div class="branch-column">
+                                <span class="choice-label">ついた</span>
+                                <div class="flow-card result safe">解消しました（そのままお使いください）</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="branch-item">
-                        <span class="label">消えていない</span>
-                        <div class="flow-card question">分電盤を見てください。<br>アンペア、または漏電ブレーカーが<br>切れていますか？</div>
+                    <div class="branch-column">
+                        <span class="choice-label">消えていない（我が家だけ）</span>
+                        <div class="flow-card question">分電盤を見て、アンペアか漏電ブレーカーが落ちていますか？</div>
+                        <div class="line-arrow"></div>
                         
-                        <div class="branch">
-                            <div class="branch-item">
-                                <span class="label">切れていない</span>
-                                <div class="flow-card question">回路ブレーカーの1つが<br>切れていますか？</div>
-                                <div class="branch">
-                                    <div class="branch-item">
-                                        <span class="label">切れている</span>
-                                        <div class="flow-card action">器具をコンセントから外し、<br>スイッチを入れる</div>
-                                        <div class="arrow">↓</div>
+                        <div class="branch-group" style="gap: 20px;">
+                            <div class="branch-column">
+                                <span class="choice-label red">落ちていない</span>
+                                <div class="flow-card question">小さいスイッチ（安全ブレーカー）が1つだけ落ちていますか？</div>
+                                
+                                <div class="branch-group" style="gap: 15px;">
+                                    <div class="branch-column">
+                                        <span class="choice-label red">落ちている</span>
+                                        <div class="flow-card">該当のコンセント器具を抜き、ブレーカーを入れる</div>
+                                        <div class="line-arrow"></div>
                                         <div class="flow-card result">
-                                            また切れたら：<br>修理依頼（ショートの恐れ）<br>大和電気：022-382-5012
+                                            また落ちたらショートの可能性：<br>修理依頼：大和電気株式会社<br>
+                                            <a href="tel:0223825012" class="tel-link">022-382-5012</a>
                                         </div>
                                     </div>
-                                    <div class="branch-item">
-                                        <span class="label">切れていない</span>
+                                    <div class="branch-column">
+                                        <span class="choice-label">落ちていない</span>
                                         <div class="flow-card result">
-                                            容量不足の可能性あり<br>アンペア変更工事のご相談<br>大和電気：022-382-5012
+                                            契約容量不足の可能性あり：<br>アンペア変更依頼：大和電気<br>
+                                            <a href="tel:0223825012" class="tel-link">022-382-5012</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="branch-item">
-                                <span class="label">切れている</span>
-                                <div class="flow-card action">
-                                    回路を全て切り、元を入れ、<br>一つずつ回路を入れていく
-                                </div>
-                                <div class="arrow">↓</div>
+
+                            <div class="branch-column">
+                                <span class="choice-label">落ちている</span>
+                                <div class="flow-card">全てのスイッチを切り、大元を入れてから1つずつスイッチを入れる</div>
+                                <div class="line-arrow"></div>
                                 <div class="flow-card result">
-                                    特定箇所でまた落ちたら：<br>修理依頼（漏電の恐れ）<br>大和電気：022-382-5012
+                                    特定のスイッチで落ちたら漏電の可能性：<br>修理依頼：大和電気株式会社<br>
+                                    <a href="tel:0223825012" class="tel-link">022-382-5012</a>
                                 </div>
                             </div>
                         </div>
@@ -218,8 +205,5 @@
 
     <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
 
-    <script>
-        // メニュー等の共通スクリプトは適宜 index と同様に配置してください
-    </script>
 </body>
 </html>
