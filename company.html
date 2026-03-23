@@ -14,7 +14,7 @@
             background-color: #fff; color: #333; overflow-x: hidden;
         }
 
-        /* --- 2. ヘッダー（共通デザイン） --- */
+        /* --- 2. 最新ヘッダー（共通デザイン） --- */
         header {
             position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
             background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
@@ -39,6 +39,7 @@
         nav ul li a:hover { color: #ffeb3b; transform: scale(1.1); }
         nav ul li a:hover::after { width: 100%; }
 
+        /* スマホ用ボタン */
         .menu-btn { display: none; cursor: pointer; z-index: 110; background: none; border: none; flex-direction: column; gap: 6px; padding: 10px; }
         .menu-btn span { display: block; width: 30px; height: 2px; background: white; transition: 0.3s; }
 
@@ -55,6 +56,9 @@
             nav.active { right: 0; }
             nav ul { flex-direction: column; gap: 40px; text-align: center; }
             .nav-jp { font-size: 22px; }
+            .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .menu-btn.active span:nth-child(2) { opacity: 0; }
+            .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
         /* --- 3. ページヘッダー --- */
@@ -93,8 +97,9 @@
         <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
         <nav id="navMenu">
             <ul>
-                <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
-                <li><a href="index.html#services"><span class="nav-jp">事業・実績</span><span class="nav-en">Services</span></a></li>
+                <li><a href="company.html" style="color:#ffeb3b;"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
+                <li><a href="business.html"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
+                <li><a href="trouble.html"><span class="nav-jp">困ったときは</span><span class="nav-en">Trouble</span></a></li>
                 <li><a href="contact.html"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
                 <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
             </ul>
