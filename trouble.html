@@ -4,142 +4,251 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>困ったときは | 大和電気株式会社</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
     <style>
-        body { font-family: "Helvetica Neue", Arial, sans-serif; background: #f4f7f9; line-height: 1.6; color: #333; margin: 0; padding: 0; }
-        .container { max-width: 800px; margin: 150px auto 100px; padding: 0 20px; }
-        
-        /* ページヘッダー */
-        .page-header { background: #e74c3c; color: white; text-align: center; padding: 60px 20px; margin-top: 80px; }
-
-        /* チャート全体のスタイル */
-        .flow-wrapper { display: flex; flex-direction: column; gap: 40px; margin-top: 50px; }
-
-        /* ステップのカード */
-        .step-card {
-            background: white; border-radius: 15px; padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            border-left: 8px solid #00479d;
-            transition: all 0.4s ease;
-            opacity: 0; transform: translateY(20px);
+        /* --- 1. 全体設定 --- */
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: #f0f4f9; color: #333; overflow-x: hidden;
+            scroll-behavior: smooth;
         }
-        /* 表示された時のアニメーション */
-        .step-card.active { opacity: 1; transform: translateY(0); }
 
-        .step-label { font-size: 0.8rem; font-weight: bold; color: #00479d; margin-bottom: 10px; display: block; }
-        .step-title { font-size: 1.4rem; font-weight: bold; margin-bottom: 20px; display: block; white-space: nowrap; }
+        /* --- 2. ヘッダー（全ページ共通） --- */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
+            background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
+        }
+        .logo-area { display: flex; align-items: center; text-decoration: none; color: white; z-index: 110; }
+        .logo-image { height: 50px; width: auto; margin-right: 15px; }
+        .company-name { font-size: 24px; font-weight: bold; letter-spacing: 0.1em; }
 
-        /* 選択肢ボタン */
-        .choice-area { display: flex; gap: 15px; }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
+        nav ul li a { 
+            text-decoration: none; color: white; 
+            display: flex; flex-direction: column; align-items: center; 
+            transition: 0.3s; position: relative; padding-bottom: 5px;
+        }
+        .nav-jp { font-size: 15px; font-weight: bold; }
+        .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.7; letter-spacing: 0.1em; }
+
+        /* スマホ用ボタン */
+        .menu-btn { display: none; cursor: pointer; z-index: 110; background: none; border: none; flex-direction: column; gap: 6px; padding: 10px; }
+        .menu-btn span { display: block; width: 30px; height: 2px; background: white; transition: 0.3s; }
+
+        @media (max-width: 1024px) {
+            header { padding: 15px 20px; }
+            .company-name { font-size: 18px; }
+            .menu-btn { display: flex; }
+            nav { 
+                position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; 
+                background: rgba(0, 71, 157, 0.98); transition: 0.5s; 
+                display: flex; align-items: center; justify-content: center; z-index: 105; 
+            }
+            nav.active { right: 0; }
+            nav ul { flex-direction: column; gap: 40px; text-align: center; }
+        }
+
+        /* --- 3. ページヘッダー --- */
+        .page-header {
+            background-color: #e74c3c; color: white; padding: 160px 20px 60px; text-align: center;
+        }
+        .page-header h1 { font-size: 2.2rem; letter-spacing: 0.1em; margin: 0; }
+        .page-header p { font-size: 1.1rem; opacity: 0.9; margin-top: 15px; line-height: 1.6; }
+
+        /* --- 4. コンテンツエリア --- */
+        .container { max-width: 850px; margin: 0 auto 100px; padding: 40px 20px; }
+
+        /* 分電盤解説セクション（ゆったり配置） */
+        .intro-section {
+            background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 80px;
+        }
+        .intro-section h2 { color: #00479d; border-bottom: 3px solid #ffeb3b; display: inline-block; margin-bottom: 30px; }
+        
+        .panel-flex { display: flex; gap: 40px; align-items: center; margin-top: 20px; }
+        .panel-illust { flex: 1; background: #f8faff; height: 250px; border-radius: 15px; border: 2px dashed #00479d; display: flex; align-items: center; justify-content: center; color: #00479d; text-align: center; font-weight: bold; }
+        .panel-desc { flex: 1.2; }
+        .panel-desc h4 { margin: 15px 0 5px; color: #00479d; font-size: 1.1rem; }
+        .panel-desc p { margin: 0; font-size: 0.95rem; color: #666; line-height: 1.7; }
+
+        /* --- 5. 診断チャート（ギミック付） --- */
+        .flow-wrapper { display: flex; flex-direction: column; gap: 50px; position: relative; }
+        
+        /* ステップカード */
+        .step-card {
+            background: white; border-radius: 20px; padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border-left: 10px solid #00479d;
+            transition: all 0.6s ease;
+            opacity: 0; transform: translateY(30px);
+            display: none; /* 初期は非表示 */
+            position: relative;
+        }
+        .step-card.active { display: block; opacity: 1; transform: translateY(0); }
+
+        .step-num { font-size: 0.9rem; font-weight: bold; color: #00479d; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+        .step-question { font-size: 1.5rem; font-weight: bold; line-height: 1.4; margin-bottom: 30px; display: block; }
+
+        /* ボタンエリア */
+        .choice-area { display: flex; gap: 20px; }
         .choice-btn {
-            flex: 1; padding: 15px; border: 2px solid #00479d; border-radius: 50px;
+            flex: 1; padding: 20px; border: 2px solid #00479d; border-radius: 60px;
             background: white; color: #00479d; font-weight: bold; cursor: pointer;
             transition: 0.3s; text-align: center; font-size: 1.1rem;
         }
-        .choice-btn:hover { background: #00479d; color: white; }
+        .choice-btn:hover { background: #00479d; color: white; transform: scale(1.02); }
 
-        /* 最終回答（リザルト） */
+        /* 結果ボックス */
         .result-box {
-            background: #fff0f0; border: 2px solid #e74c3c; border-radius: 15px; padding: 30px;
+            background: #fff0f0; border: 2px solid #e74c3c; border-radius: 20px; padding: 40px;
             margin-top: 20px; text-align: center; display: none;
+            opacity: 0; transition: opacity 0.5s;
         }
-        .result-box.active { display: block; animation: fadeIn 0.5s forwards; }
+        .result-box.active { display: block; opacity: 1; }
+        .result-title { color: #e74c3c; font-size: 1.6rem; margin-bottom: 15px; font-weight: bold; display: block; }
+        .result-text { font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px; color: #444; }
+
         .tel-btn {
-            display: inline-block; background: #e74c3c; color: white; padding: 15px 30px;
-            text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 20px; font-size: 1.3rem;
+            display: inline-block; background: #e74c3c; color: white; padding: 18px 40px;
+            text-decoration: none; border-radius: 60px; font-weight: bold; font-size: 1.4rem;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3); transition: 0.3s;
         }
+        .tel-btn:hover { background: #c0392b; transform: translateY(-3px); }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
 
-        /* 装飾用の矢印 */
-        .step-card:not(:last-child)::after {
-            content: "▼"; position: absolute; bottom: -35px; left: 40px; color: #ccc; font-size: 20px;
-        }
-
-        @media (max-width: 600px) {
-            .step-title { white-space: normal; font-size: 1.1rem; }
+        @media (max-width: 768px) {
+            .panel-flex { flex-direction: column; }
             .choice-area { flex-direction: column; }
+            .step-question { font-size: 1.2rem; }
+            .page-header h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
+    <header>
+        <a href="index.html" class="logo-area">
+            <img src="miko.png" alt="ロゴ" class="logo-image">
+            <span class="company-name">大和電気株式会社</span>
+        </a>
+        <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+        <nav id="navMenu">
+            <ul>
+                <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
+                <li><a href="business.html"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
+                <li><a href="trouble.html" style="color:#ffeb3b;"><span class="nav-jp">困ったときは</span><span class="nav-en">Trouble</span></a></li>
+                <li><a href="contact.html"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
+                <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
     <div class="page-header">
-        <h1>電気が消えた！解決チャート</h1>
-        <p>焦らず、上から順番にボタンを押して確認してください</p>
+        <h1>困った、どうしよう！</h1>
+        <p>突然電気が消えてしまったら、焦らずに下のボタンを<br>順番に押して確認してみてください。</p>
     </div>
 
     <div class="container">
+        
+        <section class="intro-section">
+            <h2>分電盤の仕組み</h2>
+            <div class="panel-flex">
+                <div class="panel-illust">
+                    【イラスト挿入箇所】<br>分電盤の構成図
+                </div>
+                <div class="panel-desc">
+                    <h4>■ アンペアブレーカー</h4>
+                    <p>契約電力を超えると家全体の電気を切断します。</p>
+                    <h4>■ 漏電ブレーカー</h4>
+                    <p>漏電を感知すると事故防止のために遮断します。</p>
+                    <h4>■ 回路ブレーカー</h4>
+                    <p>各部屋ごとのスイッチ。一部屋だけ消えた時はここを確認。</p>
+                </div>
+            </div>
+        </section>
+
         <div class="flow-wrapper">
             
             <div class="step-card active" id="step1">
-                <span class="step-label">STEP 01</span>
-                <span class="step-title">隣近所の家や、街灯の電気も消えていますか？</span>
+                <span class="step-num">Step 01</span>
+                <span class="step-question">隣近所の家や、外の街灯も消えていますか？</span>
                 <div class="choice-area">
-                    <button class="choice-btn" onclick="showNext('step1', 'step-out')">はい（近所も消えている）</button>
-                    <button class="choice-btn" onclick="showNext('step1', 'step2')">いいえ（自分の家だけ）</button>
+                    <button class="choice-btn" onclick="showNext('step1', 'res-out')">はい（近所も消えている）</button>
+                    <button class="choice-btn" onclick="showNext('step1', 'step2')">いいえ（家だけ消えている）</button>
                 </div>
             </div>
 
-            <div class="result-box" id="step-out">
-                <h3 style="color:#e74c3c;">地域の停電の可能性があります</h3>
-                <p>1～2分待ってもつかない場合は、東北電力または契約業者へご連絡ください。</p>
-                <p>東北電力ネットワーク：<strong>0120-175-366</strong></p>
+            <div class="result-box" id="res-out">
+                <span class="result-title">地域の停電の可能性があります</span>
+                <p class="result-text">1～2分待ってもつかない場合は、東北電力のコールセンターへ状況をご確認ください。</p>
+                <a href="tel:0120175366" class="tel-btn">東北電力：0120-175-366</a>
             </div>
 
             <div class="step-card" id="step2">
-                <span class="step-label">STEP 02</span>
-                <span class="step-title">分電盤の「アンペア」や「漏電」ブレーカーが切れていますか？</span>
+                <span class="step-num">Step 02</span>
+                <span class="step-question">分電盤を見て、「アンペア」または「漏電」ブレーカーが切れていますか？</span>
                 <div class="choice-area">
-                    <button class="choice-btn" onclick="showNext('step2', 'step-leak')">はい（切れている）</button>
+                    <button class="choice-btn" onclick="showNext('step2', 'res-leak')">はい（切れている）</button>
                     <button class="choice-btn" onclick="showNext('step2', 'step3')">いいえ（切れていない）</button>
                 </div>
             </div>
 
-            <div class="result-box" id="step-leak">
-                <h3 style="color:#e74c3c;">漏電または使いすぎの可能性があります</h3>
-                <p>一度全ての回路を切り、一つずつ入れて再度落ちる場所を特定してください。</p>
-                <p>特定できた、または不安な場合は大和電気へご相談ください。</p>
-                <a href="tel:0223825012" class="tel-btn">大和電気に電話する</a>
+            <div class="result-box" id="res-leak">
+                <span class="result-title">漏電、または全体の使いすぎです</span>
+                <p class="result-text">回路を全て切り、一つずつ入れて再度落ちる場所を特定してください。不安な場合はすぐ大和電気へ！</p>
+                <a href="tel:0223825012" class="tel-btn">大和電気：022-382-5012</a>
             </div>
 
             <div class="step-card" id="step3">
-                <span class="step-label">STEP 03</span>
-                <span class="step-title">小さな「回路ブレーカー」のどれか1つが切れていますか？</span>
+                <span class="step-num">Step 03</span>
+                <span class="step-question">小さな「回路ブレーカー」のどれか1つだけが切れていますか？</span>
                 <div class="choice-area">
-                    <button class="choice-btn" onclick="showNext('step3', 'step-circuit')">はい（1つだけ切れている）</button>
-                    <button class="choice-btn" onclick="showNext('step3', 'step-capacity')">いいえ（どれも切れていない）</button>
+                    <button class="choice-btn" onclick="showNext('step3', 'res-circuit')">はい（1つだけ切れている）</button>
+                    <button class="choice-btn" onclick="showNext('step3', 'res-capacity')">いいえ（どれも切れていない）</button>
                 </div>
             </div>
 
-            <div class="result-box" id="step-circuit">
-                <h3 style="color:#e74c3c;">その部屋で電気を使いすぎたか、器具の故障です</h3>
-                <p>使っていた家電をコンセントから外して、スイッチを戻してください。</p>
-                <p>それでも解決しない場合はショートの恐れがあります。</p>
-                <a href="tel:0223825012" class="tel-btn">大和電気に電話する</a>
+            <div class="result-box" id="res-circuit">
+                <span class="result-title">特定箇所の使いすぎ、または故障です</span>
+                <p class="result-text">使っていた家電を外してスイッチを戻してください。それでも落ちるなら修理が必要です。</p>
+                <a href="tel:0223825012" class="tel-btn">大和電気：022-382-5012</a>
             </div>
 
-            <div class="result-box" id="step-capacity">
-                <h3 style="color:#e74c3c;">契約容量（アンペア数）が足りない可能性があります</h3>
-                <p>家電を増やすとよく落ちる場合は、アンペア変更工事が必要です。</p>
-                <p>大和電気にて容量変更工事を承ります。</p>
-                <a href="tel:0223825012" class="tel-btn">工事の相談をする</a>
+            <div class="result-box" id="res-capacity">
+                <span class="result-title">契約容量（アンペア数）の不足です</span>
+                <p class="result-text">家電が増えてよく落ちる場合は、アンペア変更工事をお勧めします。大和電気へご相談ください。</p>
+                <a href="tel:0223825012" class="tel-btn">工事の相談：022-382-5012</a>
             </div>
 
         </div>
     </div>
 
+    <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
+
     <script>
-        function showNext(currentId, nextId) {
-            // 現在のボタンを無効化（選択肢の変更を防ぐなら）
-            const currentStep = document.getElementById(currentId);
+        // メニューの開閉
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenu = document.getElementById('navMenu');
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // 診断フローの制御
+        function showNext(currentId, targetId) {
+            // 現在のステップに含まれるすべての結果ボックスを一旦非表示にする（やり直し時用）
+            // ※今回はシンプルに次を表示するだけですが、より高度にするなら全リセットも可能
+
+            const target = document.getElementById(targetId);
             
-            // 次のステップを表示
-            const nextStep = document.getElementById(nextId);
-            nextStep.classList.add('active');
+            // ターゲットを表示状態にする
+            target.classList.add('active');
             
-            // 次の場所へスムーズにスクロール
+            // スムーズにスクロール
             setTimeout(() => {
-                nextStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 100);
         }
     </script>
