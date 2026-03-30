@@ -14,7 +14,7 @@
             background-color: #fff; color: #333; overflow-x: hidden;
         }
 
-        /* --- 2. 最新ヘッダー（共通デザイン） --- */
+        /* --- 2. 共通ヘッダー --- */
         header {
             position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
             background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
@@ -53,7 +53,6 @@
             }
             nav.active { right: 0; }
             nav ul { flex-direction: column; gap: 40px; text-align: center; }
-            .nav-jp { font-size: 22px; }
         }
 
         /* --- 3. ページヘッダー --- */
@@ -63,32 +62,72 @@
         .page-header h1 { font-size: 2.2rem; letter-spacing: 0.2em; margin: 0; }
         .page-header p { font-size: 0.9rem; opacity: 0.8; margin-top: 10px; letter-spacing: 0.3em; }
 
-        /* --- 4. 事業案内コンテンツ --- */
-        .container { max-width: 1000px; margin: 80px auto; padding: 0 20px; }
-        .business-item { display: flex; align-items: center; gap: 50px; margin-bottom: 100px; }
-        .business-item:nth-child(even) { flex-direction: row-reverse; }
-        .business-img {
-            flex: 1; height: 350px; background: #f0f4f9; border-radius: 15px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; color: #00479d; font-weight: bold; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; padding: 20px;
-        }
-        .business-text { flex: 1; }
-        .business-number { font-size: 3rem; font-weight: bold; color: rgba(0, 71, 157, 0.1); line-height: 1; margin-bottom: 10px; }
-        .business-text h2 { font-size: 1.8rem; color: #00479d; margin-bottom: 20px; border-bottom: 3px solid #ffeb3b; display: inline-block; padding-bottom: 5px; }
-        .business-text p { line-height: 1.8; color: #555; font-size: 1rem; }
-        .business-list { margin-top: 20px; padding-left: 0; list-style-type: none; }
-        .business-list li { margin-bottom: 10px; color: #333; font-weight: bold; display: flex; align-items: center; }
-        .business-list li::before { content: "■"; color: #00479d; margin-right: 10px; font-size: 0.8rem; }
+        /* --- 4. 事業案内コンテンツ（2カラム） --- */
+        .container { max-width: 1100px; margin: 80px auto; padding: 0 40px; }
 
-        .cta-section { background: #f8faff; padding: 80px 20px; text-align: center; border-radius: 20px; }
-        .cta-btn { display: inline-block; padding: 18px 50px; background: #00479d; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; transition: 0.3s; }
+        .business-row { 
+            display: flex; 
+            border-bottom: 1px solid #eee; 
+            padding: 60px 0;
+            align-items: flex-start;
+        }
+        .business-row:last-child { border-bottom: none; }
+
+        /* 左カラム：セクション名 */
+        .business-left { 
+            flex: 0 0 350px; 
+        }
+        .business-title { 
+            font-size: 1.6rem; 
+            color: #00479d; 
+            font-weight: bold; 
+            display: inline-block;
+            background: linear-gradient(transparent 70%, #ffeb3b 70%); /* 黄色い下線 */
+            line-height: 1.4;
+        }
+
+        /* 右カラム：内容 */
+        .business-right { 
+            flex: 1; 
+            padding-left: 50px;
+        }
+        .business-right p { 
+            line-height: 1.8; 
+            color: #555; 
+            font-size: 1.05rem; 
+            margin: 0 0 20px 0;
+        }
+        .business-list { 
+            margin: 0; padding-left: 0; list-style-type: none; 
+        }
+        .business-list li { 
+            margin-bottom: 12px; color: #333; font-weight: bold; 
+            display: flex; align-items: center; 
+        }
+        .business-list li::before { 
+            content: "■"; color: #00479d; margin-right: 12px; font-size: 0.8rem; 
+        }
+
+        /* --- お問い合わせエリア --- */
+        .cta-section { 
+            background: #f8faff; padding: 80px 20px; text-align: center; border-radius: 20px; margin-top: 40px;
+        }
+        .cta-text { font-size: 1.2rem; font-weight: bold; color: #333; margin-bottom: 20px; }
+        .cta-tel-label { font-size: 1rem; color: #666; display: block; margin-bottom: 5px; }
+        .cta-tel-num { 
+            font-size: 2.8rem; font-weight: bold; color: #00479d; text-decoration: none; 
+            transition: 0.3s; display: block;
+        }
+        .cta-tel-num:hover { transform: scale(1.05); }
 
         footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
 
-        @media (max-width: 768px) {
-            .business-item, .business-item:nth-child(even) { flex-direction: column; gap: 30px; margin-bottom: 60px; }
-            .business-img { width: 100%; height: 200px; }
+        @media (max-width: 900px) {
+            .business-row { flex-direction: column; padding: 40px 0; }
+            .business-left { flex: none; margin-bottom: 25px; }
+            .business-right { padding-left: 0; }
+            .business-title { font-size: 1.4rem; }
+            .cta-tel-num { font-size: 2rem; }
         }
     </style>
 </head>
@@ -117,11 +156,11 @@
     </div>
 
     <div class="container">
-        <div class="business-item">
-            <div class="business-img">一般電気設備工事</div>
-            <div class="business-text">
-                <div class="business-number">01</div>
-                <h2>一般電気設備工事</h2>
+        <div class="business-row">
+            <div class="business-left">
+                <span class="business-title">一般電気設備工事</span>
+            </div>
+            <div class="business-right">
                 <p>一般住宅、オフィス、店舗、商業施設、マンションなどの新築・改修に伴う電気設備工事一式を請け負います。</p>
                 <ul class="business-list">
                     <li>受変電設備・幹線設備工事</li>
@@ -132,25 +171,24 @@
             </div>
         </div>
 
-        <div class="business-item">
-            <div class="business-img">産業用・農事用・工場動力設備工事</div>
-            <div class="business-text">
-                <div class="business-number">02</div>
-                <h2>産業用・農事用・<br>工場動力設備工事</h2>
+        <div class="business-row">
+            <div class="business-left">
+                <span class="business-title">産業用・農事用・<br>工場動力設備工事</span>
+            </div>
+            <div class="business-right">
                 <p>動力配線や、制御盤の据付工事を行います。複雑な配線設計も、熟練の技術者が正確かつ安全に施工します。</p>
                 <ul class="business-list">
                     <li>動力配線</li>
-                    <li>計装工事</li>
                     <li>制御盤・操作盤の据付</li>
                 </ul>
             </div>
         </div>
 
-        <div class="business-item">
-            <div class="business-img">弱電・通信設備工事</div>
-            <div class="business-text">
-                <div class="business-number">03</div>
-                <h2>弱電・通信設備工事</h2>
+        <div class="business-row">
+            <div class="business-left">
+                <span class="business-title">弱電・通信設備工事</span>
+            </div>
+            <div class="business-right">
                 <p>インターネット環境（LAN）の配線や、放送設備、火災報知器などの弱電工事に対応。情報通信インフラを支えます。</p>
                 <ul class="business-list">
                     <li>LAN構築工事</li>
@@ -161,8 +199,9 @@
         </div>
 
         <div class="cta-section">
-            <h3>電気設備に関することなら、何でもご相談ください。</h3>
-            <a href="contact.html" class="cta-btn">お問い合わせはこちら</a>
+            <p class="cta-text">電気設備に関することなら、何でもご相談ください。</p>
+            <span class="cta-tel-label">工事の相談：</span>
+            <a href="tel:0223825012" class="cta-tel-num">022-382-5012</a>
         </div>
     </div>
 
