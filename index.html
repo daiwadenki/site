@@ -7,19 +7,23 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <style>
-        /* --- 1. 全体設定 --- */
+        /* --- 1. 基本設定 --- */
+        * { box-sizing: border-box; }
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             background-color: #fff; color: #333; overflow-x: hidden;
         }
 
-        /* --- 2. 共通ヘッダー --- */
+        /* --- 2. ヘッダー（共通ナビゲーション） --- */
         header {
-            position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
-            background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
+            position: fixed; top: 0; width: 100%; padding: 15px 40px;
+            z-index: 1000; /* 最前面に固定 */
+            background: rgba(0, 0, 0, 0.7); 
+            display: flex; justify-content: space-between; align-items: center; 
+            backdrop-filter: blur(8px);
         }
-        .logo-area { display: flex; align-items: center; text-decoration: none; color: white; z-index: 110; }
+        .logo-area { display: flex; align-items: center; text-decoration: none; color: white; }
         .logo-image { height: 50px; width: auto; margin-right: 15px; }
         .company-name { font-size: 24px; font-weight: bold; letter-spacing: 0.1em; }
 
@@ -27,94 +31,93 @@
         nav ul li a { 
             text-decoration: none; color: white; 
             display: flex; flex-direction: column; align-items: center; 
-            transition: 0.3s; position: relative; padding-bottom: 5px;
+            transition: 0.3s; position: relative;
         }
-        .nav-jp { font-size: 15px; font-weight: bold; }
-        .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.7; letter-spacing: 0.1em; }
+        .nav-jp { font-size: 14px; font-weight: bold; }
+        .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.7; letter-spacing: 0.1em; text-transform: uppercase; }
 
+        /* ホバーエフェクト */
         nav ul li a::after {
-            content: ""; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px;
-            background: #ffeb3b; transition: width 0.3s ease;
+            content: ""; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+            background: #ffeb3b; transition: 0.3s;
         }
-        nav ul li a:hover { color: #ffeb3b; transform: scale(1.1); }
+        nav ul li a:hover { color: #ffeb3b; }
         nav ul li a:hover::after { width: 100%; }
 
         /* スマホ用メニューボタン */
-        .menu-btn { display: none; cursor: pointer; z-index: 110; background: none; border: none; flex-direction: column; gap: 6px; padding: 10px; }
-        .menu-btn span { display: block; width: 30px; height: 2px; background: white; transition: 0.3s; }
+        .menu-btn { display: none; cursor: pointer; background: none; border: none; flex-direction: column; gap: 6px; padding: 10px; }
+        .menu-btn span { display: block; width: 25px; height: 2px; background: white; transition: 0.3s; }
 
         @media (max-width: 1024px) {
             header { padding: 15px 20px; }
             .company-name { font-size: 18px; }
             .menu-btn { display: flex; }
             nav { 
-                position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; 
-                background: rgba(0, 71, 157, 0.98); transition: 0.5s; 
-                display: flex; align-items: center; justify-content: center; z-index: 105; 
+                position: fixed; top: 0; right: -100%; width: 80%; height: 100vh; 
+                background: rgba(0, 71, 157, 0.95); transition: 0.4s; 
+                display: flex; align-items: center; justify-content: center;
             }
             nav.active { right: 0; }
             nav ul { flex-direction: column; gap: 40px; text-align: center; }
-            .nav-jp { font-size: 22px; }
-            .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-            .menu-btn.active span:nth-child(2) { opacity: 0; }
-            .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+            .nav-jp { font-size: 20px; }
         }
 
         /* --- 3. メインビジュアル --- */
         .hero {
             position: relative; width: 100%; height: 100vh;
-            /* 背景画像を設定してください */
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('hero-bg.jpg') center/cover no-repeat;
-            display: flex; align-items: center; justify-content: center; color: white; text-align: center;
+            background: #222 url('hero-bg.jpg') center/cover no-repeat;
+            display: flex; align-items: center; justify-content: center; color: white;
         }
-        .hero-content h2 { font-size: 3.5rem; letter-spacing: 0.1em; margin-bottom: 20px; line-height: 1.3; }
-        .hero-content p { font-size: 1.2rem; opacity: 0.9; letter-spacing: 0.05em; }
+        .hero-inner { text-align: center; z-index: 10; }
+        .hero-inner h2 { font-size: 3.5rem; margin: 0 0 20px; letter-spacing: 0.15em; line-height: 1.4; }
+        .hero-inner p { font-size: 1.2rem; margin: 0; opacity: 0.9; letter-spacing: 0.1em; }
 
-        /* --- 4. 縦書きスクロールアニメーション --- */
-        .scroll-down {
+        /* --- 4. 縦書きSCROLLアニメーション --- */
+        .scroll-wrapper {
             position: absolute;
-            bottom: 30px;
+            bottom: 40px;
             right: 50px;
-            writing-mode: vertical-rl; /* 縦書き */
-            font-size: 12px;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
+            z-index: 20;
             color: white;
-            z-index: 10;
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            writing-mode: vertical-rl; /* 縦書き */
+            text-transform: uppercase;
         }
-        .scroll-down span {
-            display: block;
-            position: absolute;
-            bottom: -90px;
-            left: 50%;
+        .scroll-line {
+            position: relative;
+            display: inline-block;
             width: 1px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.3);
+            height: 100px; /* 全体の長さ */
+            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.2);
             overflow: hidden;
         }
-        /* 動く線のアニメーション */
-        .scroll-down span::after {
+        /* 動く白い線 */
+        .scroll-line::before {
             content: "";
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #ffeb3b; /* 会社のアクセントカラーの黄色 */
-            animation: scrollLine 2.5s cubic-bezier(1, 0, 0, 1) infinite;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffeb3b; /* 会社のアクセントカラー */
+            animation: scroll-anim 3s infinite;
         }
 
-        @keyframes scrollLine {
-            0% { transform: scaleY(0); transform-origin: 0 0; }
-            50% { transform: scaleY(1); transform-origin: 0 0; }
-            50.1% { transform: scaleY(1); transform-origin: 0 100%; }
-            100% { transform: scaleY(0); transform-origin: 0 100%; }
+        @keyframes scroll-anim {
+            0% { top: -100px; }
+            30% { top: 0; }
+            60% { top: 100px; }
+            100% { top: 100px; }
         }
 
         /* --- 5. フッター --- */
-        footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
+        footer { background: #111; color: #777; padding: 30px; text-align: center; font-size: 12px; }
 
         @media (max-width: 768px) {
-            .hero-content h2 { font-size: 2.2rem; }
-            .scroll-down { right: 20px; }
+            .hero-inner h2 { font-size: 2rem; }
+            .scroll-wrapper { right: 20px; bottom: 20px; }
         }
     </style>
 </head>
@@ -125,7 +128,9 @@
             <img src="miko.png" alt="ロゴ" class="logo-image">
             <span class="company-name">大和電気株式会社</span>
         </a>
-        <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+        <button class="menu-btn" id="menuBtn">
+            <span></span><span></span><span></span>
+        </button>
         <nav id="navMenu">
             <ul>
                 <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
@@ -137,43 +142,48 @@
         </nav>
     </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h2>光り輝く未来を、<br>確かな技術で。</h2>
-            <p>宮城県名取市を拠点に、電気設備・空調の設計施工を担います</p>
-        </div>
+    <main>
+        <section class="hero">
+            <div class="hero-inner">
+                <h2>光り輝く未来を、<br>確かな技術で。</h2>
+                <p>宮城県名取市を拠点に、電気設備・空調の設計施工を担います</p>
+            </div>
 
-        <div class="scroll-down">
-            SCROLL
-            <span></span>
-        </div>
-    </section>
+            <div class="scroll-wrapper">
+                SCROLL
+                <span class="scroll-line"></span>
+            </div>
+        </section>
 
-    <div style="height: 100vh; display: flex; align-items: center; justify-content: center; background: #fff;">
-        <p>コンテンツエリア（スクロールして確認してください）</p>
-    </div>
+        <section style="padding: 100px 20px; text-align: center;">
+            <p>ここから下のコンテンツが始まります。</p>
+        </section>
+    </main>
 
-    <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
+    <footer>
+        &copy; 2026 大和電気株式会社 All Rights Reserved.
+    </footer>
 
     <script>
-        // スマホ用ハンバーガーメニューの動作
+        // ハンバーガーメニューの開閉
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
 
         menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('active');
             navMenu.classList.toggle('active');
-        });
-
-        // リンクをクリックした時にメニューを閉じる（スマホ対策）
-        const navLinks = document.querySelectorAll('nav ul li a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                menuBtn.classList.remove('active');
-                navMenu.classList.remove('active');
-            });
+            // ボタンのアニメーション（三本線から✕へ）
+            const spans = menuBtn.querySelectorAll('span');
+            menuBtn.classList.toggle('open');
+            if(navMenu.classList.contains('active')) {
+                spans[0].style.transform = 'translateY(8px) rotate(45deg)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
         });
     </script>
-
 </body>
 </html>
