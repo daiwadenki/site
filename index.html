@@ -3,19 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大和電気株式会社 | 宮城県名取市の電気工事・空調設備</title>
+    <title>大和電気株式会社 | DAIWA DENKI</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <style>
-        /* --- 1. 全体設定 --- */
+        /* --- 1. ローディング画面 --- */
+        #loading {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #00479d; display: flex; justify-content: center; align-items: center; z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+        #loading.loaded { opacity: 0; visibility: hidden; }
+        .loading-content { text-align: center; }
+        .dot { display: inline-block; width: 25px; height: 25px; margin: 0 10px; background-color: #ffeb3b; border-radius: 50%; animation: bounce 0.6s infinite alternate; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-30px); scale: 1.1; } }
+        .loading-text { margin-top: 30px; color: white; font-weight: bold; letter-spacing: 0.4em; font-size: 14px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        /* --- 2. 全体設定 --- */
         body, html {
             margin: 0; padding: 0; width: 100%;
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            background-color: #f8faff; color: #333; overflow-x: hidden;
-            scroll-behavior: smooth;
+            scroll-behavior: smooth; color: #333; overflow-x: hidden;
         }
 
-        /* --- 2. 共通ヘッダー --- */
+        /* --- 3. ヘッダー（ホバーアニメーション追加） --- */
         header {
             position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
             background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
@@ -24,25 +38,47 @@
         .logo-image { height: 50px; width: auto; margin-right: 15px; }
         .company-name { font-size: 24px; font-weight: bold; letter-spacing: 0.1em; }
 
+        /* ナビゲーション基本 */
         nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
         nav ul li a { 
             text-decoration: none; color: white; 
             display: flex; flex-direction: column; align-items: center; 
-            transition: 0.3s; position: relative; padding-bottom: 5px;
+            transition: 0.3s; position: relative;
+            padding-bottom: 5px; /* ラインのための余白 */
         }
-        .nav-jp { font-size: 14px; font-weight: bold; }
+        .nav-jp { font-size: 15px; font-weight: bold; }
         .nav-en { font-size: 9px; margin-top: 2px; opacity: 0.7; letter-spacing: 0.1em; }
 
-        nav ul li a:hover { color: #ffeb3b; transform: scale(1.05); }
+        /* 【復活】ホバー時の黄色ライン演出 */
+        nav ul li a::after {
+            content: "";
+            position: absolute;
+            bottom: -2px; /* 英語の下の位置 */
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ffeb3b; /* 黄色 */
+            transition: width 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #ffeb3b;
+            transform: scale(1.1);
+        }
+        nav ul li a:hover::after {
+            width: 100%;
+        }
 
         /* スマホ用ボタン */
         .menu-btn { display: none; cursor: pointer; z-index: 110; background: none; border: none; flex-direction: column; gap: 6px; padding: 10px; }
         .menu-btn span { display: block; width: 30px; height: 2px; background: white; transition: 0.3s; }
 
+        /* スマホ版（1024px以下）の設定 */
         @media (max-width: 1024px) {
             header { padding: 15px 20px; }
             .company-name { font-size: 18px; }
+            .logo-image { height: 40px; }
             .menu-btn { display: flex; }
+
             nav { 
                 position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; 
                 background: rgba(0, 71, 157, 0.98); transition: 0.5s; 
@@ -50,72 +86,61 @@
             }
             nav.active { right: 0; }
             nav ul { flex-direction: column; gap: 40px; text-align: center; }
+            .nav-jp { font-size: 22px; }
+            .nav-en { font-size: 12px; }
+
+            /* スマホ版でもホバーラインを中央から広がるように微調整 */
+            nav ul li a::after { left: 50%; transform: translateX(-50%); }
+
+            .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .menu-btn.active span:nth-child(2) { opacity: 0; }
+            .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        /* --- 3. メインビジュアル --- */
+        /* --- 4. メインビジュアル --- */
         .hero {
             position: relative; width: 100%; height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('hero-bg.jpg') center/cover no-repeat;
-            display: flex; align-items: center; justify-content: center; color: white; text-align: center;
+            background: url('main_haikei.jpg') center/cover no-repeat;
+            display: flex; justify-content: center; align-items: center; color: white; text-align: center;
         }
-        .hero-title { font-size: 3.5rem; letter-spacing: 0.2em; line-height: 1.4; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .hero::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-content h1 { font-size: 4.5rem; margin: 0; letter-spacing: 0.3em; }
+        .hero-content p { font-size: 1.2rem; margin-top: 15px; letter-spacing: 0.4em; }
 
-        /* 縦書きスクロールアニメーション */
-        .scroll-down {
-            position: absolute; bottom: 30px; right: 50px;
-            writing-mode: vertical-rl; font-size: 12px; letter-spacing: 0.3em; color: white;
+        /* --- SCROLL DOWN （完成版・変更不可） --- */
+        .scrolldown {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; z-index: 2;
         }
-        .scroll-down span {
-            display: block; position: absolute; bottom: -90px; left: 50%;
-            width: 1px; height: 80px; background: rgba(255, 255, 255, 0.3); overflow: hidden;
+        .scrolldown span { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: #fff; margin-bottom: 10px; font-weight: bold; }
+        .scrolldown .line { width: 1px; height: 80px; background: rgba(255,255,255,0.2); position: relative; overflow: hidden; }
+        .scrolldown .line::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #fff;
+            animation: scrolldown-ani 2.0s cubic-bezier(0.76, 0, 0.3, 1) infinite;
         }
-        .scroll-down span::after {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: #ffeb3b; animation: scrollLine 2.5s cubic-bezier(1, 0, 0, 1) infinite;
-        }
-        @keyframes scrollLine {
-            0% { transform: scaleY(0); transform-origin: 0 0; }
-            50% { transform: scaleY(1); transform-origin: 0 0; }
-            50.1% { transform: scaleY(1); transform-origin: 0 100%; }
-            100% { transform: scaleY(0); transform-origin: 0 100%; }
+        @keyframes scrolldown-ani {
+            0% { transform: scaleY(0); transform-origin: top; }
+            45% { transform: scaleY(1); transform-origin: top; }
+            55% { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
         }
 
-        /* --- 4. 3つのカードセクション --- */
-        .section-container { max-width: 1200px; margin: -50px auto 80px; padding: 0 20px; position: relative; z-index: 10; }
-        .card-wrapper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .card {
-            background: white; border-radius: 15px; padding: 40px 30px; text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); transition: 0.3s; text-decoration: none; color: #333;
-        }
-        .card:hover { transform: translateY(-10px); }
-        .card h3 { color: #00479d; font-size: 1.4rem; margin-bottom: 15px; border-bottom: 2px solid #ffeb3b; display: inline-block; }
-        .card p { font-size: 0.95rem; line-height: 1.7; color: #666; }
-
-        /* --- 5. お問い合わせ（電話番号） --- */
-        .contact-bar { background: #00479d; color: white; padding: 60px 20px; text-align: center; margin-bottom: 80px; }
-        .contact-bar h2 { font-size: 1.2rem; margin-bottom: 15px; opacity: 0.9; }
-        .tel-number { font-size: 3rem; font-weight: bold; text-decoration: none; color: white; display: block; transition: 0.3s; }
-        .tel-number:hover { color: #ffeb3b; }
-
-        /* --- 6. 採用情報セクション --- */
-        .recruit-section { max-width: 1000px; margin: 0 auto 100px; background: white; border-radius: 20px; overflow: hidden; display: flex; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .recruit-img { flex: 1; background: #ddd url('recruit-thumb.jpg') center/cover; min-height: 300px; }
-        .recruit-content { flex: 1; padding: 60px; }
-        .recruit-content h2 { color: #00479d; font-size: 2rem; margin-bottom: 20px; }
-        .recruit-btn { display: inline-block; padding: 15px 40px; background: #00479d; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; transition: 0.3s; }
-        .recruit-btn:hover { background: #00357a; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        /* --- 5. セクション設定 --- */
+        section { padding: 100px 8%; text-align: center; }
+        .section-title h2 { font-size: 2.2rem; color: #00479d; margin: 0; letter-spacing: 0.2em; }
+        .section-subtitle { font-size: 0.9rem; color: #888; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 50px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background: white; padding: 40px 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-radius: 5px; border-top: 5px solid #00479d; transition: 0.3s; }
+        .btn-link { display: inline-block; margin-top: 30px; padding: 12px 40px; border: 2px solid #00479d; color: #00479d; text-decoration: none; font-weight: bold; border-radius: 50px; transition: 0.3s; }
+        .btn-link:hover { background: #00479d; color: white; }
 
         footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
-
-        @media (max-width: 900px) {
-            .card-wrapper { grid-template-columns: 1fr; }
-            .hero-title { font-size: 2.2rem; }
-            .recruit-section { flex-direction: column; margin: 0 20px 80px; }
-            .tel-number { font-size: 2rem; }
-        }
     </style>
 </head>
 <body>
+
+    <div id="loading"><div class="loading-content"><div class="dot"></div><div class="dot"></div><div class="dot"></div><p class="loading-text">CONNECTING...</p></div></div>
 
     <header>
         <a href="index.html" class="logo-area">
@@ -125,61 +150,74 @@
         <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
         <nav id="navMenu">
             <ul>
-                <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
-                <li><a href="business.html"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
-                <li><a href="trouble.html"><span class="nav-jp">困ったときは</span><span class="nav-en">Trouble</span></a></li>
+                <li><a href="#about" onclick="closeMenu()"><span class="nav-jp">会社概要</span><span class="nav-en">About</span></a></li>
+                <li><a href="#business" onclick="closeMenu()"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
+                <li><a href="#works" onclick="closeMenu()"><span class="nav-jp">実績紹介</span><span class="nav-en">Works</span></a></li>
                 <li><a href="contact.html"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
                 <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
             </ul>
         </nav>
     </header>
 
-    <section class="hero">
-        <h2 class="hero-title">光り輝く未来を、<br>確かな技術で。</h2>
-        <div class="scroll-down">SCROLL<span></span></div>
-    </section>
-
-    <div class="section-container">
-        <div class="card-wrapper">
-            <a href="company.html" class="card">
-                <h3>会社概要</h3>
-                <p>1971年創業。宮城県名取市を拠点に、地域のインフラを支え続けてきた私たちの歩みと想いをご紹介します。</p>
-            </a>
-            <a href="business.html" class="card">
-                <h3>事業案内</h3>
-                <p>一般電気工事から産業用動力設備、LAN構築まで。専門技術を活かした幅広い施工サービスを提供しています。</p>
-            </a>
-            <a href="trouble.html" class="card">
-                <h3>困ったときは</h3>
-                <p>停電やブレーカが落ちた際などのトラブル解決ガイド。緊急時の連絡先や確認手順はこちらから。</p>
-            </a>
-        </div>
+    <div class="hero">
+        <div class="hero-content"><h1>DAIWA DENKI</h1><p>光り輝く未来を、電気の技術で。</p></div>
+        <div class="scrolldown"><span>Scroll Down</span><div class="line"></div></div>
     </div>
 
-    <section class="contact-bar">
-        <h2>電気設備に関するご相談・お見積り</h2>
-        <a href="tel:0223825012" class="tel-number">022-382-5012</a>
-        <p style="margin-top:10px; opacity:0.8;">受付時間：平日 8:30〜17:30</p>
+    <section id="about">
+        <div class="section-title"><h2>会社概要</h2><p class="section-subtitle">About Us</p></div>
+        <p style="max-width: 800px; margin: 0 auto; line-height: 2;">大和電気株式会社は、電気設備工事を通じて地域のインフラを支え続けてきました。</p>
+        <a href="company.html" class="btn-link">詳しく見る</a>
     </section>
 
-    <section class="recruit-section">
-        <div class="recruit-img"></div>
-        <div class="recruit-content">
-            <h2>共に、未来を照らす。</h2>
-            <p style="margin-bottom: 30px; line-height: 1.8; color: #666;">大和電気では、次世代の電気技術者を募集しています。未経験からでも一生モノの技術を身に付けられる環境です。</p>
-            <a href="recruit.html" class="recruit-btn">採用情報を詳しく見る</a>
+    <section id="business" style="background: #f9f9f9;">
+        <div class="section-title"><h2>事業案内</h2><p class="section-subtitle">Our Business</p></div>
+        <div class="grid">
+            <div class="card"><h3>一般電気工事</h3><p>ビル、店舗、住宅のあらゆる電気設備に対応します。</p></div>
+            <div class="card"><h3>産業用設備</h3><p>工場の生産ラインなどの設計・施工を行います。</p></div>
+            <div class="card"><h3>省エネ</h3><p>LED化などの省エネ提案をいたします。</p></div>
         </div>
+    </section>
+
+    <section id="works">
+        <div class="section-title"><h2>実績紹介</h2><p class="section-subtitle">Our Works</p></div>
+        <div class="grid">
+            <div class="card"><h3>商業施設A</h3><p>照明設備全般の施工を担当しました。</p></div>
+            <div class="card"><h3>マンションB</h3><p>幹線工事および各戸配線工事を施工。</p></div>
+            <div class="card"><h3>公共道路</h3><p>LED街灯設置工事を実施しました。</p></div>
+        </div>
+    </section>
+
+    <section id="contact-cta" style="background: #f0f4f9;">
+        <div class="section-title"><h2>お問い合わせ</h2><p class="section-subtitle">Contact</p></div>
+        <div style="background:white; padding:40px; border-radius:10px; max-width:600px; margin:0 auto;">
+            <a href="tel:03-1234-5678" style="font-size: 2.5rem; font-weight: bold; color: #00479d; text-decoration: none; display: block; margin: 20px 0;">03-1234-5678</a>
+            <a href="contact.html" class="btn-link">メールでのお問い合わせ</a>
+        </div>
+    </section>
+
+    <section id="recruit-cta" style="background: #00479d; color: white;">
+        <div class="section-title"><h2 style="color: white;">採用情報</h2><p class="section-subtitle" style="color:rgba(255,255,255,0.7)">Recruit</p></div>
+        <p>共に未来を照らす仲間を募集しています。</p>
+        <a href="recruit.html" class="btn-link" style="border-color:white; color:white;">詳細を見る</a>
     </section>
 
     <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
 
     <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() { document.getElementById('loading').classList.add('loaded'); }, 1500);
+        });
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         menuBtn.addEventListener('click', () => {
             menuBtn.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
+        function closeMenu() {
+            menuBtn.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
     </script>
 </body>
 </html>
