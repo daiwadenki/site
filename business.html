@@ -45,6 +45,7 @@
         @media (max-width: 1024px) {
             header { padding: 15px 20px; }
             .company-name { font-size: 18px; }
+            .logo-image { height: 40px; }
             .menu-btn { display: flex; }
             nav { 
                 position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; 
@@ -53,6 +54,12 @@
             }
             nav.active { right: 0; }
             nav ul { flex-direction: column; gap: 40px; text-align: center; }
+            .nav-jp { font-size: 22px; }
+
+            /* ハンバーガーメニューのアニメーション */
+            .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .menu-btn.active span:nth-child(2) { opacity: 0; }
+            .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
         /* --- 3. ページヘッダー --- */
@@ -144,8 +151,6 @@
                 <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
                 <li><a href="business.html" style="color:#ffeb3b;"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
                 <li><a href="trouble.html"><span class="nav-jp">困ったときは</span><span class="nav-en">Trouble</span></a></li>
-                <li><a href="contact.html"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
-                <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
             </ul>
         </nav>
     </header>
