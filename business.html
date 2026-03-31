@@ -83,16 +83,15 @@
             flex: 0 0 350px; 
         }
 
-        /* タイトル下線の修正：複数行に対応 */
         .business-title { 
             font-size: 1.6rem; 
             color: #00479d; 
             font-weight: bold; 
-            display: inline; /* インラインに変更 */
+            display: inline;
             background: linear-gradient(transparent 70%, #ffeb3b 70%);
             line-height: 1.6;
             padding: 5px 0;
-            box-decoration-break: clone; /* 改行されても各行に装飾を維持 */
+            box-decoration-break: clone;
             -webkit-box-decoration-break: clone;
         }
 
@@ -136,6 +135,13 @@
             .business-right { padding-left: 0; }
             .business-title { font-size: 1.4rem; }
             .cta-tel-num { font-size: 2rem; }
+            
+            /* スマホ版での文章の改行固定 */
+            .business-right p {
+                font-size: 3.5vw;
+                white-space: nowrap;
+                line-height: 1.8;
+            }
         }
     </style>
 </head>
@@ -167,7 +173,7 @@
                 <span class="business-title">一般電気設備工事</span>
             </div>
             <div class="business-right">
-                <p>一般住宅、オフィス、店舗、商業施設、マンションなどの新築・改修に伴う電気設備工事一式を請け負います。</p>
+                <p>一般住宅、オフィス、店舗、商業施設、<br>マンションなどの新築・改修に伴う電気設備工事一式を請け負います。</p>
                 <ul class="business-list">
                     <li>受変電設備・幹線設備工事</li>
                     <li>電灯・動力設備工事</li>
