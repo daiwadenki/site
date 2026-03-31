@@ -70,7 +70,7 @@
             display: flex; justify-content: center; align-items: center; color: white; text-align: center;
         }
         .hero::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); }
-        .hero-content { position: relative; z-index: 1; }
+        .hero-content { position: relative; z-index: 1; padding: 0 20px; box-sizing: border-box; width: 100%; }
         .hero-content h1 { font-size: 4.5rem; margin: 0; letter-spacing: 0.3em; }
         .hero-content p { font-size: 1.2rem; margin-top: 15px; letter-spacing: 0.4em; }
 
@@ -104,8 +104,7 @@
 
         .scroll-container {
             display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
-            gap: 25px; padding: 20px 20px 40px; /* 下部にインジケーター用の余白 */
-            scrollbar-width: none; justify-content: center;
+            gap: 25px; padding: 20px 20px 40px; scrollbar-width: none; justify-content: center;
             position: relative;
         }
         .scroll-container::-webkit-scrollbar { display: none; }
@@ -126,48 +125,40 @@
         .scroll-card p { font-size: 0.9rem; line-height: 1.7; opacity: 0.8; }
         .card-more { font-weight: bold; margin-top: 20px; color: #00479d; transition: 0.3s; }
 
-        /* 追加：スマホ用スクロールインジケーター（デフォルト非表示） */
-        .scroll-indicator {
-            display: none;
-            justify-content: center;
-            gap: 8px;
-            margin-top: -10px; /* scroll-containerのpaddingを調整 */
-            margin-bottom: 40px;
-        }
-        .dot {
-            width: 8px;
-            height: 8px;
-            background-color: rgba(0, 71, 157, 0.2); /* 青の薄い色 */
-            border-radius: 50%;
-            transition: 0.3s;
-        }
-        .dot.active {
-            background-color: #00479d; /* 青 */
-            transform: scale(1.2);
-        }
+        /* スクロールインジケーター */
+        .scroll-indicator { display: none; justify-content: center; gap: 8px; margin-top: -10px; margin-bottom: 40px; }
+        .dot { width: 8px; height: 8px; background-color: rgba(0, 71, 157, 0.2); border-radius: 50%; transition: 0.3s; }
+        .dot.active { background-color: #00479d; transform: scale(1.2); }
 
         /* --- 5. お問い合わせセクション --- */
         section { padding: 100px 8%; text-align: center; }
-        
         .contact-box { 
             background: white; padding: 50px; border-radius: 20px; 
             max-width: 800px; margin: 0 auto; box-shadow: 0 10px 40px rgba(0,0,0,0.05); 
         }
-        .tel-number { 
-            font-size: 3rem; font-weight: bold; color: #00479d; 
-            text-decoration: none; display: block; margin: 25px 0; 
-            transition: 0.3s;
-        }
+        .tel-number { font-size: 3rem; font-weight: bold; color: #00479d; text-decoration: none; display: block; margin: 25px 0; transition: 0.3s; }
         .tel-number:hover { transform: scale(1.05); }
 
         footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
 
+        /* --- スマホ専用UI調整 --- */
         @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.5rem; }
+            /* ヒーローテキストの改行禁止とサイズ調整 */
+            .hero-content h1 { 
+                font-size: 7.5vw; /* 画面幅に合わせて可変 */
+                white-space: nowrap; /* 改行禁止 */
+                letter-spacing: 0.2em;
+            }
+            .hero-content p { 
+                font-size: 3.8vw; /* 画面幅に合わせて可変 */
+                white-space: nowrap; /* 改行禁止 */
+                letter-spacing: 0.2em;
+                margin-top: 10px;
+            }
+
             .scroll-container { justify-content: flex-start; padding: 20px 5% 40px; }
             .scroll-card { flex: 0 0 85%; }
             .tel-number { font-size: 2.2rem; }
-            /* スマホでのみインジケーターを表示 */
             .scroll-indicator { display: flex; }
         }
     </style>
@@ -246,7 +237,6 @@
     <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
 
     <script>
-        // メニュー開閉
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         menuBtn.addEventListener('click', () => {
@@ -254,34 +244,20 @@
             navMenu.classList.toggle('active');
         });
 
-        // スマホ用スクロールインジケーターの制御
         const container = document.getElementById('cardContainer');
         const dots = document.querySelectorAll('#scrollIndicator .dot');
 
         container.addEventListener('scroll', () => {
-            // 現在のスクロール位置から、何枚目のカードが中央に近いかを計算
-            const containerWidth = container.offsetWidth;
             const scrollLeft = container.scrollLeft;
             const cardWidth = container.querySelector('.scroll-card').offsetWidth;
-            const gap = 25; // CSSのgap値
-
-            // カード1枚分の進捗幅（カード幅 + gap）
+            const gap = 25;
             const segmentWidth = cardWidth + gap;
-            
-            // 現在表示されているカードのインデックス（0, 1, 2）を計算
-            // スクロール位置にコンテナ幅の半分を足すことで、中央付近のカードを特定
-            let index = Math.round((scrollLeft + gap) / segmentWidth);
-            
-            // インデックスが配列の範囲外にならないよう調整（念のため）
+            let index = Math.round(scrollLeft / segmentWidth);
             index = Math.max(0, Math.min(index, dots.length - 1));
 
-            // 全てのドットのactiveクラスを削除し、現在のインデックスに付与
             dots.forEach((dot, i) => {
-                if (i === index) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
+                if (i === index) dot.classList.add('active');
+                else dot.classList.remove('active');
             });
         });
     </script>
