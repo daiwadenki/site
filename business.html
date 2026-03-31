@@ -42,6 +42,9 @@
         .menu-btn { display: none; cursor: pointer; z-index: 110; background: none; border: none; flex-direction: column; gap: 6px; padding: 10px; }
         .menu-btn span { display: block; width: 30px; height: 2px; background: white; transition: 0.3s; }
 
+        /* 改行コントロール用のクラス */
+        .sp-only { display: none; }
+
         @media (max-width: 1024px) {
             header { padding: 15px 20px; }
             .company-name { font-size: 18px; }
@@ -136,13 +139,18 @@
             .business-title { font-size: 1.4rem; }
             .cta-tel-num { font-size: 2rem; }
             
-            /* スマホ版での文章の改行固定 */
+            /* スマホ版での文章の表示設定 */
             .business-right p {
-                font-size: 3.5vw;
-                white-space: nowrap;
+                font-size: 1rem; /* 読みやすい固定サイズに */
+                white-space: normal; /* 折り返しを許可 */
                 line-height: 1.8;
+                word-break: keep-all; /* 文字の途中で切れないように */
             }
+
+            /* スマホ用改行を有効化 */
+            .sp-only { display: block; }
         }
+    </media>
     </style>
 </head>
 <body>
@@ -173,7 +181,7 @@
                 <span class="business-title">一般電気設備工事</span>
             </div>
             <div class="business-right">
-                <p>一般住宅、オフィス、店舗、商業施設、<br>マンションなどの新築・改修に伴う電気設備工事一式を請け負います。</p>
+                <p>一般住宅、オフィス、店舗、商業施設、<br>マンションなどの新築・改修に伴う<br class="sp-only">電気設備工事一式を請け負います。</p>
                 <ul class="business-list">
                     <li>受変電設備・幹線設備工事</li>
                     <li>電灯・動力設備工事</li>
@@ -212,7 +220,7 @@
 
         <div class="cta-section">
             <p class="cta-text">電気設備に関することなら、何でもご相談ください。</p>
-            <span class="cta-tel-label">工事の相談</span>
+            <span class="cta-tel-label">工事の相談：</span>
             <a href="tel:0223825012" class="cta-tel-num">022-382-5012</a>
         </div>
     </div>
