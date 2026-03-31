@@ -13,6 +13,10 @@
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             background-color: #f0f4f9; color: #333; overflow-x: hidden;
             scroll-behavior: smooth;
+            /* 追加：フッターを下に押し出すための設定 */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* --- 2. 共通ヘッダー --- */
@@ -63,6 +67,9 @@
         .page-header { background-color: #e74c3c; color: white; padding: 160px 20px 60px; text-align: center; }
         .page-header h1 { font-size: 2.2rem; letter-spacing: 0.1em; margin: 0; }
         .page-header p { font-size: 1.1rem; opacity: 0.9; margin-top: 15px; line-height: 1.6; }
+
+        /* 追加：メインコンテンツ部分を広げる設定 */
+        main { flex: 1; }
 
         .container { max-width: 850px; margin: 0 auto 100px; padding: 40px 20px; }
 
@@ -130,101 +137,102 @@
         </nav>
     </header>
 
-    <div class="page-header">
-        <h1>困った、どうしよう！</h1>
-        <p>突然電気が消えてしまったら、焦らずに<br>下のボタンを順番に選んで確認してください。</p>
-    </div>
-
-    <div class="container">
-        <div class="flow-wrapper">
-            
-            <div class="step-card active" id="step1">
-                <span class="step-num">Step 01</span>
-                <span class="step-question">隣近所の家や、外の街灯も消えていますか？</span>
-                <div class="choice-area">
-                    <button class="choice-btn" onclick="showNext('step1', 'res-blackout')">はい（近所も消えている）</button>
-                    <button class="choice-btn" onclick="showNext('step1', 'step2')">いいえ（自分の家だけ）</button>
-                </div>
-            </div>
-
-            <div class="result-box" id="res-blackout">
-                <span class="result-title">停電です</span>
-                <div class="result-text">
-                    <p>お客様がご契約している小売り電気事業者、または東北電力コールセンターへお問い合わせください。</p>
-                    <div class="tel-group">
-                        <span class="tel-label">東北電力ネットワーク コールセンター</span>
-                        <a href="tel:0120175366" class="tel-link">0120-175-366</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="step-card" id="step2">
-                <span class="step-num">Step 02</span>
-                <span class="step-question">分電盤を見て、「アンペア」または「漏電」ブレーカが切れていますか？</span>
-                <div class="choice-area">
-                    <button class="choice-btn" onclick="showNext('step2', 'step-leak-chk')">はい（切れている）</button>
-                    <button class="choice-btn" onclick="showNext('step2', 'step3')">いいえ（切れていない）</button>
-                </div>
-            </div>
-
-            <div class="step-card" id="step-leak-chk">
-                <span class="step-num">Step 03</span>
-                <span class="step-question">漏電ブレーカに「漏電表示」はありますか？</span>
-                <div class="choice-area">
-                    <button class="choice-btn" onclick="showNext('step-leak-chk', 'res-leak-on')">あり（漏電表示が出ている）</button>
-                    <button class="choice-btn" onclick="showNext('step-leak-chk', 'res-capacity-info')">なし（表示されていない）</button>
-                </div>
-            </div>
-
-            <div class="result-box" id="res-leak-on">
-                <span class="result-title">漏電です</span>
-                <div class="result-text">
-                    <p>回路を全て切り、一つずつ入れて再度落ちる場所を特定してください。特定後、大和電気（株）へご相談ください。</p>
-                    <div class="tel-group">
-                        <span class="tel-label">修理・点検のご依頼（大和電気）</span>
-                        <a href="tel:0223825012" class="tel-link">022-382-5012</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="result-box" id="res-capacity-info">
-                <span class="result-title">契約容量（アンペア数）の不足です</span>
-                <div class="result-text">
-                    <p>家電が増えてよく落ちる場合は、アンペア変更工事をお勧めします。</p>
-                    <div class="tel-group">
-                        <span class="tel-label">① 契約電力会社へ連絡（東北電力の場合）</span>
-                        <a href="tel:0120066774" class="tel-link">0120-066-774</a>
-                    </div>
-                    <p>② 工事が必要となった場合は大和電気（株）へご相談ください。</p>
-                    <div class="tel-group">
-                        <span class="tel-label">変更工事のご相談（大和電気）</span>
-                        <a href="tel:0223825012" class="tel-link">022-382-5012</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="step-card" id="step3">
-                <span class="step-num">Step 03</span>
-                <span class="step-question">小さな「回路ブレーカ」のどれか1つだけが切れていますか？</span>
-                <div class="choice-area">
-                    <button class="choice-btn" onclick="showNext('step3', 'res-short-repair')">はい（1つだけ切れている）</button>
-                    <button class="choice-btn" onclick="showNext('step3', 'res-capacity-info')">いいえ（どれも切れていない）</button>
-                </div>
-            </div>
-
-            <div class="result-box" id="res-short-repair">
-                <span class="result-title">特定回路の使いすぎ、または故障です</span>
-                <div class="result-text">
-                    <p>使っていた器具をコンセントから外し、スイッチを戻してください。それでも落ちる場合は故障の可能性があります。</p>
-                    <div class="tel-group">
-                        <span class="tel-label">修理のご依頼（大和電気）</span>
-                        <a href="tel:0223825012" class="tel-link">022-382-5012</a>
-                    </div>
-                </div>
-            </div>
-
+    <main>
+        <div class="page-header">
+            <h1>困った、どうしよう！</h1>
+            <p>突然電気が消えてしまったら、焦らずに<br>下のボタンを順番に選んで確認してください。</p>
         </div>
-    </div>
+
+        <div class="container">
+            <div class="flow-wrapper">
+                
+                <div class="step-card active" id="step1">
+                    <span class="step-num">Step 01</span>
+                    <span class="step-question">隣近所の家や、外の街灯も消えていますか？</span>
+                    <div class="choice-area">
+                        <button class="choice-btn" onclick="showNext('step1', 'res-blackout')">はい（近所も消えている）</button>
+                        <button class="choice-btn" onclick="showNext('step1', 'step2')">いいえ（自分の家だけ）</button>
+                    </div>
+                </div>
+
+                <div class="result-box" id="res-blackout">
+                    <span class="result-title">停電です</span>
+                    <div class="result-text">
+                        <p>お客様がご契約している小売り電気事業者、または東北電力コールセンターへお問い合わせください。</p>
+                        <div class="tel-group">
+                            <span class="tel-label">東北電力ネットワーク コールセンター</span>
+                            <a href="tel:0120175366" class="tel-link">0120-175-366</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card" id="step2">
+                    <span class="step-num">Step 02</span>
+                    <span class="step-question">分電盤を見て、「アンペア」または「漏電」ブレーカが切れていますか？</span>
+                    <div class="choice-area">
+                        <button class="choice-btn" onclick="showNext('step2', 'step-leak-chk')">はい（切れている）</button>
+                        <button class="choice-btn" onclick="showNext('step2', 'step3')">いいえ（切れていない）</button>
+                    </div>
+                </div>
+
+                <div class="step-card" id="step-leak-chk">
+                    <span class="step-num">Step 03</span>
+                    <span class="step-question">漏電ブレーカに「漏電表示」はありますか？</span>
+                    <div class="choice-area">
+                        <button class="choice-btn" onclick="showNext('step-leak-chk', 'res-leak-on')">あり（漏電表示が出ている）</button>
+                        <button class="choice-btn" onclick="showNext('step-leak-chk', 'res-capacity-info')">なし（表示されていない）</button>
+                    </div>
+                </div>
+
+                <div class="result-box" id="res-leak-on">
+                    <span class="result-title">漏電です</span>
+                    <div class="result-text">
+                        <p>回路を全て切り、一つずつ入れて再度落ちる場所を特定してください。特定後、大和電気（株）へご相談ください。</p>
+                        <div class="tel-group">
+                            <span class="tel-label">修理・点検のご依頼（大和電気）</span>
+                            <a href="tel:0223825012" class="tel-link">022-382-5012</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-box" id="res-capacity-info">
+                    <span class="result-title">契約容量（アンペア数）の不足です</span>
+                    <div class="result-text">
+                        <p>家電が増えてよく落ちる場合は、アンペア変更工事をお勧めします。</p>
+                        <div class="tel-group">
+                            <span class="tel-label">① 契約電力会社へ連絡（東北電力の場合）</span>
+                            <a href="tel:0120066774" class="tel-link">0120-066-774</a>
+                        </div>
+                        <p>② 工事が必要となった場合は大和電気（株）へご相談ください。</p>
+                        <div class="tel-group">
+                            <span class="tel-label">変更工事のご相談（大和電気）</span>
+                            <a href="tel:0223825012" class="tel-link">022-382-5012</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card" id="step3">
+                    <span class="step-num">Step 03</span>
+                    <span class="step-question">小さな「回路ブレーカ」のどれか1つだけが切れていますか？</span>
+                    <div class="choice-area">
+                        <button class="choice-btn" onclick="showNext('step3', 'res-short-repair')">はい（1つだけ切れている）</button>
+                        <button class="choice-btn" onclick="showNext('step3', 'res-capacity-info')">いいえ（どれも切れていない）</button>
+                    </div>
+                </div>
+
+                <div class="result-box" id="res-short-repair">
+                    <span class="result-title">特定回路の使いすぎ、または故障です</span>
+                    <div class="result-text">
+                        <p>使っていた器具をコンセントから外し、スイッチを戻してください。それでも落ちる場合は故障の可能性があります。</p>
+                        <div class="tel-group">
+                            <span class="tel-label">修理のご依頼（大和電気）</span>
+                            <a href="tel:0223825012" class="tel-link">022-382-5012</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
 
