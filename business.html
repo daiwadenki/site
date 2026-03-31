@@ -56,7 +56,6 @@
             nav ul { flex-direction: column; gap: 40px; text-align: center; }
             .nav-jp { font-size: 22px; }
 
-            /* ハンバーガーメニューのアニメーション */
             .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
             .menu-btn.active span:nth-child(2) { opacity: 0; }
             .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
@@ -69,7 +68,7 @@
         .page-header h1 { font-size: 2.2rem; letter-spacing: 0.2em; margin: 0; }
         .page-header p { font-size: 0.9rem; opacity: 0.8; margin-top: 10px; letter-spacing: 0.3em; }
 
-        /* --- 4. 事業案内コンテンツ（2カラム） --- */
+        /* --- 4. 事業案内コンテンツ --- */
         .container { max-width: 1100px; margin: 80px auto; padding: 0 40px; }
 
         .business-row { 
@@ -80,20 +79,23 @@
         }
         .business-row:last-child { border-bottom: none; }
 
-        /* 左カラム：セクション名 */
         .business-left { 
             flex: 0 0 350px; 
         }
+
+        /* タイトル下線の修正：複数行に対応 */
         .business-title { 
             font-size: 1.6rem; 
             color: #00479d; 
             font-weight: bold; 
-            display: inline-block;
-            background: linear-gradient(transparent 70%, #ffeb3b 70%); /* 黄色い下線 */
-            line-height: 1.4;
+            display: inline; /* インラインに変更 */
+            background: linear-gradient(transparent 70%, #ffeb3b 70%);
+            line-height: 1.6;
+            padding: 5px 0;
+            box-decoration-break: clone; /* 改行されても各行に装飾を維持 */
+            -webkit-box-decoration-break: clone;
         }
 
-        /* 右カラム：内容 */
         .business-right { 
             flex: 1; 
             padding-left: 50px;
@@ -115,7 +117,6 @@
             content: "■"; color: #00479d; margin-right: 12px; font-size: 0.8rem; 
         }
 
-        /* --- お問い合わせエリア --- */
         .cta-section { 
             background: #f8faff; padding: 80px 20px; text-align: center; border-radius: 20px; margin-top: 40px;
         }
