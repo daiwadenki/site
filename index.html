@@ -76,33 +76,16 @@
 
         /* スクロールアニメーション（中央下） */
         .scroll-down {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            color: white;
-            z-index: 2;
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            display: flex; align-items: flex-start; gap: 10px; color: white; z-index: 2;
         }
         .scroll-down span {
-            display: block;
-            width: 1px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.3);
-            overflow: hidden;
-            position: relative;
+            display: block; width: 1px; height: 60px; background: rgba(255, 255, 255, 0.3);
+            overflow: hidden; position: relative;
         }
         .scroll-down span::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            animation: scrollLine 2.5s cubic-bezier(1, 0, 0, 1) infinite;
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; animation: scrollLine 2.5s cubic-bezier(1, 0, 0, 1) infinite;
         }
         @keyframes scrollLine {
             0% { transform: scaleY(0); transform-origin: 0 0; }
@@ -111,10 +94,7 @@
             100% { transform: scaleY(0); transform-origin: 0 100%; }
         }
         .scroll-text {
-            writing-mode: vertical-rl;
-            font-size: 12px;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
+            writing-mode: vertical-rl; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase;
         }
 
         /* --- 4. サービスカードセクション --- */
@@ -124,7 +104,9 @@
 
         .scroll-container {
             display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
-            gap: 25px; padding: 20px 20px; scrollbar-width: none; justify-content: center;
+            gap: 25px; padding: 20px 20px 40px; /* 下部にインジケーター用の余白 */
+            scrollbar-width: none; justify-content: center;
+            position: relative;
         }
         .scroll-container::-webkit-scrollbar { display: none; }
 
@@ -144,6 +126,26 @@
         .scroll-card p { font-size: 0.9rem; line-height: 1.7; opacity: 0.8; }
         .card-more { font-weight: bold; margin-top: 20px; color: #00479d; transition: 0.3s; }
 
+        /* 追加：スマホ用スクロールインジケーター（デフォルト非表示） */
+        .scroll-indicator {
+            display: none;
+            justify-content: center;
+            gap: 8px;
+            margin-top: -10px; /* scroll-containerのpaddingを調整 */
+            margin-bottom: 40px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(0, 71, 157, 0.2); /* 青の薄い色 */
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .dot.active {
+            background-color: #00479d; /* 青 */
+            transform: scale(1.2);
+        }
+
         /* --- 5. お問い合わせセクション --- */
         section { padding: 100px 8%; text-align: center; }
         
@@ -162,9 +164,11 @@
 
         @media (max-width: 768px) {
             .hero-content h1 { font-size: 2.5rem; }
-            .scroll-container { justify-content: flex-start; padding: 20px 5%; }
+            .scroll-container { justify-content: flex-start; padding: 20px 5% 40px; }
             .scroll-card { flex: 0 0 85%; }
             .tel-number { font-size: 2.2rem; }
+            /* スマホでのみインジケーターを表示 */
+            .scroll-indicator { display: flex; }
         }
     </style>
 </head>
@@ -199,7 +203,7 @@
     <div class="horizontal-section" id="services">
         <div class="section-title"><h2>サービス紹介</h2><p class="section-subtitle">Information</p></div>
         
-        <div class="scroll-container">
+        <div class="scroll-container" id="cardContainer">
             <a href="company.html" class="scroll-card">
                 <div>
                     <h3>会社概要</h3>
@@ -223,6 +227,12 @@
                 <div class="card-more">解決方法を見る →</div>
             </a>
         </div>
+
+        <div class="scroll-indicator" id="scrollIndicator">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
     </div>
 
     <section id="contact-cta">
@@ -236,11 +246,43 @@
     <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
 
     <script>
+        // メニュー開閉
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         menuBtn.addEventListener('click', () => {
             menuBtn.classList.toggle('active');
             navMenu.classList.toggle('active');
+        });
+
+        // スマホ用スクロールインジケーターの制御
+        const container = document.getElementById('cardContainer');
+        const dots = document.querySelectorAll('#scrollIndicator .dot');
+
+        container.addEventListener('scroll', () => {
+            // 現在のスクロール位置から、何枚目のカードが中央に近いかを計算
+            const containerWidth = container.offsetWidth;
+            const scrollLeft = container.scrollLeft;
+            const cardWidth = container.querySelector('.scroll-card').offsetWidth;
+            const gap = 25; // CSSのgap値
+
+            // カード1枚分の進捗幅（カード幅 + gap）
+            const segmentWidth = cardWidth + gap;
+            
+            // 現在表示されているカードのインデックス（0, 1, 2）を計算
+            // スクロール位置にコンテナ幅の半分を足すことで、中央付近のカードを特定
+            let index = Math.round((scrollLeft + gap) / segmentWidth);
+            
+            // インデックスが配列の範囲外にならないよう調整（念のため）
+            index = Math.max(0, Math.min(index, dots.length - 1));
+
+            // 全てのドットのactiveクラスを削除し、現在のインデックスに付与
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
         });
     </script>
 </body>
