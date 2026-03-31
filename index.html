@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大和電気株式会社 | DAIWA DENKI</title>
     
+    <title>大和電気株式会社 | DAIWA DENKI</title>
+    <meta name="description" content="大和電気株式会社は、宮城県名取市を拠点に一般住宅から工場、農事設備の電気工事、LAN構築まで幅広く対応。確かな技術でお客様の電気のトラブルを解決します。">
+    <meta name="keywords" content="大和電気, 電気工事, 宮城県, 名取市, 停電, ブレーカー, LAN工事">
+
+    <meta property="og:title" content="大和電気株式会社 | DAIWA DENKI">
+    <meta property="og:description" content="光り輝く未来を、確かな技術で。宮城県名取市の電気工事プロフェッショナル。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://github.com/daiwadenki/">
+    <meta property="og:image" content="https://github.com/daiwadenki/main_haikei.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+
     <link rel="preload" href="main_haikei.jpg" as="image">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
@@ -42,7 +52,6 @@
         nav ul li a:hover { color: #ffeb3b; transform: scale(1.1); }
         nav ul li a:hover::after { width: 100%; }
 
-        /* スマホ用メニューボタン */
         .menu-btn { display: none; cursor: pointer; z-index: 110; background: none; border: none; flex-direction: column; gap: 6px; padding: 10px; }
         .menu-btn span { display: block; width: 30px; height: 2px; background: white; transition: 0.3s; }
 
@@ -65,10 +74,9 @@
             .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        /* --- 3. メインビジュアル（読み込み改善済） --- */
+        /* --- 3. メインビジュアル --- */
         .hero {
             position: relative; width: 100%; height: 100vh;
-            /* 画像読み込みまでのつなぎ色を設定 */
             background: #001a3d url('main_haikei.jpg') center/cover no-repeat;
             display: flex; justify-content: center; align-items: center; color: white; text-align: center;
         }
@@ -77,7 +85,6 @@
         .hero-content h1 { font-size: 4.5rem; margin: 0; letter-spacing: 0.3em; }
         .hero-content p { font-size: 1.2rem; margin-top: 15px; letter-spacing: 0.4em; }
 
-        /* スクロールアニメーション（中央下） */
         .scroll-down {
             position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
             display: flex; align-items: flex-start; gap: 10px; color: white; z-index: 2;
@@ -96,9 +103,7 @@
             50.1% { transform: scaleY(1); transform-origin: 0 100%; }
             100% { transform: scaleY(0); transform-origin: 0 100%; }
         }
-        .scroll-text {
-            writing-mode: vertical-rl; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase;
-        }
+        .scroll-text { writing-mode: vertical-rl; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; }
 
         /* --- 4. サービスカードセクション --- */
         .horizontal-section { padding: 100px 0; background-color: #f8faff; text-align: center; }
@@ -127,7 +132,6 @@
         .scroll-card h3 { font-size: 1.4rem; margin-bottom: 15px; line-height: 1.3; }
         .scroll-card p { font-size: 0.9rem; line-height: 1.7; opacity: 0.8; }
 
-        /* スクロールインジケーター（スマホ用） */
         .scroll-indicator { display: none; justify-content: center; gap: 8px; margin-top: -10px; margin-bottom: 40px; }
         .dot { width: 8px; height: 8px; background-color: rgba(0, 71, 157, 0.2); border-radius: 50%; transition: 0.3s; }
         .dot.active { background-color: #00479d; transform: scale(1.2); }
@@ -144,21 +148,14 @@
 
         footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
 
-        /* --- スマホ専用UI調整 --- */
         @media (max-width: 768px) {
-            /* ヒーローエリアの改行禁止 */
             .hero-content h1 { font-size: 7.5vw; white-space: nowrap; letter-spacing: 0.2em; }
             .hero-content p { font-size: 3.8vw; white-space: nowrap; letter-spacing: 0.2em; margin-top: 10px; }
-
             .scroll-container { justify-content: flex-start; padding: 20px 5% 40px; }
             .scroll-card { flex: 0 0 85%; }
-            /* 事業案内・困ったときの改行固定 */
             .scroll-card p { font-size: 3.5vw; white-space: nowrap; line-height: 1.8; }
-            
-            /* お問い合わせセクションの改行固定 */
             .contact-box { padding: 40px 20px; }
             .contact-box p { font-size: 3.8vw; white-space: nowrap; line-height: 1.8; }
-            
             .tel-number { font-size: 2.2rem; }
             .scroll-indicator { display: flex; }
         }
@@ -197,9 +194,7 @@
         
         <div class="scroll-container" id="cardContainer">
             <a href="company.html" class="scroll-card">
-                <div>
-                    <h3>会社概要</h3>
-                </div>
+                <div><h3>会社概要</h3></div>
                 <div class="card-more">VIEW MORE →</div>
             </a>
 
