@@ -58,7 +58,6 @@
             nav ul { flex-direction: column; gap: 40px; text-align: center; }
             .nav-jp { font-size: 22px; }
             
-            /* ハンバーガーアニメーション */
             .menu-btn.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
             .menu-btn.active span:nth-child(2) { opacity: 0; }
             .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
@@ -75,29 +74,26 @@
         .hero-content h1 { font-size: 4.5rem; margin: 0; letter-spacing: 0.3em; }
         .hero-content p { font-size: 1.2rem; margin-top: 15px; letter-spacing: 0.4em; }
 
-        /* --- 復活：スクロールアニメーション（中央下・白線・横書きSCROLL） --- */
+        /* スクロールアニメーション（中央下） */
         .scroll-down {
             position: absolute;
             bottom: 30px;
             left: 50%;
-            transform: translateX(-50%); /* 水平中央揃え */
+            transform: translateX(-50%);
             display: flex;
-            align-items: flex-start; /* 白線のトップと文字のトップを揃える */
-            gap: 10px; /* 線と文字の間隔 */
+            align-items: flex-start;
+            gap: 10px;
             color: white;
             z-index: 2;
         }
-
-        /* 白の縦線アニメーション */
         .scroll-down span {
             display: block;
             width: 1px;
-            height: 60px; /* 線の長さ */
-            background: rgba(255, 255, 255, 0.3); /* 線全体の背景 */
+            height: 60px;
+            background: rgba(255, 255, 255, 0.3);
             overflow: hidden;
             position: relative;
         }
-
         .scroll-down span::after {
             content: "";
             position: absolute;
@@ -105,20 +101,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #fff; /* 動く線の色（白） */
+            background: #fff;
             animation: scrollLine 2.5s cubic-bezier(1, 0, 0, 1) infinite;
         }
-
         @keyframes scrollLine {
             0% { transform: scaleY(0); transform-origin: 0 0; }
             50% { transform: scaleY(1); transform-origin: 0 0; }
             50.1% { transform: scaleY(1); transform-origin: 0 100%; }
             100% { transform: scaleY(0); transform-origin: 0 100%; }
         }
-
-        /* 縦書きSCROLL文字 */
         .scroll-text {
-            writing-mode: vertical-rl; /* 縦書き */
+            writing-mode: vertical-rl;
             font-size: 12px;
             letter-spacing: 0.3em;
             text-transform: uppercase;
@@ -199,8 +192,6 @@
                 <li><a href="company.html"><span class="nav-jp">会社概要</span><span class="nav-en">Company</span></a></li>
                 <li><a href="business.html"><span class="nav-jp">事業案内</span><span class="nav-en">Business</span></a></li>
                 <li><a href="trouble.html"><span class="nav-jp">困ったときは</span><span class="nav-en">Trouble</span></a></li>
-                <li><a href="contact.html"><span class="nav-jp">お問い合わせ</span><span class="nav-en">Contact</span></a></li>
-                <li><a href="recruit.html"><span class="nav-jp">採用情報</span><span class="nav-en">Recruit</span></a></li>
             </ul>
         </nav>
     </header>
@@ -211,7 +202,9 @@
             <p>光り輝く未来を、確かな技術で。</p>
         </div>
         <div class="scroll-down">
-            <span></span><div class="scroll-text">SCROLL</div></div>
+            <span></span>
+            <div class="scroll-text">SCROLL</div>
+        </div>
     </div>
 
     <div class="horizontal-section" id="services">
