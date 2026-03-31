@@ -7,17 +7,17 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <style>
-        /* --- 全体設定（index.htmlと統一） --- */
+        /* --- 1. 全体設定 --- */
         body, html {
             margin: 0; padding: 0; width: 100%;
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            color: #333; background-color: #fff; line-height: 1.6;
+            background-color: #fff; color: #333; overflow-x: hidden;
         }
 
-        /* --- ヘッダー（index.htmlと同一デザイン） --- */
+        /* --- 2. ヘッダー（index.htmlと共通のデザインに統一） --- */
         header {
             position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
-            background: rgba(0, 0, 0, 0.8); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
         }
         .logo-area { display: flex; align-items: center; text-decoration: none; color: white; z-index: 110; }
         .logo-image { height: 50px; width: auto; margin-right: 15px; }
@@ -39,7 +39,6 @@
         nav ul li a:hover { color: #ffeb3b; transform: scale(1.1); }
         nav ul li a:hover::after { width: 100%; }
 
-        /* スマホ用メニューボタン */
         .menu-btn { display: none; cursor: pointer; z-index: 110; background: none; border: none; flex-direction: column; gap: 6px; padding: 10px; }
         .menu-btn span { display: block; width: 30px; height: 2px; background: white; transition: 0.3s; }
 
@@ -62,20 +61,30 @@
             .menu-btn.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
         }
 
-        /* --- 下層ページ共通ヒーローエリア --- */
+        /* --- 3. ページヘッダー --- */
         .page-header {
-            background: #00479d; padding: 140px 0 60px; text-align: center; color: white;
+            background-color: #00479d; color: white; padding: 160px 20px 80px; text-align: center;
         }
-        .page-header h1 { font-size: 2.5rem; letter-spacing: 0.2em; margin: 0; }
-        .page-header p { opacity: 0.7; font-size: 0.9rem; letter-spacing: 0.3em; margin-top: 10px; }
+        .page-header h1 { font-size: 2.2rem; letter-spacing: 0.2em; margin: 0; }
+        .page-header p { font-size: 0.9rem; opacity: 0.8; margin-top: 10px; letter-spacing: 0.3em; }
 
-        /* --- コンテンツエリア --- */
-        .container { max-width: 1000px; margin: 60px auto; padding: 0 5%; }
+        /* --- 4. 会社情報テーブル --- */
+        .container { max-width: 900px; margin: 60px auto 100px; padding: 0 20px; }
         
-        /* 暫定的なコンテンツ内容（今後修正予定） */
-        .company-info { margin-top: 40px; }
-        
-        footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; margin-top: 100px; }
+        .info-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .info-table th, .info-table td { padding: 25px; border-bottom: 1px solid #eee; text-align: left; }
+        .info-table th { width: 30%; color: #00479d; font-weight: bold; background: #f8faff; }
+        .info-table td { line-height: 1.8; }
+
+        .info-list { margin: 0; padding-left: 20px; }
+        .info-list li { margin-bottom: 5px; }
+
+        footer { background: #222; color: #fff; padding: 40px; text-align: center; font-size: 13px; }
+
+        @media (max-width: 768px) {
+            .info-table th, .info-table td { display: block; width: 100%; box-sizing: border-box; }
+            .info-table th { border-bottom: none; padding-bottom: 5px; }
+        }
     </style>
 </head>
 <body>
@@ -101,15 +110,52 @@
     </div>
 
     <div class="container">
-        <section class="company-info">
-            <p>ここから会社概要の詳細コンテンツを構築していきます。</p>
-        </section>
+        <table class="info-table">
+            <tr>
+                <th>会社名</th>
+                <td>大和電気株式会社<br><span style="font-size: 0.8rem; color: #666;">（ダイワデンキカブシキガイシャ）</span></td>
+            </tr>
+            <tr>
+                <th>代表者</th>
+                <td>代表取締役　相澤 きよの</td>
+            </tr>
+            <tr>
+                <th>所在地</th>
+                <td>〒981-1226<br>宮城県名取市植松一丁目7番5号</td>
+            </tr>
+            <tr>
+                <th>設立</th>
+                <td>1971年10月1日</td>
+            </tr>
+            <tr>
+                <th>資本金</th>
+                <td>2800万円</td>
+            </tr>
+            <tr>
+                <th>事業内容</th>
+                <td>
+                    <ul class="info-list">
+                        <li>電気設備工事の設計および施工</li>
+                        <li>空調設備工事</li>
+                        <li>容量変更工事（アンペア変更）</li>
+                        <li>照明設備のLED化</li>
+                        <li>LAN構築工事</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>許可・登録</th>
+                <td>
+                    <p style="margin: 0 0 10px 0;"><strong>■ 建設業許可</strong><br>宮城県知事許可（般-7）第5084号</p>
+                    <p style="margin: 0;"><strong>■ 宅地建物取引業</strong><br>宮城県知事（6）第4872号</p>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <footer>&copy; 2026 大和電気株式会社 All Rights Reserved.</footer>
 
     <script>
-        // スマホメニュー制御
         const menuBtn = document.getElementById('menuBtn');
         const navMenu = document.getElementById('navMenu');
         menuBtn.addEventListener('click', () => {
