@@ -14,7 +14,7 @@
             background-color: #fff; color: #333; overflow-x: hidden;
         }
 
-        /* --- 2. ヘッダー（index.htmlと共通のデザインに統一） --- */
+        /* --- 2. ヘッダー --- */
         header {
             position: fixed; top: 0; width: 100%; padding: 15px 40px; box-sizing: border-box; z-index: 100;
             background: rgba(0, 0, 0, 0.7); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
@@ -76,6 +76,9 @@
         .info-table th { width: 30%; color: #00479d; font-weight: bold; background: #f8faff; }
         .info-table td { line-height: 1.8; }
 
+        /* 電話番号リンクのスタイル */
+        .tel-link { color: inherit; text-decoration: none; font-weight: bold; }
+
         .info-list { margin: 0; padding-left: 20px; }
         .info-list li { margin-bottom: 5px; }
 
@@ -84,6 +87,7 @@
         @media (max-width: 768px) {
             .info-table th, .info-table td { display: block; width: 100%; box-sizing: border-box; }
             .info-table th { border-bottom: none; padding-bottom: 5px; }
+            .tel-link { color: #00479d; text-decoration: underline; }
         }
     </style>
 </head>
@@ -120,8 +124,12 @@
                 <td>代表取締役　相澤 きよの</td>
             </tr>
             <tr>
-                <th>所在地</th>
-                <td>〒981-1226<br>宮城県名取市植松一丁目7番5号</td>
+                <th>所在地・連絡先</th>
+                <td>
+                    〒981-1226<br>宮城県名取市植松一丁目7番5号<br>
+                    TEL：<a href="tel:0223825012" class="tel-link">022-382-5012</a><br>
+                    FAX：022-382-5580
+                </td>
             </tr>
             <tr>
                 <th>設立</th>
